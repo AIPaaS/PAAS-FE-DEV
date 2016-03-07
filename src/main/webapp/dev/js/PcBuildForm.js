@@ -89,10 +89,12 @@ function initListener() {
 	$("#projectId").bind("change", resetBuildFace);
 	
 	$("#forcenter").bind("focus",function(){
+		alert(11);
 		var sul = $('#sel_forcenter');
 		sul.css("top", $("#forcenter").offset().top-$("#forcenter").height());
 		sul.css("left", $("#forcenter").offset().left-$("#forcenter").width()/2);
 		sul.show(); 
+		alert(22);
 	});
 	$("#forcenter").on("blur", function() {
 		if(!mouseenter) $("#sel_forcenter").hide();
