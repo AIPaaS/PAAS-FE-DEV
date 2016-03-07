@@ -13,30 +13,30 @@ String ContextPath = request.getContextPath();
 		<div class="main-box clearfix">
 			<div class="filter-block pull-left">
 				<div class="form-group pull-left">
-					&nbsp;&nbsp;&nbsp;构建名:
+					&nbsp;构建名:
 				</div>
 				<div class="form-group pull-left">
-					<input type="text" name="buildName" id="buildName" class="form-control" style="width:120px;">
+					<input type="text" name="buildName" id="buildName" class="form-control" style="width:100px;">
 				</div>
 				<div class="form-group pull-left">
 					产品:
 				</div>
 				<div class="form-group pull-left">
-					<select id="sel_productId" class="form-control" style="width:120px;">
+					<select id="sel_productId" class="form-control" style="width:100px;">
 					</select>
 				</div>
 				<div class="form-group pull-left">
 					工程:
 				</div>
 				<div class="form-group pull-left">
-					<select id="sel_projectId" class="form-control" style="width:120px;">
+					<select id="sel_projectId" class="form-control" style="width:100px;">
 					</select>
 				</div>
 				<div class="form-group pull-left">
 						是否生成镜像:
 					</div>
 					<div class="form-group pull-left">
-						<select id="sel_isBuildImage" class="form-control" style="width:120px;">
+						<select id="sel_isBuildImage" class="form-control" style="width:100px;">
 						</select>
 					</div>
 				<button id="btn_query" class="btn btn-primary"><i class="fa fa-search fa-lg"></i> 查询</button>

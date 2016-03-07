@@ -14,7 +14,7 @@ String ContextPath = request.getContextPath();
 			<div class="filter-block pull-left">
 				<div class="form-group pull-left">
 					<div class="form-group pull-left">
-						&nbsp;&nbsp;&nbsp;应用代码:
+						&nbsp;&nbsp;&nbsp;产品代码:
 					</div>
 					<div class="form-group pull-left">
 						<input type="text" name="code" id="code" class="form-control">

@@ -120,7 +120,6 @@ function UserSelector(cfg) {
 		ela.bind("click", function() {
 			var opId = this.id.substring(this.id.lastIndexOf("_")+1);
 			thiz.removeSelectedUser(opId);
-			
 			var cbs = tabBody.find("input");
 			if(CU.isEmpty(cbs)) return ;
 			
@@ -189,6 +188,7 @@ function UserSelector(cfg) {
 		var selobj = data.SelectUsers[key];
 		if(!CU.isEmpty(selobj)) {
 			removeUserDom(selobj.id);
+			tabSelAll.prop("checked",false);
 			delete data.SelectUsers[key];
 		}
 	};

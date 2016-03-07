@@ -139,26 +139,6 @@ String ContextPath = request.getContextPath();
 						<span></span>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="isAutoPush1" class="col-lg-2 control-label"><input type="checkbox" name="isAutoPush1" id="isAutoPush1"></label>
-					<div class="col-lg-5">
-						<span>是否自动推送到开发环境</span>
-					</div>
-					<div class="col-lg-5">
-						<span></span>
-					</div>
-				</div>
-				<div id="div_isAutoPush1_yes">
-					<div class="form-group">
-						<label for="forcenter" class="col-lg-2 control-label">资源中心:<font color="red">*</font>:</label>
-						<div class="col-lg-5">
-							<input type="text" name="forcenter" id="forcenter" class="form-control" readOnly />
-						</div>
-						<div class="col-lg-5">
-							<span></span>
-						</div>
-					</div>
-				</div>
 			</div>
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">

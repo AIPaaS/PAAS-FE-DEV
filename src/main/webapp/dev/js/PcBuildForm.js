@@ -1,8 +1,7 @@
 var CurrentId = "";
 var CurrentPageNum = 1;
 
-var TreeData = null;
-var SelResCenterId = null;
+
 
 var mouseenter = false;
 /** 初始化 **/
@@ -23,7 +22,6 @@ function initData(cb) {
 	setDisabled(false);
 	$("#div_isExternal_no").show();
 	$("#div_isBuildImage_yes").hide();
-	$("#div_isAutoPush1_yes").hide();
 	CurrentId = PRQ.get("id");
 	CurrentPageNum = PRQ.get("pageNum");
 	if(CU.isEmpty(CurrentPageNum)) CurrentPageNum = 1;
@@ -34,30 +32,14 @@ function initData(cb) {
 		var selhtml = PU.getSelectOptionsHtml("DV_PRODUCT_CODE");
 		$("#productId").html(selhtml);
 		
-		RS.ajax({url:"/res/res/getResRegionDropListMap",ps:{addEmpty:false, addAttr:true,opts:"dc|rc"},cb:function(result) {
-			DROP["DV_DATA_CENTER_CODE"] = result["dc"];
-			DROP["DV_RES_CENTER_CODE"] = result["rc"];
-			var dropList = [];
-			for(var i=0; i<result["dc"].length; i++) dropList.push(result["dc"][i]);
-			for(var i=0; i<result["rc"].length; i++) dropList.push(result["rc"][i]);
-			TreeData = toTreeData(dropList);
-			
-			if(CU.isFunction(cb))cb();
-		}});
+		if(CU.isFunction(cb))cb();
 	}});
 
 }
 
 /** 初始化组件 **/
 function initComponent() {
-	$("#sel_forcenter").treeview({data:TreeData,color:"#428bca",selectedBackColor:"#f0f8ff",selectedColor:"#428bca",collapseIcon:"fa fa-minus-square-o",expandIcon:"fa fa-plus-square-o",onNodeSelected: function(e, node) {
-		if(node.param1==2 || node.param1=="2") {
-			SelResCenterId = node.id;
-			$("#forcenter").val(node.text);
-			$('#sel_forcenter').hide();
-		}
-	}});
-	$("#sel_forcenter").treeview("collapseAll", {silent:true});
+	
 	
 }
 
@@ -70,16 +52,7 @@ function initListener() {
 		}else{
 			$("#imageDefId").val("");
 			$("#dockerFilePath").val("");
-			$("#isAutoPush1").val("");
 			$("#div_isBuildImage_yes").hide();
-		}
-	});
-	$("#isAutoPush1").bind("change",function(){
-		if($("#isAutoPush1").prop("checked")){
-			$("#div_isAutoPush1_yes").show();
-			
-		}else{
-			$("#div_isAutoPush1_yes").hide();
 		}
 	});
 	$("#productId").bind("change",function(){
@@ -89,12 +62,10 @@ function initListener() {
 	$("#projectId").bind("change", resetBuildFace);
 	
 	$("#forcenter").bind("focus",function(){
-		alert(11);
 		var sul = $('#sel_forcenter');
-		sul.css("top", $("#forcenter").offset().top-$("#forcenter").height());
-		sul.css("left", $("#forcenter").offset().left-$("#forcenter").width()/2);
+		sul.css("top", $("#forcenter").offset().top-$("#forcenter").height()+ParentHeaderHeight+10);
+		sul.css("left", $("#forcenter").offset().left-$("#forcenter").width()-90+ParentLeftWidth+5);
 		sul.show(); 
-		alert(22);
 	});
 	$("#forcenter").on("blur", function() {
 		if(!mouseenter) $("#sel_forcenter").hide();
@@ -118,31 +89,6 @@ function initFace() {
 	
 }
 
-function toTreeData(dropList) {
-	var tree = [{}];
-	var pnobj = {};
-	for(var i=0; i<dropList.length; i++) {
-		var item = dropList[i];
-		var type = item.param1;
-		
-		item.id = item.code;
-		item.text = item.name;
-		
-		pnobj[item.code+"_"+type] = item;
-		
-		if(type == "1") {
-			item.icon = "fa fa-database";
-			tree.push(item);
-		}else {
-			item.icon = type=="2" ? "fa fa-sitemap" : "fa fa-flash";
-			var pn = pnobj[item.parentCode+"_"+(parseInt(type, 10)-1)];
-			if(CU.isEmpty(pn)) continue ;
-			if(CU.isEmpty(pn.childNodes)) pn.childNodes = [];
-			pn.childNodes.push(item);
-		}
-	}
-	return tree;
-}
 
 function setDisabled(isExternal){
 	if(isExternal){
@@ -251,16 +197,6 @@ function queryInfo(){
 			});
 			
 			$("#dockerFilePath").val(rs.def.dockerFilePath);
-			var isAutoPush1 = rs.def.isAutoPush1;
-			if(isAutoPush1){
-				$("#isAutoPush1").prop("checked",true);
-				var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", rs.def.resCenterId);
-				$("#forcenter").val(item.attributes.resName);
-				SelResCenterId = rs.def.resCenterId;
-				$("#div_isAutoPush1_yes").show();
-			}else{
-				$("#div_isAutoPush1_yes").hide();
-			}
 			$("#div_isBuildImage_yes").show();
 		}else{
 			$("#isBuildImage").prop("checked",false);
@@ -289,15 +225,6 @@ function submitForm(){
 	}else{
 		delete bean.imageDefId;
 		delete bean.dockerFilePath;
-	}
-	if(bean.isAutoPush1 == 1){
-		if(CU.isEmpty(SelResCenterId)) {CC.showMsg({msg:"请选择资源中心"}); return;}
-		
-		bean.resCenterId = SelResCenterId;
-		var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", SelResCenterId);
-		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)){
-			bean.dataCenterId = item.attributes.dataCenterId;
-		}
 	}
 	
 	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
