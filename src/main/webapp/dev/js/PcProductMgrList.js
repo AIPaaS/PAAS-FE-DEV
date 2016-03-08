@@ -26,7 +26,7 @@ function initListener() {
 	$("#name").bind("keyup", doCdtTFKeyUp);
 	$("#btn_query").bind("click",function(){query(1);});
 	$("#grid_pageSize").bind("change",function(){query(1);});
-	$("#sel_respDocType").bind("change",function(){query();});
+	$("#sel_respDocType").bind("change",function(){query(1);});
 }
 function initFace() {
 }
