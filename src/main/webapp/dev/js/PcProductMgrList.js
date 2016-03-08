@@ -26,6 +26,7 @@ function initListener() {
 	$("#name").bind("keyup", doCdtTFKeyUp);
 	$("#btn_query").bind("click",function(){query(1);});
 	$("#grid_pageSize").bind("change",function(){query(1);});
+	$("#sel_respDocType").bind("change",function(){query();});
 }
 function initFace() {
 }
@@ -45,9 +46,10 @@ function query(pageNum){
 	var pageSize = $("#grid_pageSize").val();
 	var code = $("#code").val();
 	var name = $("#name").val();
+	var respDocType = $("#sel_respDocType").val();
 	var orders = "CODE";
 	
-	var ps = {pageNum:pageNum,pageSize:pageSize,code:code,name:name,orders:orders};
+	var ps = {pageNum:pageNum,pageSize:pageSize,code:code,name:name,respDocType:respDocType,orders:orders};
 	RS.ajax({url:"/dev/product/queryMgrPage",ps:ps,cb:function(r) {
 		var data = r.data;
 		for(var i=0; i<data.length; i++) {

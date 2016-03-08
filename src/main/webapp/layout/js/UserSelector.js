@@ -139,13 +139,16 @@ function UserSelector(cfg) {
 		var cbs = tabBody.find("input");
 		if(CU.isEmpty(cbs)) return ;
 		
+		var selcount = 0;
 		for(var i=0; i<cbs.length; i++) {
 			if(cbs[i].checked) {
 				thiz.addSelectedUser(cbs[i].value);
+				selcount ++ ;
 			}else {
 				thiz.removeSelectedUser(cbs[i].value);
 			}
 		}
+		tabSelAll.prop("checked", selcount==cbs.length);
 	};
 	var effVal = function(v) {
 		if(v===undefined || v===null) return "&nbsp;";
