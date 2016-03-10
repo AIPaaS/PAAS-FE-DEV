@@ -44,6 +44,7 @@ public class PcBuildMvc {
 	
 	@RequestMapping("/saveOrUpdateDef")
 	public void  saveOrUpdateDef(HttpServletRequest request,HttpServletResponse response, PcBuildDef record){
+		record.setIsBuildImage(1);//一定生成镜像
 		Long id = buildPeer.saveOrUpdateDef(record);
 		ControllerUtils.returnJson(request, response, id);
 	}

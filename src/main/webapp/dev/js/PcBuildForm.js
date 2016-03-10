@@ -14,6 +14,7 @@ function init() {
 		if(!CU.isEmpty(CurrentId)) {
 			queryInfo();
 		}
+		$("#div_isBuildImage_yes").show();
 	});
 }
 
@@ -238,32 +239,32 @@ function queryInfo(){
 		}
 		$("#respUser").val(rs.def.respUser);
 		$("#respPwd").val(rs.def.respPwd);
-		$("#buildCmd").val(rs.def.buildCmd);
-		var isSupportHook = rs.def.isSupportHook;
-		if(isSupportHook) $("#isSupportHook").prop("checked",true);
-		var isBuildImage = rs.def.isBuildImage;
-		if(isBuildImage){
-			$("#isBuildImage").prop("checked",true);
+//		$("#buildCmd").val(rs.def.buildCmd);
+//		var isSupportHook = rs.def.isSupportHook;
+//		if(isSupportHook) $("#isSupportHook").prop("checked",true);
+//		var isBuildImage = rs.def.isBuildImage;
+//		if(isBuildImage){
+//			$("#isBuildImage").prop("checked",true);
 			reloadDefDropList(isExternal,rs.def.projectId,function(){
 				$("#imageDefId").val(rs.def.imageDefId);
 			});
 			
 			$("#dockerFilePath").val(rs.def.dockerFilePath);
-			var isAutoPush1 = rs.def.isAutoPush1;
-			if(isAutoPush1){
-				$("#isAutoPush1").prop("checked",true);
-				var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", rs.def.resCenterId);
-				$("#forcenter").val(item.attributes.resName);
-				SelResCenterId = rs.def.resCenterId;
-				$("#div_isAutoPush1_yes").show();
-			}else{
-				$("#div_isAutoPush1_yes").hide();
-			}
-			$("#div_isBuildImage_yes").show();
-		}else{
-			$("#isBuildImage").prop("checked",false);
-			$("#div_isBuildImage_yes").hide();
-		}
+//			var isAutoPush1 = rs.def.isAutoPush1;
+//			if(isAutoPush1){
+//				$("#isAutoPush1").prop("checked",true);
+//				var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", rs.def.resCenterId);
+//				$("#forcenter").val(item.attributes.resName);
+//				SelResCenterId = rs.def.resCenterId;
+//				$("#div_isAutoPush1_yes").show();
+//			}else{
+//				$("#div_isAutoPush1_yes").hide();
+//			}
+//			$("#div_isBuildImage_yes").show();
+//		}else{
+//			$("#isBuildImage").prop("checked",false);
+//			$("#div_isBuildImage_yes").hide();
+//		}
 	}});
 }
 
@@ -281,22 +282,22 @@ function submitForm(){
 		if(CU.isEmpty(productId)){CC.showMsg({msg:"所属产品不能为空"}); return;}
 		if(CU.isEmpty(projectId)){CC.showMsg({msg:"所属工程不能为空"}); return;}
 	}
-	if(bean.isBuildImage == 1){
+//	if(bean.isBuildImage == 1){
 		if(CU.isEmpty(bean.imageDefId)){CC.showMsg({msg:"镜像定义不能为空"}); return;}
 		if(CU.isEmpty(bean.dockerFilePath)){CC.showMsg({msg:"DockerFilePath不能为空"}); return;}
-	}else{
-		delete bean.imageDefId;
-		delete bean.dockerFilePath;
-	}
-	if(bean.isAutoPush1 == 1){
-		if(CU.isEmpty(SelResCenterId)) {CC.showMsg({msg:"请选择资源中心"}); return;}
-		
-		bean.resCenterId = SelResCenterId;
-		var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", SelResCenterId);
-		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)){
-			bean.dataCenterId = item.attributes.dataCenterId;
-		}
-	}
+//	}else{
+//		delete bean.imageDefId;
+//		delete bean.dockerFilePath;
+//	}
+//	if(bean.isAutoPush1 == 1){
+//		if(CU.isEmpty(SelResCenterId)) {CC.showMsg({msg:"请选择资源中心"}); return;}
+//		
+//		bean.resCenterId = SelResCenterId;
+//		var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", SelResCenterId);
+//		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)){
+//			bean.dataCenterId = item.attributes.dataCenterId;
+//		}
+//	}
 	
 	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
 	

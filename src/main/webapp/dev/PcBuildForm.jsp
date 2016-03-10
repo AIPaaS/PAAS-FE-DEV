@@ -92,33 +92,33 @@ String ContextPath = request.getContextPath();
 					</div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="buildCmd" class="col-lg-2 control-label">构建命令<font color="red">*</font>:</label>
-				<div class="col-lg-5">
-					<textarea name="buildCmd" rows="3" cols="3" class="form-control" required id="buildCmd" maxlength="1500"></textarea>
-				</div>
-				<div class="col-lg-5">
-					<span></span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="autoBuild" class="col-lg-2 control-label"><input type="checkbox" name="isSupportHook" id="isSupportHook"></label>
-				<div class="col-lg-5">
-					<span>是否支持代码提交自动触发构建 [build][package][deploy]</span>
-				</div>
-				<div class="col-lg-5">
-					<span></span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="isBuildImage" class="col-lg-2 control-label"><input type="checkbox" name="isBuildImage" id="isBuildImage"></label>
-				<div class="col-lg-5">
-					<span>是否生成镜像(提示生成镜像保留10个最近版本)</span>
-				</div>
-				<div class="col-lg-5">
-					<span></span>
-				</div>
-			</div>
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="buildCmd" class="col-lg-2 control-label">构建命令<font color="red">*</font>:</label> -->
+<!-- 				<div class="col-lg-5"> -->
+<!-- 					<textarea name="buildCmd" rows="3" cols="3" class="form-control" required id="buildCmd" maxlength="1500"></textarea> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-5"> -->
+<!-- 					<span></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="autoBuild" class="col-lg-2 control-label"><input type="checkbox" name="isSupportHook" id="isSupportHook"></label> -->
+<!-- 				<div class="col-lg-5"> -->
+<!-- 					<span>是否支持代码提交自动触发构建 [build][package][deploy]</span> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-5"> -->
+<!-- 					<span></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="isBuildImage" class="col-lg-2 control-label"><input type="checkbox" name="isBuildImage" id="isBuildImage"></label> -->
+<!-- 				<div class="col-lg-5"> -->
+<!-- 					<span>是否生成镜像(提示生成镜像保留10个最近版本)</span> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-5"> -->
+<!-- 					<span></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<div id="div_isBuildImage_yes">
 				<div class="form-group">
 					<label for="imageDefId" class="col-lg-2 control-label">镜像定义<font color="red">*</font>:</label>
@@ -139,26 +139,26 @@ String ContextPath = request.getContextPath();
 						<span></span>
 					</div>
 				</div>
-				<div class="form-group">
-					<label for="isAutoPush1" class="col-lg-2 control-label"><input type="checkbox" name="isAutoPush1" id="isAutoPush1"></label>
-					<div class="col-lg-5">
-						<span>是否自动推送到开发环境</span>
-					</div>
-					<div class="col-lg-5">
-						<span></span>
-					</div>
-				</div>
-				<div id="div_isAutoPush1_yes">
-					<div class="form-group">
-						<label for="forcenter" class="col-lg-2 control-label">资源中心:<font color="red">*</font>:</label>
-						<div class="col-lg-5">
-							<input type="text" name="forcenter" id="forcenter" class="form-control" readOnly />
-						</div>
-						<div class="col-lg-5">
-							<span></span>
-						</div>
-					</div>
-				</div>
+<!-- 				<div class="form-group"> -->
+<!-- 					<label for="isAutoPush1" class="col-lg-2 control-label"><input type="checkbox" name="isAutoPush1" id="isAutoPush1"></label> -->
+<!-- 					<div class="col-lg-5"> -->
+<!-- 						<span>是否自动推送到开发环境</span> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-lg-5"> -->
+<!-- 						<span></span> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div id="div_isAutoPush1_yes"> -->
+<!-- 					<div class="form-group"> -->
+<!-- 						<label for="forcenter" class="col-lg-2 control-label">资源中心:<font color="red">*</font>:</label> -->
+<!-- 						<div class="col-lg-5"> -->
+<!-- 							<input type="text" name="forcenter" id="forcenter" class="form-control" readOnly /> -->
+<!-- 						</div> -->
+<!-- 						<div class="col-lg-5"> -->
+<!-- 							<span></span> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
