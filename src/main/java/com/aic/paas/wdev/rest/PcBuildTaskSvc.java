@@ -25,4 +25,24 @@ public interface PcBuildTaskSvc {
 	 */
 	public List<PcBuildTask> queryPcBuildTaskListForPage(Integer pageNum,Integer pageSize,CPcBuildTask cdt,String orders);
 
+	
+	/**
+	 * aic.tsd_hyh  2016.03.11
+	 * 根据状态 buildId 去查 数据状态为2，3的List
+	 * @param buildDefId
+	 * * @param statuss
+	 * @return
+	 */
+	public List<PcBuildTask> selectTaskListByStatueId(Long buildDefId , Integer[] statuss);
+	
+	
+	
+	/**
+	 * aic.tsd_hyh  2016.03.11
+	 * 根据条件去修改表
+	 * @param  PcBuildTask record ;//更新的映射对象
+	 * @param CPcBuildTask cdt ;//条件对象
+	 * @return
+	 */
+	public int updatePcBuildTaskCdt(PcBuildTask record ,CPcBuildTask cdt);
 }

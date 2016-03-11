@@ -24,6 +24,7 @@ public class PcBuildTaskMvc {
 	
 	@RequestMapping("/saveOrUpdateBuildTask")
 	public void  saveOrUpdateBuildTask(HttpServletRequest request,HttpServletResponse response, Long buildDefId){
+		System.out.println("aaaaa");
 		PcBuildTask pbt = new PcBuildTask();
 		pbt.setBuildDefId(buildDefId);
 		Long id = buildTaskPeer.saveOrUpdateBuildTask(pbt);

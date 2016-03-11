@@ -77,6 +77,9 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 			BinaryUtils.checkEmpty(record.getRespUrl(), "record.respUrl");
 			BinaryUtils.checkEmpty(record.getRespUser(), "record.respUser");
 			BinaryUtils.checkEmpty(record.getRespPwd(), "record.respPwd");
+			
+			BinaryUtils.checkEmpty(record.getRespBranch(), "record.respBranch");
+			BinaryUtils.checkEmpty(record.getDepTag(), "record.depTag");
 //			BinaryUtils.checkEmpty(record.getBuildCmd(), "record.buildCmd");
 //			BinaryUtils.checkEmpty(record.getIsSupportHook(), "record.isSupportHook");
 //			BinaryUtils.checkEmpty(record.getIsBuildImage(), "record.isBuildImage");
@@ -109,6 +112,9 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 //			if(record.getIsBuildImage().intValue() == 1) {
 				BinaryUtils.checkEmpty(record.getImageDefId(), "record.imageDefId");
 				BinaryUtils.checkEmpty(record.getDockerFilePath(), "record.dockerFilePath");
+				
+				BinaryUtils.checkEmpty(record.getRespBranch(), "record.respBranch");
+				BinaryUtils.checkEmpty(record.getDepTag(), "record.depTag");
 //				BinaryUtils.checkEmpty(record.getIsAutoPush1(), "record.isAutoPush1");
 //				if(record.getIsAutoPush1().intValue() == 1) {
 //					BinaryUtils.checkEmpty(record.getDataCenterId(), "record.dataCenterId");

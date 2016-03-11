@@ -12,37 +12,37 @@ String ContextPath = request.getContextPath();
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<div class="filter-block pull-left">
+				<div class="form-group pull-left">&nbsp;&nbsp;&nbsp;构建名:</div>
 				<div class="form-group pull-left">
-					&nbsp;&nbsp;&nbsp;构建名:
+					<input type="text" name="buildName" id="buildName"
+						class="form-control" style="width: 120px;">
 				</div>
+				<div class="form-group pull-left">产品:</div>
 				<div class="form-group pull-left">
-					<input type="text" name="buildName" id="buildName" class="form-control" style="width:120px;">
-				</div>
-				<div class="form-group pull-left">
-					产品:
-				</div>
-				<div class="form-group pull-left">
-					<select id="sel_productId" class="form-control" style="width:120px;">
+					<select id="sel_productId" class="form-control"
+						style="width: 120px;">
 					</select>
 				</div>
+				<div class="form-group pull-left">工程:</div>
 				<div class="form-group pull-left">
-					工程:
-				</div>
-				<div class="form-group pull-left">
-					<select id="sel_projectId" class="form-control" style="width:120px;">
+					<select id="sel_projectId" class="form-control"
+						style="width: 120px;">
 					</select>
 				</div>
+				<div class="form-group pull-left">是否生成镜像:</div>
 				<div class="form-group pull-left">
-						是否生成镜像:
-					</div>
-					<div class="form-group pull-left">
-						<select id="sel_isBuildImage" class="form-control" style="width:120px;">
-						</select>
-					</div>
-				<button id="btn_query" class="btn btn-primary"><i class="fa fa-search fa-lg"></i> 查询</button>
-				<button id="btn_add" class="btn btn-primary"> <i class="fa fa-plus-circle fa-lg"></i> 添加</button>
+					<select id="sel_isBuildImage" class="form-control"
+						style="width: 120px;">
+					</select>
+				</div>
+				<button id="btn_query" class="btn btn-primary">
+					<i class="fa fa-search fa-lg"></i> 查询
+				</button>
+				<button id="btn_add" class="btn btn-primary">
+					<i class="fa fa-plus-circle fa-lg"></i> 添加
+				</button>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -68,24 +68,22 @@ String ContextPath = request.getContextPath();
 							</tr>
 						</thead>
 						<tbody id="buildTable">
-							
+
 						</tbody>
 					</table>
 				</div>
 				<div class="row-fluid">
 					<div class="col-lg-6">
-						<label>
-							每页
-								<select name="selPageSize"  class="pagination" id="grid_pageSize" >
-									<option value="10">10</option>
-									<option value="15">15</option>
-									<option value="20" selected>20</option>
-									<option value="25">25</option>
-									<option value="30">30</option>
-									<option value="40">40</option>
-									<option value="50">50</option>
-								</select>
-							条记录
+						<label> 每页 <select name="selPageSize" class="pagination"
+							id="grid_pageSize">
+								<option value="10">10</option>
+								<option value="15">15</option>
+								<option value="20" selected>20</option>
+								<option value="25">25</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+								<option value="50">50</option>
+						</select> 条记录
 						</label>
 					</div>
 					<div class="col-lg-6">
@@ -94,7 +92,81 @@ String ContextPath = request.getContextPath();
 						</div>
 					</div>
 				</div>
-				
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="div_appResUse" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog" style="width: 900px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="div_title"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="diag_dos">
+					<div class="diag_left">
+						<ul>
+							<li class="active"><a href="javascript:void(0)">crm-web-1.0</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.9</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.8</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.7</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.6</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.5</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.4</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.3</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.2</a></li>
+							<li><a href="javascript:void(0)">crm-web-0.1</a></li>
+						</ul>
+					</div>
+					<div class="diag_right">
+						<div id="mon_scroll" class="scrollDiv">
+							<ul>
+								<li>jquery 滚动条 Scrollbar 设置浏览器默认滚动条样式</li>
+								<li>jquery 图片切换 switchable 带左右按钮控制分页索引图片切换</li>
+								<li>jquery powerFloat万能浮动框提示插件 支持图片、文字、ajax异步加载、表单验证等</li>
+								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
+								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
+								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
+								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
+								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
+								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
+								<li>1111111111111111111</li>
+								<li>2222222222222</li>
+								<li>3333333333333333</li>
+								<li>1111111111111111111</li>
+								<li>2222222222222</li>
+								<li>3333333333333333</li>
+								<li>4444</li>
+							</ul>
+						</div>
+						<div class="dos_list">
+							<ul>
+								<li>开始时间</li>
+								<li>耗时</li>
+								<li>Tag</li>
+								<li>镜像</li>
+								<li>产品\工程</li>
+								<li>状态</li>
+							</ul>
+
+							<ul>
+								<li>2016-02-30</li>
+								<li>366s</li>
+								<li>Tag</li>
+								<li>镜像</li>
+								<li>产品\工程</li>
+								<li>状态</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -154,6 +226,17 @@ String ContextPath = request.getContextPath();
 					<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
+
+
+
+			<a id="a_zd_build_{{= row.def.id}}" href="###" class="table-link" title="中段">               
+				<span class="fa-stack"> 
+					<i class="fa fa-square fa-stack-2x"></i>
+					<i class="fa  fa-stack-1x fa-inverse"><font size="-2">中断</font></i>
+				</span>
+			</a>
+
+
 		</td>
 	</tr>
 {{/each}}

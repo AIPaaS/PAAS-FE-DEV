@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.mvc;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.aic.paas.wdev.bean.CPcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
+import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildPeer;
+import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.peer.PcDataCenterPeer;
 import com.aic.paas.wdev.peer.PcResCenterPeer;
 import com.binary.framework.util.ControllerUtils;
@@ -28,6 +32,9 @@ public class PcBuildMvc {
 	
 	@Autowired
 	PcResCenterPeer pcResCenterPeer;
+	
+	@Autowired
+	PcBuildTaskPeer buildTaskPeer;
 	
 	
 	@RequestMapping("/queryDefInfoPage")
@@ -52,7 +59,16 @@ public class PcBuildMvc {
 	
 	@RequestMapping("/removeDefById")
 	public void  removeDefById(HttpServletRequest request,HttpServletResponse response, Long id){
-		int c = buildPeer.removeDefById(id);
+		
+		
+		Integer[] statuss = {2,3};  // 1=就绪    2=构建运行中   3=构建中断中     4=成功   5=失败
+		List<PcBuildTask> taskList = buildTaskPeer.selectTaskListByStatueId(id, statuss);
+		
+		int c = -1; //构建运行中 ,构建中断中 标注
+		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中   3=构建中断中 ）
+			 c = buildPeer.removeDefById(id);
+		}
+
 		ControllerUtils.returnJson(request, response, c);
 	}
 	

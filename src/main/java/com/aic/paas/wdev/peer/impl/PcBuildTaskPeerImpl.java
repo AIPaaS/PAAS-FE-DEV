@@ -42,4 +42,12 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		return buildTaskSvc.queryPcBuildTaskListForPage(pageNum, pageSize, cdt, orders);
 	}
 
+	@Override
+	public List<PcBuildTask> selectTaskListByStatueId(Long buildDefId, Integer[] statuss) {
+		BinaryUtils.checkEmpty(buildDefId, "buildDefId");
+		BinaryUtils.checkEmpty(statuss, "statuss");
+		List<PcBuildTask> list =buildTaskSvc.selectTaskListByStatueId(buildDefId,statuss);
+		return list;
+	}
+
 }
