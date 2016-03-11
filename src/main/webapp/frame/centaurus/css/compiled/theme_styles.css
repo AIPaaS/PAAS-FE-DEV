@@ -2166,3 +2166,6 @@ html,body{font-family:"Open Sans",sans-serif;-webkit-font-smoothing:antialiased;
     background-color: #1abc9c;
   }
 }
+/*20160311 jia add*/
+.form-group{line-height:36px;margin-top:10px;}
+.filter-block .btn{margin-top:18px;}
