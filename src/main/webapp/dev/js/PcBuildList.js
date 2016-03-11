@@ -86,12 +86,14 @@ function query(pageNum){
 		    });
 			$('#buildTable-tmpl').tmpl(r).appendTo("#buildTable");
 			for(var i=0; i<data.length; i++) {
-				console.log(data[i]);
-				console.log(CurrDataMap);
+				
+				//console.log(data[i]);
+				//console.log(CurrDataMap);
 				$("#a_build_task_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					queryBuildTaskRecord(obj);
 				});
+				
 				$("#a_remove_build_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					removeBuildDef(obj.def.id);
@@ -99,7 +101,7 @@ function query(pageNum){
 				
 				$("#a_zd_build_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
-					PcBuild_ZD(obj.def.id);//给绑定事件
+					PcBuild_ZD(obj.def.id);
 				});
 				
 			}
@@ -107,7 +109,9 @@ function query(pageNum){
 	}});
 	
 }
+
 function removeBuildDef(id){
+	alert("removeBuildDef :"+id)
 	var obj = CurrDataMap["key_"+id];
 	CC.showMsg({msg:"您确定要删除构建任务[<font color='blue'>"+obj.def.buildName+"</font>]吗?",option:2,callback:function(r) {
 		if(r != "ok") return ;
@@ -135,10 +139,20 @@ function queryBuildTaskRecord(obj){
 
 function PcBuild_ZD(id){//构建中止
 	alert("PcBuild_ZD :"+id)
-	//ajax
-	query(ParamPageNum);
+	var bId = 123456;
+	RS.ajax({url:"/dev/buildtask/updateBuildTaskStatusByBackId",ps:{backBuildId:bId},cb:function(data) {
+			if(data!=null && data!=undefined && data=="0"){
+				alert("Code:="+data+"中止失败！");
+				return false;
+			}else{
+				alert("Code:="+data+"中止成功！");
+				query(ParamPageNum);
+			}
+		},errcb:function(errorCode, errorMsg) {
+			alert(errorCode+" : "+errorMsg)
+		}
+		});
 }
-
 
 
 

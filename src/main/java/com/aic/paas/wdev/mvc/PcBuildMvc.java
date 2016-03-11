@@ -59,18 +59,16 @@ public class PcBuildMvc {
 	
 	@RequestMapping("/removeDefById")
 	public void  removeDefById(HttpServletRequest request,HttpServletResponse response, Long id){
-		
-		
-		Integer[] statuss = {2,3};  // 1=就绪    2=构建运行中   3=构建中断中     4=成功   5=失败
+		Integer[] statuss = {2};  // {2,3} 1=就绪    2=构建运行中   3=构建已中断     4=成功   5=失败
 		List<PcBuildTask> taskList = buildTaskPeer.selectTaskListByStatueId(id, statuss);
 		
 		int c = -1; //构建运行中 ,构建中断中 标注
-		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中   3=构建中断中 ）
+		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中   3=构建已中断 ）
 			 c = buildPeer.removeDefById(id);
 		}
-
 		ControllerUtils.returnJson(request, response, c);
 	}
+	
 	@RequestMapping("/checkBuildFullName")
 	public void  checkBuildFullName(HttpServletRequest request,HttpServletResponse response, Long id,String buildName){
 		PcBuildDef record = new PcBuildDef();
