@@ -2167,5 +2167,10 @@ html,body{font-family:"Open Sans",sans-serif;-webkit-font-smoothing:antialiased;
   }
 }
 /*20160311 jia add*/
-.form-group{line-height:36px;margin-top:10px;}
-.filter-block .btn{margin-top:18px;}
+.filter-block .form-group{line-height:36px;margin-top:10px;}
+.filter-block .btn{margin-top:10px;}
+.main-box .main-box-header{padding:0px;min-height:0px;}
+#buildName{width:82%;float:right}
+.set_num{clear:both;overflow:hidden;}
+.num_tit{float:left;height:34px;line-height:34px;}
+

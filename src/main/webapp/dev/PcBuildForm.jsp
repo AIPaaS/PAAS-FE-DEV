@@ -26,7 +26,7 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="productId" class="col-lg-2 control-label">所属产品<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<select id="productId" name="productId" class="form-control">
+						<select id="productId" name="productId" class="form-control" required>
 						</select>
 					</div>
 					<div class="col-lg-5">
@@ -36,7 +36,7 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="projectId" class="col-lg-2 control-label">所属工程<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<select id="projectId" name="projectId" class="form-control">
+						<select id="projectId" name="projectId" class="form-control" required>
 						</select>
 					</div>
 					<div class="col-lg-5">
@@ -47,9 +47,10 @@ String ContextPath = request.getContextPath();
 			<div class="form-group">
 				<label for="buildName" class="col-lg-2 control-label">构建名<font color="red">*</font>:</label>
 				<div class="col-lg-5">
+					<div class="num_tit">12313123/12313213/12313</div>
 					<input type="text" name="buildName" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,20}" placeholder="必填">
 				</div>
-				<div class="col-lg-5">
+				<div class="col-lg-5 set_num">
 					<span>1-20位字母、数字、下划线或斜线的组合</span>
 				</div>
 			</div>
@@ -152,7 +153,7 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="depTag" class="col-lg-2 control-label">tag标记<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,60}" placeholder="格式为X.X.X 且X为0~9的数字">
+						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字">
 					</div>
 					<div class="col-lg-5">
 						<span>1-40位</span>
