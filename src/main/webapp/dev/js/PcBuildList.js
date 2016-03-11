@@ -118,13 +118,17 @@ function removeBuildDef(id){
 	}});
 }
 
-
+function queryBuildTaskRecord(){
+	
+}
 
 function PcBuild_ZD(id){//构建中止
 	alert("PcBuild_ZD :"+id)
 	//ajax
 	query(ParamPageNum);
 }
+
+
 
 
 

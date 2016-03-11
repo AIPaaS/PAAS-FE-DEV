@@ -1,0 +1,19 @@
+.diag_dos{width:80%;height:532px;position:absolute;left:50%;top:50%;margin-left:-40%;margin-top:-266px;color:#fff;font-size:14px;text-align:center;line-height:24px;background:#fff;font-weight:bold;border-radius:3px;-moz-box-shadow:1px 2px 24px #000;-webkit-box-shadow:1px 2px 24px #000;box-shadow:1px 2px 24px #000;}
+
+.diag_left{width:183px;float:left;background:#f2f3f7;height:532px;}
+.diag_left ul{padding:18px 26px;}
+.diag_left ul li{text-align:right;font-size:14px;color:#333;font-weight:normal;padding-top:12px;padding-bottom:10px;position:relative;padding-left:0px;}
+.diag_left li.active{color:#1abd9e;}
+.diag_left li.active:before{background:#1abd9e;}
+.diag_left ul li:before{position:absolute;content:"";width:4px;height:4px;background:#333;display:block;top:20px;left:-1px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;}
+.diag_left ul li:after{content:"";height:20px;width:1px;background:#e5e5e5;padding-top:20px;position:absolute;left:0px;top:25px;}
+.diag_left ul li:last-child:after{height:0px;padding-top:0px;}
+
+
+
+.diag_right{margin-left:190px;}
+.dos_list ul li{width:148px;float:left;font-size:12px;color:#333;font-weight:normal;}
+.dos_list ul:nth-child(1) li{color:#a8a8a8;}
+.scrollDiv{height:442px;background:#000;line-height:25px;overflow:auto;width:98%;margin:10px auto;}
+.scrollDiv li{height:25px;padding-left:30px;color:#fff;text-align:left;font-weight:normal;color:#5aa660;}
+
