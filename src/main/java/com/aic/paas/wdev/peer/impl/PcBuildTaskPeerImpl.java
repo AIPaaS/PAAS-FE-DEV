@@ -1,9 +1,12 @@
 package com.aic.paas.wdev.peer.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
+import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.rest.PcBuildTaskSvc;
@@ -31,6 +34,12 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		}
 			
 		return buildTaskSvc.saveOrUpdateBuildTask(record);
+	}
+
+	@Override
+	public List<PcBuildTask> queryBuildTaskList(Integer pageNum, Integer pageSize, CPcBuildTask cdt, String orders) {
+		BinaryUtils.checkEmpty(cdt.getBuildDefId(), "buildDefId");
+		return buildTaskSvc.queryPcBuildTaskListForPage(pageNum, pageSize, cdt, orders);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.mvc;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,16 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.aic.paas.wdev.bean.CPcBuildDef;
-import com.aic.paas.wdev.bean.PcBuildDef;
-import com.aic.paas.wdev.bean.PcBuildDefInfo;
+import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
-import com.aic.paas.wdev.peer.PcBuildPeer;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
-import com.aic.paas.wdev.peer.PcDataCenterPeer;
-import com.aic.paas.wdev.peer.PcResCenterPeer;
 import com.binary.framework.util.ControllerUtils;
-import com.binary.jdbc.Page;
 
 @Controller
 @RequestMapping("/dev/buildtask")
@@ -33,6 +29,13 @@ public class PcBuildTaskMvc {
 		Long id = buildTaskPeer.saveOrUpdateBuildTask(pbt);
 		ControllerUtils.returnJson(request, response, id);
 	}
+	
+	@RequestMapping("/queryBuildTaskInfoList")
+	public void queryBuildTaskInfoList(HttpServletRequest request, HttpServletResponse response,Integer pageNum,Integer pageSize,CPcBuildTask cdt,String orders){
+		List<PcBuildTask> buildTasks = buildTaskPeer.queryBuildTaskList(pageNum, pageSize, cdt, orders);
+		ControllerUtils.returnJson(request, response, buildTasks);
+	}
+	
 	
 
 	

@@ -1,5 +1,8 @@
 package com.aic.paas.wdev.rest;
 
+import java.util.List;
+
+import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 
 public interface PcBuildTaskSvc {
@@ -12,4 +15,14 @@ public interface PcBuildTaskSvc {
 	 */
 	public Long saveOrUpdateBuildTask(PcBuildTask record);
 	
+	/**
+	 * 查询历史构建记录 只查询最近的10个
+	 * @param pageNum
+	 * @param pageSize
+	 * @param cdt
+	 * @param orders
+	 * @return
+	 */
+	public List<PcBuildTask> queryPcBuildTaskListForPage(Integer pageNum,Integer pageSize,CPcBuildTask cdt,String orders);
+
 }
