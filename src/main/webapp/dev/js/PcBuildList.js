@@ -86,6 +86,12 @@ function query(pageNum){
 		    });
 			$('#buildTable-tmpl').tmpl(r).appendTo("#buildTable");
 			for(var i=0; i<data.length; i++) {
+				console.log(data[i]);
+				console.log(CurrDataMap);
+				$("#a_build_task_"+data[i].def.id).bind("click",function(){
+					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
+					queryBuildTaskRecord(obj);
+				});
 				$("#a_remove_build_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					removeBuildDef(obj.def.id);
@@ -118,8 +124,13 @@ function removeBuildDef(id){
 	}});
 }
 
-function queryBuildTaskRecord(){
-	
+function queryBuildTaskRecord(obj){
+	var buildDefId=obj.def.id;
+	var ps={buildDefId:buildDefId};
+	$("#buildTask_modal").modal("show");
+	/*RS.ajax({url:"/dev/buildtask/queryBuildTaskInfoList",ps:ps, cb:function(data){
+		
+	}});*/
 }
 
 function PcBuild_ZD(id){//构建中止
