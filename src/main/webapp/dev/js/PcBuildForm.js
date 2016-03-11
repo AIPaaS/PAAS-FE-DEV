@@ -289,6 +289,17 @@ function submitForm(){
 		window.location = url;
 	}});
 }
-
+function checkBuildFullName(){
+	var bean = PU.getFormData("form_buildDef");
+	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
+	RS.ajax({url:"/dev/build/checkBuildFullName",ps:bean,cb:function(rs) {
+		var id=rs;
+		if(id==0){
+			alert("构建名不能重复！");
+		}else{
+			alert("ok!");
+		}
+	}});
+}
 
 
