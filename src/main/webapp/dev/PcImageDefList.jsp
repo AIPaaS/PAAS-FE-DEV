@@ -98,12 +98,12 @@ String ContextPath = request.getContextPath();
 	</div>
 </div>
 
-
-
+<!-- jia 【镜像定义】屏蔽镜像链接修改功能 backup -->
+<!-- <td class="text-left"><a href="<%=ContextPath%>/dispatch/mc/1030801?id={{= row.def.id}}&pageNum={{= pageNum}}">{{= row.def.imageFullName}}</a></td> -->
 <script id="imageTable-tmpl" type="text/x-jquery-tmpl">
 	{{each(i,row) data}}
 		<tr>
-			<td class="text-left"><a href="<%=ContextPath%>/dispatch/mc/1030801?id={{= row.def.id}}&pageNum={{= pageNum}}">{{= row.def.imageFullName}}</a></td>
+			<td class="text-left">{{= row.def.imageFullName}}</td>
 			<td class="text-center">
 				{{if !CU.isEmpty(row.product)}}
 					{{= row.product.name}}
