@@ -11,4 +11,5 @@ public interface PcBuildTaskSvc {
 	 * @return 当前记录主键[id]值
 	 */
 	public Long saveOrUpdateBuildTask(PcBuildTask record);
+	
 }

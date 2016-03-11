@@ -19,6 +19,7 @@
    	<bean class="com.aic.paas.wdev.peer.impl.PcProductPeerImpl" />
    	<bean class="com.aic.paas.wdev.peer.impl.PcProjectPeerImpl" />
    	<bean class="com.aic.paas.wdev.peer.impl.PcBuildPeerImpl" />
+   	<bean class="com.aic.paas.wdev.peer.impl.PcBuildTaskPeerImpl" />
    	<bean class="com.aic.paas.wdev.peer.impl.PcImagePeerImpl" />
     
     
