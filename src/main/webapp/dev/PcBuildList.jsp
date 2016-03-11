@@ -117,7 +117,7 @@ String ContextPath = request.getContextPath();
 		<td class="text-center">{{html PU.getDropValue("V_PC_BUILD_DEF_IS_BUILD_IMAGE",row.def.isBuildImage,true)}}</td>
 		<td class="text-left">
 			{{if !CU.isEmpty(row.imageDef)}}
-				{{= row.imageDef.dirName}}/{{= row.imageDef.imageName}}
+				{{= row.imageDef.imageFullName}}
 			{{/if}}
 		</td>
 		<td class="text-center">
