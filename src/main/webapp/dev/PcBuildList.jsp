@@ -98,7 +98,7 @@ String ContextPath = request.getContextPath();
 	</div>
 </div>
 
-<div class="modal fade" id="div_appResUse" tabindex="-1" role="dialog"
+<div class="modal fade" id="buildTask_modal" tabindex="-1" role="dialog"
 	aria-hidden="true">
 	<div class="modal-dialog" style="width: 900px;">
 		<div class="modal-content">
@@ -214,7 +214,7 @@ String ContextPath = request.getContextPath();
 					<i class="fa fa-cog fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
-			<a href="###" class="table-link" title="历史任务">
+			<a id="a_build_task_{{= row.def.id}}" href="###" class="table-link" title="历史任务">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>
 					<i class="fa fa-history fa-stack-1x fa-inverse"></i>
