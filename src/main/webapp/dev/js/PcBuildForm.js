@@ -239,32 +239,21 @@ function queryInfo(){
 		}
 		$("#respUser").val(rs.def.respUser);
 		$("#respPwd").val(rs.def.respPwd);
-//		$("#buildCmd").val(rs.def.buildCmd);
-//		var isSupportHook = rs.def.isSupportHook;
-//		if(isSupportHook) $("#isSupportHook").prop("checked",true);
-//		var isBuildImage = rs.def.isBuildImage;
-//		if(isBuildImage){
-//			$("#isBuildImage").prop("checked",true);
-			reloadDefDropList(isExternal,rs.def.projectId,function(){
-				$("#imageDefId").val(rs.def.imageDefId);
-			});
-			
-			$("#dockerFilePath").val(rs.def.dockerFilePath);
-//			var isAutoPush1 = rs.def.isAutoPush1;
-//			if(isAutoPush1){
-//				$("#isAutoPush1").prop("checked",true);
-//				var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", rs.def.resCenterId);
-//				$("#forcenter").val(item.attributes.resName);
-//				SelResCenterId = rs.def.resCenterId;
-//				$("#div_isAutoPush1_yes").show();
-//			}else{
-//				$("#div_isAutoPush1_yes").hide();
-//			}
-//			$("#div_isBuildImage_yes").show();
-//		}else{
-//			$("#isBuildImage").prop("checked",false);
-//			$("#div_isBuildImage_yes").hide();
-//		}
+		reloadDefDropList(isExternal,rs.def.projectId,function(){
+			$("#imageDefId").val(rs.def.imageDefId);
+		});
+		$("#dockerFilePath").val(rs.def.dockerFilePath);
+		
+		$("#respBranch").val(rs.def.respBranch);
+		$("#depTag").val(rs.def.depTag);
+		var openEmail = rs.def.openEmail;
+		if(openEmail){
+			$("#openEmail").prop("checked",true);
+		}
+		var openCache = rs.def.openCache;
+		if(openCache){
+			$("#openCache").prop("checked",true);
+		}
 	}});
 }
 
