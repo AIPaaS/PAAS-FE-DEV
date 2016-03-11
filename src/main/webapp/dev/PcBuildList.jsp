@@ -154,6 +154,15 @@ String ContextPath = request.getContextPath();
 					<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
+
+
+
+			<a id="a_zd_build_{{= row.def.id}}" href="###" class="table-link" title="中段">               
+				<span class="fa-stack"> 
+					<i class="fa fa-square fa-stack-2x"></i>
+					<i class="fa  fa-stack-1x fa-inverse"><font size="-2">中断</font></i>
+				</span>
+			</a>
 		</td>
 	</tr>
 {{/each}}

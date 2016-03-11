@@ -90,6 +90,12 @@ function query(pageNum){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					removeBuildDef(obj.def.id);
 				});
+				
+				$("#a_zd_build_"+data[i].def.id).bind("click",function(){
+					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
+					PcBuild_ZD(obj.def.id);//给绑定事件
+				});
+				
 			}
 		}
 	}});
@@ -99,15 +105,25 @@ function removeBuildDef(id){
 	var obj = CurrDataMap["key_"+id];
 	CC.showMsg({msg:"您确定要删除构建任务[<font color='blue'>"+obj.def.buildName+"</font>]吗?",option:2,callback:function(r) {
 		if(r != "ok") return ;
-		RS.ajax({url:"/dev/build/removeDefById",ps:{id:id},cb:function() {
-			query(ParamPageNum);
+		RS.ajax({url:"/dev/build/removeDefById",ps:{id:id},cb:function(data) {
+			if(data!=null && data!=undefined && data=="-1"){
+				alert("Code:="+data+"  操作进行中，拒绝删除！");
+				return false;
+			}else{
+				alert("Code:="+data+"  删除成功");
+				query(ParamPageNum);
+			}
+
 		}});
 	}});
 }
 
 
 
-
+function PcBuild_ZD(id){//构建中止
+	alert("PcBuild_ZD :"+id)
+	query(ParamPageNum);
+}
 
 
 
