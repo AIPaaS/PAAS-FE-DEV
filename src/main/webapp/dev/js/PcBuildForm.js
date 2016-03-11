@@ -247,12 +247,10 @@ function queryInfo(){
 		$("#respBranch").val(rs.def.respBranch);
 		$("#depTag").val(rs.def.depTag);
 		var openEmail = rs.def.openEmail;
-		alert("openEmail=="+openEmail);
 		if(openEmail){
 			$("#openEmail").prop("checked",true);
 		}
 		var openCache = rs.def.openCache;
-		alert("openCache=="+openCache);
 		if(openCache){
 			$("#openCache").prop("checked",true);
 		}
