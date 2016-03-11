@@ -74,6 +74,15 @@ String ContextPath = request.getContextPath();
 					</div>
 				</div>
 				<div class="form-group">
+					<label for="respBranch" class="col-lg-2 control-label">分支<font color="red">*</font>:</label>
+					<div class="col-lg-5">
+						<input type="text" name="respBranch" class="form-control" required id="respBranch" pattern=".{1,60}" placeholder="必填">
+					</div>
+					<div class="col-lg-5">
+						<span>1-60位</span>
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="respUser" class="col-lg-2 control-label">账号<font color="red">*</font>:</label>
 					<div class="col-lg-5">
 						<input type="text" name="respUser" class="form-control" required id="respUser" pattern=".{1,40}" placeholder="必填">
@@ -139,6 +148,37 @@ String ContextPath = request.getContextPath();
 						<span></span>
 					</div>
 				</div>
+				<div class="form-group">
+					<label for="depTag" class="col-lg-2 control-label">tag标记<font color="red">*</font>:</label>
+					<div class="col-lg-5">
+						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,60}" placeholder="格式为X.X.X 且X为0~9的数字">
+					</div>
+					<div class="col-lg-5">
+						<span>1-40位</span>
+					</div>
+				</div>
+				<div class="form-group"> 
+					<label for="openEmail" class="col-lg-2 control-label"><input type="checkbox" name="openEmail" id="openEmail"></label>
+					<div class="col-lg-5">
+						<span>是否增加构建邮件通知 </span>
+					</div>
+					<div class="col-lg-5">
+						<span></span>
+					</div>
+				</div>
+				<div class="form-group"> 
+					<label for="openCache" class="col-lg-2 control-label"><input type="checkbox" name="openCache" id="openCache"></label>
+					<div class="col-lg-5">
+						<span>是否开启构建缓存 </span>
+					</div>
+					<div class="col-lg-5">
+						<span></span>
+					</div>
+				</div>
+				
+				
+				
+				
 <!-- 				<div class="form-group"> -->
 <!-- 					<label for="isAutoPush1" class="col-lg-2 control-label"><input type="checkbox" name="isAutoPush1" id="isAutoPush1"></label> -->
 <!-- 					<div class="col-lg-5"> -->
