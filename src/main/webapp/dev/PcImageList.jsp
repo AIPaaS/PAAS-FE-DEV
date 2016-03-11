@@ -99,8 +99,13 @@ String ContextPath = request.getContextPath();
 	</div>
 </div>
 
-
-
+<!-- jia【镜像管理】导出功能屏蔽掉 backup -->
+<!-- <a href="###" class="table-link" title="导出">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-share-square-o fa-stack-1x fa-inverse"></i>
+					</span>
+</a> -->
 <script id="imageTable-tmpl" type="text/x-jquery-tmpl">
 	{{each(i,row) data}}
 		<tr>
@@ -133,12 +138,12 @@ String ContextPath = request.getContextPath();
 						<i class="fa fa-upload fa-stack-1x fa-inverse"></i>
 					</span>
 				</a>
-				<a href="###" class="table-link" title="导出">
+				<!--<a href="###" class="table-link" title="导出">
 					<span class="fa-stack">
 						<i class="fa fa-square fa-stack-2x"></i>
 						<i class="fa fa-share-square-o fa-stack-1x fa-inverse"></i>
 					</span>
-				</a>
+				</a>-->
 				<a href="<%=ContextPath%>/dispatch/mc/1030601?defId={{= row.def.id}}&pageNum={{= pageNum}}" class="table-link" title="查看历史版本">
 					<span class="fa-stack">
 						<i class="fa fa-square fa-stack-2x"></i>
