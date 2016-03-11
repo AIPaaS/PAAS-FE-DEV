@@ -71,6 +71,13 @@ public class PcBuildMvc {
 
 		ControllerUtils.returnJson(request, response, c);
 	}
-	
+	@RequestMapping("/checkBuildFullName")
+	public void  checkBuildFullName(HttpServletRequest request,HttpServletResponse response, Long id,String buildName){
+		PcBuildDef record = new PcBuildDef();
+		record.setId(id);
+		record.setBuildName(buildName);
+		int id2 = buildPeer.checkBuildFullName(record);
+		ControllerUtils.returnJson(request, response, id2);
+	}
 	
 }

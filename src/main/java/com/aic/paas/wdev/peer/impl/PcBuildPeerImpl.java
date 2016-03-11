@@ -135,6 +135,16 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		if(def == null) return 0;
 		return buildSvc.removeDefById(id);
 	}
+
+
+
+
+	@Override
+	public int checkBuildFullName(PcBuildDef record) {
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		record.setMntId(user.getMerchent().getId());
+		return buildSvc.checkBuildFullName(record);
+	}
 	
 	
 	

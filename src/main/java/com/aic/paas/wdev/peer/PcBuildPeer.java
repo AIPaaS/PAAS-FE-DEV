@@ -64,5 +64,11 @@ public interface PcBuildPeer {
 	 * @return
 	 */
 	public int removeDefById(Long id);
+	/**
+	 * 校验构建名是否已存在
+	 * @param record
+	 * @return
+	 */
+	public int checkBuildFullName(PcBuildDef record);
 
 }

@@ -289,10 +289,16 @@ function submitForm(){
 		window.location = url;
 	}});
 }
+/**
+ *校验构建名是否重复
+ */
 function checkBuildFullName(){
-	var bean = PU.getFormData("form_buildDef");
-	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
-	RS.ajax({url:"/dev/build/checkBuildFullName",ps:bean,cb:function(rs) {
+	var buildName=$("#buildName").val();
+	var id="";
+	if(!CU.isEmpty(CurrentId)){
+		id= CurrentId;
+	} 
+	RS.ajax({url:"/dev/build/checkBuildFullName",ps:{id:id,buildName:buildName},cb:function(rs) {
 		var id=rs;
 		if(id==0){
 			alert("构建名不能重复！");
