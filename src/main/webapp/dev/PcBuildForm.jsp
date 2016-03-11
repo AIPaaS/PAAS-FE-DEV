@@ -13,16 +13,7 @@ String ContextPath = request.getContextPath();
 	<header class="main-box-header clearfix"> </header>
 	<div class="main-box-body clearfix">
 		<form class="form-horizontal" role="form" id="form_buildDef">
-			<div class="form-group">
-				<label for="buildName" class="col-lg-2 control-label">构建名<font color="red">*</font>:</label>
-				<div class="col-lg-5">
-					<input type="text" name="buildName" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,20}" placeholder="必填">
-				</div>
-				<div class="col-lg-5">
-					<span>1-20位字母、数字、下划线或斜线的组合</span>
-				</div>
-			</div>
-			<div class="form-group">
+		<div class="form-group">
 				<label for="isExternal" class="col-lg-2 control-label">是否外部工程:</label>
 				<div class="col-lg-1">
 					<input type="checkbox" name="isExternal" id="isExternal">
@@ -53,6 +44,16 @@ String ContextPath = request.getContextPath();
 					</div>
 				</div>
 			</div>
+			<div class="form-group">
+				<label for="buildName" class="col-lg-2 control-label">构建名<font color="red">*</font>:</label>
+				<div class="col-lg-5">
+					<input type="text" name="buildName" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,20}" placeholder="必填">
+				</div>
+				<div class="col-lg-5">
+					<span>1-20位字母、数字、下划线或斜线的组合</span>
+				</div>
+			</div>
+			
 			<div id="div_isExternal_yes">
 				<div class="form-group">
 					<label class="col-lg-2 control-label">代码库类型:</label>

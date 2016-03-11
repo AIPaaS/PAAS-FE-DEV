@@ -85,6 +85,10 @@ function initListener() {
 	});
 	$("#productId").bind("change",function(){
 		var productId = $("#productId").val();
+		var item = CU.getDropItemRecord("DV_PRODUCT_CODE", productId);
+		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)) {
+			$("#buildName").val(item.attributes.code);
+		}
 		reloadProjectDropList(productId);
 	});
 	$("#projectId").bind("change", resetBuildFace);
@@ -188,6 +192,7 @@ function resetBuildFace(){
 			$("#respType1").prop("checked", item.attributes.respCodeType==1);
 			$("#respType2").prop("checked", item.attributes.respCodeType==2);
 			$("#respUrl").val(item.attributes.respCodeUrl);
+			$("#buildName").val($("#buildName").val()+"/"+item.attributes.code+"/");
 		}
 	}
 	reloadDefDropList(isExternal, projectId);
@@ -271,22 +276,9 @@ function submitForm(){
 		if(CU.isEmpty(productId)){CC.showMsg({msg:"所属产品不能为空"}); return;}
 		if(CU.isEmpty(projectId)){CC.showMsg({msg:"所属工程不能为空"}); return;}
 	}
-//	if(bean.isBuildImage == 1){
 		if(CU.isEmpty(bean.imageDefId)){CC.showMsg({msg:"镜像定义不能为空"}); return;}
 		if(CU.isEmpty(bean.dockerFilePath)){CC.showMsg({msg:"DockerFilePath不能为空"}); return;}
-//	}else{
-//		delete bean.imageDefId;
-//		delete bean.dockerFilePath;
-//	}
-//	if(bean.isAutoPush1 == 1){
-//		if(CU.isEmpty(SelResCenterId)) {CC.showMsg({msg:"请选择资源中心"}); return;}
-//		
-//		bean.resCenterId = SelResCenterId;
-//		var item = CU.getDropItemRecord("DV_RES_CENTER_CODE", SelResCenterId);
-//		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)){
-//			bean.dataCenterId = item.attributes.dataCenterId;
-//		}
-//	}
+
 	
 	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
 	
