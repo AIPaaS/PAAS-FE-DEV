@@ -25,4 +25,15 @@ public interface PcBuildTaskPeer {
 	 * @return
 	 */
 	public List<PcBuildTask> queryBuildTaskList(Integer pageNum, Integer pageSize, CPcBuildTask cdt, String orders);
+	
+	
+	
+	/**
+	 * aic.tsd_hyh  2016.03.11
+	 * 根据状态 buildId 去查 数据状态为2，3的List
+	 * @param buildDefId
+	 * * @param statuss
+	 * @return
+	 */
+	public List<PcBuildTask> selectTaskListByStatueId(Long buildDefId , Integer[] statuss);
 }
