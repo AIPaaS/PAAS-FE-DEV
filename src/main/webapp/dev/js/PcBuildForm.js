@@ -87,11 +87,13 @@ function initListener() {
 		var productId = $("#productId").val();
 		var item = CU.getDropItemRecord("DV_PRODUCT_CODE", productId);
 		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)) {
-			$("#buildName").val(item.attributes.code);
+			$("#buildNameText").text("/"+item.attributes.code);
+			reloadProjectDropList(productId);
 		}
-		reloadProjectDropList(productId);
 	});
 	$("#projectId").bind("change", resetBuildFace);
+	//新添加构建名校验事件
+//	$("#buildName").bind("change", checkBuildFullName);
 	
 	$("#forcenter").bind("focus",function(){
 		var sul = $('#sel_forcenter');
@@ -192,7 +194,7 @@ function resetBuildFace(){
 			$("#respType1").prop("checked", item.attributes.respCodeType==1);
 			$("#respType2").prop("checked", item.attributes.respCodeType==2);
 			$("#respUrl").val(item.attributes.respCodeUrl);
-			$("#buildName").val($("#buildName").val()+"/"+item.attributes.code+"/");
+			$("#buildNameText").text("/"+$("#buildNameText").text().split("/")[1]+"/"+item.attributes.code+"/");
 		}
 	}
 	reloadDefDropList(isExternal, projectId);
@@ -213,7 +215,8 @@ function reloadDefDropList(isExternal, projectId, cb) {
 function queryInfo(){
 	RS.ajax({url:"/dev/build/queryDefInfoById",ps:{id:CurrentId},cb:function(rs) {
 		var isExternal = rs.def.isExternal;
-		$("#buildName").val(rs.def.buildName);
+		$("#buildNameText").text(rs.def.buildName.substr(0,rs.def.buildName.lastIndexOf("/")+1));
+		$("#buildName").val(rs.def.buildName.substr(rs.def.buildName.lastIndexOf("/")+1));
 		$("#imageName").val(rs.def.imageName);
 		if(isExternal){
 			setDisabled(true);
@@ -266,6 +269,7 @@ function queryInfo(){
 function submitForm(){
 	var bean = PU.getFormData("form_buildDef");
 	
+	bean.buildName=$("#buildNameText").text()+$("#buildName").val();
 	bean.respType = $("#respType1").prop("checked") ? 1 : 2;
 	if(bean.isExternal){
 		delete bean.productId;
@@ -293,7 +297,7 @@ function submitForm(){
  *校验构建名是否重复
  */
 function checkBuildFullName(){
-	var buildName=$("#buildName").val();
+	var buildName=$("#buildNameText").text()+$("#buildName").val();
 	var id="";
 	if(!CU.isEmpty(CurrentId)){
 		id= CurrentId;
@@ -301,9 +305,10 @@ function checkBuildFullName(){
 	RS.ajax({url:"/dev/build/checkBuildFullName",ps:{id:id,buildName:buildName},cb:function(rs) {
 		var id=rs;
 		if(id==0){
-			alert("构建名不能重复！");
+			CC.showMsg({msg:"此构建名已存在!"});
+			$("#buildName").val("");
 		}else{
-			alert("ok!");
+			CC.showMsg({msg:"此构建名ok!"});
 		}
 	}});
 }
