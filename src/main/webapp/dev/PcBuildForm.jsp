@@ -47,11 +47,11 @@ String ContextPath = request.getContextPath();
 			<div class="form-group">
 				<label for="buildName" class="col-lg-2 control-label">构建名<font color="red">*</font>:</label>
 				<div class="col-lg-5">
-					<div class="num_tit">12313123/12313213/12313</div>
-					<input type="text" name="buildName" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,20}" placeholder="必填">
+					<div id="buildNameText" class="num_tit"></div>
+					<input type="text" name="buildName" onblur="checkBuildFullName();" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,200}" placeholder="必填">
 				</div>
 				<div class="col-lg-5 set_num">
-					<span>1-20位字母、数字、下划线或斜线的组合</span>
+					<span>1-200位字母、数字、下划线或斜线的组合</span>
 				</div>
 			</div>
 			

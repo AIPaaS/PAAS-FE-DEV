@@ -87,6 +87,13 @@ function query(pageNum){
 			$('#buildTable-tmpl').tmpl(r).appendTo("#buildTable");
 			for(var i=0; i<data.length; i++) {
 				
+				//构建
+				$("#a_build_task_gj_"+data[i].def.id).bind("click",function(){
+					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
+					gj_BuildDef(obj.def.id);
+				});
+				
+				//历史
 				//console.log(data[i]);
 				//console.log(CurrDataMap);
 				$("#a_build_task_"+data[i].def.id).bind("click",function(){
@@ -94,11 +101,13 @@ function query(pageNum){
 					queryBuildTaskRecord(obj);
 				});
 				
+				//删除
 				$("#a_remove_build_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					removeBuildDef(obj.def.id);
 				});
 				
+				//中止
 				$("#a_zd_build_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					PcBuild_ZD(obj.def.id);
@@ -107,6 +116,20 @@ function query(pageNum){
 			}
 		}
 	}});
+	
+}
+
+
+function gj_BuildDef(id){
+	
+	alert("ajax");
+
+	
+	$(".td_build_task_"+id).css("height", "52px"); 
+	$("#a_build_task_gj_"+id).css("display", "none"); 
+	$("#a_zd_build_"+id).css("display", "block");
+	$("#td_build_task_msage_"+id).text("构建中");
+	
 	
 }
 
@@ -143,9 +166,11 @@ function PcBuild_ZD(id){//构建中止
 	RS.ajax({url:"/dev/buildtask/updateBuildTaskStatusByBackId",ps:{backBuildId:bId},cb:function(data) {
 			if(data!=null && data!=undefined && data=="0"){
 				alert("Code:="+data+"中止失败！");
+				$("#td_build_task_msage_"+id).text("中止失败！");
 				return false;
 			}else{
 				alert("Code:="+data+"中止成功！");
+				$("#td_build_task_msage_"+id).text("中止成功！");
 				query(ParamPageNum);
 			}
 		},errcb:function(errorCode, errorMsg) {
