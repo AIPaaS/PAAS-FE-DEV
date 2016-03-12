@@ -97,17 +97,12 @@ String ContextPath = request.getContextPath();
 		</div>
 	</div>
 </div>
-
 <div class="modal fade" id="buildTask_modal" tabindex="-1" role="dialog"
 	aria-hidden="true">
 	<div class="modal-dialog" style="width: 900px;">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="div_title"></h4>
-			</div>
 			<div class="modal-body">
+				<span class="close new_close" data-dismiss="modal" aria-hidden="true">&times</span>
 				<div class="diag_dos">
 					<div class="diag_left">
 						<ul>
@@ -126,6 +121,23 @@ String ContextPath = request.getContextPath();
 					<div class="diag_right">
 						<div id="mon_scroll" class="scrollDiv">
 							<ul>
+								<li>jquery 滚动条 Scrollbar 设置浏览器默认滚动条样式</li>
+								<li>jquery 图片切换 switchable 带左右按钮控制分页索引图片切换</li>
+								<li>jquery powerFloat万能浮动框提示插件 支持图片、文字、ajax异步加载、表单验证等</li>
+								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
+								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
+								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
+								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
+								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
+								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
+								<li>1111111111111111111</li>
+								<li>2222222222222</li>
+								<li>3333333333333333</li>
+								<li>1111111111111111111</li>
+								<li>2222222222222</li>
+								<li>3333333333333333</li>
+								<li>4444</li>
+								
 								<li>jquery 滚动条 Scrollbar 设置浏览器默认滚动条样式</li>
 								<li>jquery 图片切换 switchable 带左右按钮控制分页索引图片切换</li>
 								<li>jquery powerFloat万能浮动框提示插件 支持图片、文字、ajax异步加载、表单验证等</li>
