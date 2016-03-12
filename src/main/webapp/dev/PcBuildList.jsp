@@ -202,18 +202,19 @@ String ContextPath = request.getContextPath();
 				{{= row.lastBuildTask.codeVersion}}
 			{{/if}}
 		</td>
-		<td class="text-center">
+		<td class="text-center" id="td_build_task_msage_{{= row.def.id}}">
 			{{if !CU.isEmpty(row.lastBuildTask)}}
 				{{= PU.getDropValue("V_PC_BUILD_TASK_STATUS",row.lastBuildTask.status,false)}}
 			{{/if}}
 		</td>
 		<td class="text-center">
-			<a href="###" class="table-link" title="构建">
+			<a id="a_build_task_gj_{{= row.def.id}}" href="###" class="table-link" title="构建">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>
 					<i class="fa fa-cog fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
+
 			<a id="a_build_task_{{= row.def.id}}" href="###" class="table-link" title="历史任务">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>
@@ -229,7 +230,7 @@ String ContextPath = request.getContextPath();
 
 
 
-			<a id="a_zd_build_{{= row.def.id}}" href="###" class="table-link" title="中段">               
+			<a id="a_zd_build_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">               
 				<span class="fa-stack"> 
 					<i class="fa fa-square fa-stack-2x"></i>
 					<i class="fa  fa-stack-1x fa-inverse"><font size="-2">中断</font></i>
