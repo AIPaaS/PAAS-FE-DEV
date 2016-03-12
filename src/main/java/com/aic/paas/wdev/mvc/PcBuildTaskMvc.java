@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.aic.paas.comm.util.SystemUtil;
+import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
@@ -39,7 +41,12 @@ public class PcBuildTaskMvc {
 	}
 	
 	@RequestMapping("/updateBuildTaskStatusByBackId")
-	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response, Long backBuildId){
+	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response, Long backBuildId, String alls){
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		String namespace = user.getMerchent().getMntCode();
+		String back_build_id = backBuildId.toString();
+		String repo_name = alls; //产品code/工程code/构建名
+		
 		 PcBuildTask record =new PcBuildTask();//更新的映射对象
 		 record.setStatus(3);// 3=构建已中断
 		 Long timeL =BinaryUtils.getNumberDateTime();

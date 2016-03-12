@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.aic.paas.comm.util.SystemUtil;
+import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
 import com.aic.paas.wdev.bean.CPcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
@@ -58,7 +60,14 @@ public class PcBuildMvc {
 
 	
 	@RequestMapping("/removeDefById")
-	public void  removeDefById(HttpServletRequest request,HttpServletResponse response, Long id){
+	public void  removeDefById(HttpServletRequest request,HttpServletResponse response, Long id, String alls){
+	
+		System.out.println(id+"|"+alls);
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		String build_id = id.toString();
+		String namespace = user.getMerchent().getMntCode();
+		String repo_name = alls; //产品code/工程code/构建名
+		
 		Integer[] statuss = {2};  // {2,3} 1=就绪    2=构建运行中   3=构建已中断     4=成功   5=失败
 		List<PcBuildTask> taskList = buildTaskPeer.selectTaskListByStatueId(id, statuss);
 		

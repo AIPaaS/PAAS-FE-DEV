@@ -187,7 +187,10 @@ String ContextPath = request.getContextPath();
 <script id="buildTable-tmpl" type="text/x-jquery-tmpl">
 {{each(i,row) data}}
 	<tr>
-		<td class="text-center"><a href="<%=ContextPath%>/dispatch/mc/1030501?id={{= row.def.id}}&pageNum={{= pageNum}}" class="table-link" title="编辑">{{= row.def.buildName}}</a></td>
+		<td class="text-center">
+			<a id="a_build_task_gjname_{{= row.def.id}}" href="<%=ContextPath%>/dispatch/mc/1030501?id={{= row.def.id}}&pageNum={{= pageNum}}" class="table-link" title="编辑">{{= row.def.buildName}}</a>
+		</td>
+
 		<td class="text-center">
 			{{if !CU.isEmpty(row.product) && row.def.isExternal!=1}}
 				{{= row.product.name}}
@@ -219,7 +222,17 @@ String ContextPath = request.getContextPath();
 				{{= PU.getDropValue("V_PC_BUILD_TASK_STATUS",row.lastBuildTask.status,false)}}
 			{{/if}}
 		</td>
+
 		<td class="text-center">
+         <input type="hidden" id="thisBackBuildId_{{= row.def.id}}" />
+
+			<a id="a_build_task_zd_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">               
+				<span class="fa-stack"> 
+					<i class="fa fa-square fa-stack-2x"></i>
+					<i class="fa  fa-stack-1x fa-inverse"><font size="-3">中断</font></i>
+				</span>
+			</a>
+
 			<a id="a_build_task_gj_{{= row.def.id}}" href="###" class="table-link" title="构建">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>
@@ -239,16 +252,6 @@ String ContextPath = request.getContextPath();
 					<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
-
-
-
-			<a id="a_zd_build_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">               
-				<span class="fa-stack"> 
-					<i class="fa fa-square fa-stack-2x"></i>
-					<i class="fa  fa-stack-1x fa-inverse"><font size="-2">中断</font></i>
-				</span>
-			</a>
-
 
 		</td>
 	</tr>
