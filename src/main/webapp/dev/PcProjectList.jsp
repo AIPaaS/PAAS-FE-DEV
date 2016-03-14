@@ -17,20 +17,20 @@ String ContextPath = request.getContextPath();
 						&nbsp;&nbsp;&nbsp;所属产品:
 					</div>
 					<div class="form-group pull-left">
-						<select id="sel_productId" class="form-control" style="width:160px;">
+						<select id="sel_productId" class="form-control" style="width:120px;">
 						</select>
 					</div>
 					<div class="form-group pull-left">
 						工程代码:
 					</div>
 					<div class="form-group pull-left">
-						<input type="text" name="code" id="code" class="form-control">
+						<input type="text" name="code" id="code" class="form-control" style="width:120px;">
 					</div>
 					<div class="form-group pull-left">
 						工程名称:
 					</div>
 					<div class="form-group pull-left">
-						<input type="text" name="name" id="name" class="form-control">
+						<input type="text" name="name" id="name" class="form-control" style="width:120px;">
 					</div>
 				</div>
 				<button id="btn_query" class="btn btn-primary"><i class="fa fa-search fa-lg"></i> 查询</button>

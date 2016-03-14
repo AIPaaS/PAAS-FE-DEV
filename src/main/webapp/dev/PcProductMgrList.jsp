@@ -14,16 +14,26 @@ String ContextPath = request.getContextPath();
 			<div class="filter-block pull-left">
 				<div class="form-group pull-left">
 					<div class="form-group pull-left">
-						&nbsp;&nbsp;&nbsp;产品代码:
+						&nbsp;产品代码:
 					</div>
 					<div class="form-group pull-left">
-						<input type="text" name="code" id="code" class="form-control">
+						<input type="text" name="code" id="code" class="form-control" style="width:120px;">
 					</div>
 					<div class="form-group pull-left">
 						产品名称:
 					</div>
 					<div class="form-group pull-left">
-						<input type="text" name="name" id="name" class="form-control">
+						<input type="text" name="name" id="name" class="form-control" style="width:120px;">
+					</div>
+					<div class="form-group pull-left">
+						文档库类型:
+					</div>
+					<div class="form-group pull-left">
+						<select id="sel_respDocType" class="form-control" style="width:120px;">
+							<option value="">&nbsp;</option>
+							<option value="1">SVN</option>
+							<option value="2">GIT</option>
+						</select>
 					</div>
 				</div>
 				<button id="btn_query" class="btn btn-primary"><i class="fa fa-search fa-lg"></i> 查询</button>
