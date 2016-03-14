@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.peer.impl;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
 import com.aic.paas.wdev.peer.PcBuildPeer;
 import com.aic.paas.wdev.rest.PcBuildSvc;
+import com.aic.paas.wdev.util.HttpClientUtil;
 import com.aic.paas.wdev.util.HttpRequestUtil;
 import com.binary.core.util.BinaryUtils;
 import com.binary.jdbc.Page;
@@ -143,8 +146,20 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		if(def == null) return 0;
 		
 		String address = paasTaskUrl+"/dev/buildMvc/deleteBuild"; //"http://localhost:16009/paas-task/dev/buildMvc/deleteBuild";
+		//String s1[] = {namespace};
+		//String s2[] = {repo_name};
+		//String param = "namespace="+s1+"&repo_name="+s2;
+		//String result  = HttpRequestUtil.sendPost(address, param);
+		
 		String param = "namespace={"+namespace+"}&repo_name={"+repo_name+"}";
-		String result  = HttpRequestUtil.sendPost(address, param);
+		String result = null;
+		try {
+			result = HttpClientUtil.sendPostRequest(address, param);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 		
 		if(result!=null && "success".equals(result)){
 			return buildSvc.removeDefById(build_id);
