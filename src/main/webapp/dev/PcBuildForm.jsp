@@ -54,6 +54,8 @@ String ContextPath = request.getContextPath();
 				</div>
 				<div class="col-lg-5 set_num">
 					<span>1-200位字母、数字、下划线或斜线的组合</span>
+					<span class="error_tit">此构建名已存在!</span>
+					<span class="success_tit">此构建名ok!</span>
 				</div>
 			</div>
 			
@@ -155,10 +157,11 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="depTag" class="col-lg-2 control-label">tag标记<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<input type="text" name="depTag" class="form-control" required id="depTag" onkeyup="value=value.replace(/[^\d]/g,'')" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字">
+						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字">
 					</div>
 					<div class="col-lg-5">
-						<span>1-40位</span>
+						<span class="tag_tit">请输入格式为X.X.X 且X为0~9的数字</span>
+						<span class="tag_success">输入格式正确</span>
 					</div>
 				</div>
 				<div class="form-group"> 
@@ -216,3 +219,22 @@ String ContextPath = request.getContextPath();
 <div id="sel_forcenter" style="width:300px;position:absolute;display:none;"></div>
 
 <jsp:include page="/layout/jsp/footer.jsp"></jsp:include>
+<script type="text/javascript">
+	$(function(){
+		//tag标记
+		$("#depTag").keyup(
+			function(){
+				var code = $(this).val();
+		   		var tag_reg = /^\d{1}.\d{1}.\d{1}$/;
+		   		if(tag_reg.test(code)){
+		   			$(".tag_success").show();
+		   			$(".tag_tit").hide();
+		   		}else{
+		   			$(".tag_tit").show();
+		   			$(".tag_success").hide();
+		   			}
+				}
+			);
+		
+	})
+</script>
