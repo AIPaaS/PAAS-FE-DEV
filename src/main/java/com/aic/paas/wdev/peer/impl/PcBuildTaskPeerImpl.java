@@ -15,6 +15,7 @@ import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.rest.PcBuildTaskSvc;
 import com.aic.paas.wdev.util.HttpClientUtil;
+import com.aic.paas.wdev.util.HttpRequestUtil;
 import com.alibaba.dubbo.common.json.JSONObject;
 import com.binary.core.http.HttpClient;
 import com.binary.core.util.BinaryUtils;
@@ -22,6 +23,12 @@ import com.binary.json.JSON;
 
 public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	
+	private String paasTaskUrl;
+	public void setPaasTaskUrl(String paasTaskUrl) {
+		if(paasTaskUrl != null) {
+			this.paasTaskUrl = paasTaskUrl.trim();
+		}
+	}
 	
 	@Autowired
 	PcBuildTaskSvc buildTaskSvc;
@@ -61,6 +68,15 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	}
 
 	@Override
+	public String updatePcBuildTaskApi(String namespace, String back_build_id, String repo_name) {
+		//http://localhost:16009/paas-task/dev/buildTaskMvc/stopBuilding";
+		String address = paasTaskUrl+"/dev/buildTaskMvc/stopBuilding"; 
+		String param = "namespace="+namespace+"&build_id="+back_build_id+"&repo_name="+repo_name;	
+		String result  = HttpRequestUtil.sendPost(address, param);
+		return result;
+	}
+	
+	@Override
 	public BuildTaskRecord queryTaskRecord(JSONObject object) throws IOException, URISyntaxException {
 		BuildTaskRecord record=new BuildTaskRecord();
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
@@ -75,6 +91,8 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		record=JSON.toObject(data, BuildTaskRecord.class);
 		return record;
 	}
+
+	
 	
 	 
 }

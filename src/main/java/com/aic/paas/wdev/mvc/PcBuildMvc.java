@@ -37,8 +37,9 @@ public class PcBuildMvc {
 	
 	@Autowired
 	PcBuildTaskPeer buildTaskPeer;
+
 	
-	
+
 	@RequestMapping("/queryDefInfoPage")
 	public void  queryDefInfoPage(HttpServletRequest request,HttpServletResponse response, Integer pageNum, Integer pageSize, CPcBuildDef cdt, String orders){
 		Page<PcBuildDefInfo> page = buildPeer.queryDefInfoPage(pageNum, pageSize, cdt, orders);
@@ -64,7 +65,6 @@ public class PcBuildMvc {
 	
 		System.out.println(id+"|"+alls);
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
-		String build_id = id.toString();
 		String namespace = user.getMerchent().getMntCode();
 		String repo_name = alls; //产品code/工程code/构建名
 		
@@ -73,7 +73,13 @@ public class PcBuildMvc {
 		
 		int c = -1; //构建运行中 ,构建中断中 标注
 		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中   3=构建已中断 ）
-			 c = buildPeer.removeDefById(id);
+			//String address = paasTaskUrl+"/dev/buildMvc/deleteBuild"; //"http://localhost:16009/paas-task/dev/buildMvc/deleteBuild";
+			//String param = "namespace={"+namespace+"}&repo_name={"+repo_name+"}";
+			//String result  = HttpRequestUtil.sendPost(address, param);
+			//if(result!=null && "success".equals(result)){
+			//	 c = buildPeer.removeDefById(build_id,namespace,repo_name);
+			//}
+			c = buildPeer.removeDefById(id,namespace,repo_name);;
 		}
 		ControllerUtils.returnJson(request, response, c);
 	}

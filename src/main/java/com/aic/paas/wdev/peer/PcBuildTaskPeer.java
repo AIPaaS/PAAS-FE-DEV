@@ -52,6 +52,8 @@ public interface PcBuildTaskPeer {
 	 */
 	public int updatePcBuildTaskCdt(PcBuildTask record ,CPcBuildTask cdt);
 	
+	public String updatePcBuildTaskApi(String namespace, String back_build_id, String  repo_name);
+
 	/**
 	 * 查询单条构建记录
 	 * @param object

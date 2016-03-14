@@ -63,7 +63,7 @@ public interface PcBuildPeer {
 	 * @param id
 	 * @return
 	 */
-	public int removeDefById(Long id);
+	public int removeDefById(Long build_id,String namespace,String repo_name);
 	/**
 	 * 校验构建名是否已存在
 	 * @param record

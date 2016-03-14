@@ -11,11 +11,18 @@ import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
 import com.aic.paas.wdev.peer.PcBuildPeer;
 import com.aic.paas.wdev.rest.PcBuildSvc;
+import com.aic.paas.wdev.util.HttpRequestUtil;
 import com.binary.core.util.BinaryUtils;
 import com.binary.jdbc.Page;
 
 public class PcBuildPeerImpl implements PcBuildPeer {
 	
+	private String paasTaskUrl;
+	public void setPaasTaskUrl(String paasTaskUrl) {
+		if(paasTaskUrl != null) {
+			this.paasTaskUrl = paasTaskUrl.trim();
+		}
+	}
 	
 	@Autowired
 	PcBuildSvc buildSvc;
@@ -129,11 +136,22 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 	
 	
 	@Override
-	public int removeDefById(Long id) {
-		BinaryUtils.checkEmpty(id, "id");
-		PcBuildDef def = buildSvc.queryDefById(id);
+	public int removeDefById(Long build_id,String namespace,String repo_name) {
+		BinaryUtils.checkEmpty(build_id, "build_id");
+
+		PcBuildDef def = buildSvc.queryDefById(build_id);
 		if(def == null) return 0;
-		return buildSvc.removeDefById(id);
+		
+		String address = paasTaskUrl+"/dev/buildMvc/deleteBuild"; //"http://localhost:16009/paas-task/dev/buildMvc/deleteBuild";
+		String param = "namespace={"+namespace+"}&repo_name={"+repo_name+"}";
+		String result  = HttpRequestUtil.sendPost(address, param);
+		
+		if(result!=null && "success".equals(result)){
+			return buildSvc.removeDefById(build_id);
+		}else{
+			return -1;
+		}
+
 	}
 
 

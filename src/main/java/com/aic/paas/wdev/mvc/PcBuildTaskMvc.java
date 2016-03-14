@@ -51,14 +51,22 @@ public class PcBuildTaskMvc {
 		String back_build_id = backBuildId.toString();
 		String repo_name = alls; //产品code/工程code/构建名
 		
-		 PcBuildTask record =new PcBuildTask();//更新的映射对象
-		 record.setStatus(3);// 3=构建已中断
-		 Long timeL =BinaryUtils.getNumberDateTime();
-		 record.setModifyTime(timeL);// yyyyMMddHHmmss    
-		 
-		 CPcBuildTask cdt = new  CPcBuildTask();//条件对象
-		 cdt.setBackBuildId(backBuildId.toString());
-		 int cc = buildTaskPeer.updatePcBuildTaskCdt(record, cdt);
+		String result = buildTaskPeer.updatePcBuildTaskApi(namespace, back_build_id, repo_name);
+		//String address = paasTaskUrl+"/dev/buildTaskMvc/stopBuilding"; //http://localhost:16009/paas-task/dev/buildTaskMvc/stopBuilding";
+		//String param = "namespace="+namespace+"&build_id="+back_build_id+"&repo_name="+repo_name;	
+		//String result  = HttpRequestUtil.sendPost(address, param);
+		
+		int cc = -1;
+		if(result!=null && "success".equals(result)){
+			 PcBuildTask record =new PcBuildTask();//更新的映射对象
+			 record.setStatus(3);// 3=构建已中断
+			 Long timeL =BinaryUtils.getNumberDateTime();
+			 record.setModifyTime(timeL);// yyyyMMddHHmmss    
+			 
+			 CPcBuildTask cdt = new  CPcBuildTask();//条件对象
+			 cdt.setBackBuildId(backBuildId.toString());
+			  cc = buildTaskPeer.updatePcBuildTaskCdt(record, cdt);
+		}
 		ControllerUtils.returnJson(request, response, cc);
 	}
 	
