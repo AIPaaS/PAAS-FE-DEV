@@ -77,21 +77,28 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	}
 	
 	@Override
-	public BuildTaskRecord queryTaskRecord(JSONObject object) throws IOException, URISyntaxException {
-		BuildTaskRecord record=new BuildTaskRecord();
-		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+	public BuildTaskRecord queryTaskRecord(String repo_name, String build_id) throws IOException, URISyntaxException {
+		BuildTaskRecord record = new BuildTaskRecord();
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser) SystemUtil.getLoginUser();
+		BinaryUtils.checkEmpty(repo_name, "repo_name");
+		BinaryUtils.checkEmpty(build_id, "build_id");
 		BinaryUtils.checkEmpty(user.getMerchent().getMntCode(), "mntCode");
-		object.put("namespace", user.getMerchent().getMntCode());
-		String data=HttpClientUtil.sendPostRequest("http://127.0.0.1:16009/paas-task/dev/buildTask/queryTaskRecord", object.toString());
-		if(data==null ||data.equals("")){
+		/*String param = "namespace={" + user.getMerchent().getMntCode() + "}&repo_name={" + repo_name + "}&build_id={"
+				+ build_id + "}";*/
+		JSONObject param=new JSONObject();
+		param.put("namespace", user.getMerchent().getMntCode());
+		param.put("repo_name", repo_name);
+		param.put("build_id", build_id);
+		String data = HttpClientUtil.sendPostRequest(paasTaskUrl+"/dev/buildTaskMvc/queryTaskRecord",
+				param.toString());
+		if (data == null || data.equals("")) {
 			record.setResultCode("999999");
 			record.setResultMsg("请求失败");
 			return record;
 		}
-		record=JSON.toObject(data, BuildTaskRecord.class);
+		record = JSON.toObject(data, BuildTaskRecord.class);
 		return record;
 	}
-
 	
 	
 	 

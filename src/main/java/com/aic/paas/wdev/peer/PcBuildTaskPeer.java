@@ -56,8 +56,11 @@ public interface PcBuildTaskPeer {
 
 	/**
 	 * 查询单条构建记录
-	 * @param object
+	 * @param repo_name
+	 * @param build_id
 	 * @return
+	 * @throws IOException
+	 * @throws URISyntaxException
 	 */
-	public BuildTaskRecord queryTaskRecord(JSONObject object) throws IOException, URISyntaxException;
+	public BuildTaskRecord queryTaskRecord(String repo_name,String build_id) throws IOException, URISyntaxException;
 }

@@ -73,13 +73,10 @@ public class PcBuildTaskMvc {
 	
 	@RequestMapping("/queryTaskRecord")
 	public void queryTaskRecord(HttpServletRequest request, HttpServletResponse response, String repo_name, String build_id) throws IOException, URISyntaxException{
-		JSONObject object=new JSONObject();
 		BinaryUtils.checkEmpty(repo_name, "repo_name");
 		BinaryUtils.checkEmpty(build_id, "build_id");
-		object.put("repo_name", repo_name);
-		object.put("build_id", build_id);
-		BuildTaskRecord record =buildTaskPeer.queryTaskRecord(object);
- 		ControllerUtils.returnJson(request, response, record);
+		BuildTaskRecord record =buildTaskPeer.queryTaskRecord(repo_name,build_id);
+		ControllerUtils.returnJson(request, response, record);
 	}
 	
 

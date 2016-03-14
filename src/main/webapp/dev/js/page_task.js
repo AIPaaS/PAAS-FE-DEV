@@ -1,7 +1,5 @@
  $(function(){
-        $(".diag_left li").bind("click",function(){
-            $(this).addClass("active").siblings().removeClass("active");
-        })
+        
 
 
         var tops = 0;

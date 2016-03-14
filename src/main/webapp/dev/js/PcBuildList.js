@@ -1,4 +1,5 @@
 var CurrDataMap = {};
+var CurrTaskMap = {};
 var ParamPageNum = 1;
 var timer;
 
@@ -142,8 +143,6 @@ function query(pageNum) {
 							});
 
 					// 历史
-					console.log(data[i]);
-					// console.log(CurrDataMap);
 					$("#a_build_task_" + data[i].def.id).bind(
 							"click",
 							function() {
@@ -238,62 +237,68 @@ function removeBuildDef(id) {
 }
 
 function queryBuildTaskRecord(obj) {
+
+	var pagenum = 1;
+	var pageSize = 10;
+	var orders = "CREATE_TIME desc";
 	var buildDefId = obj.def.id;
 	var ps = {
-		buildDefId : buildDefId
+		pageNum : pagenum,
+		pageSize : pageSize,
+		buildDefId : buildDefId,
+		orders : orders
 	};
 	RS.ajax({
 		url : "/dev/buildtask/queryBuildTaskInfoList",
 		ps : ps,
 		cb : function(data) {
-			$("iso_name").text(obj.imageName);
-			$("prod_proj").text(obj.product.code+"_"+obj.project.code);
-			if (CU.isEmpty(data)) {
+			$("#iso_name").text(obj.imageDef.imageName);
+			$("#prod_proj").text(obj.product.code + "_" + obj.project.code);
+			if (!CU.isEmpty(data)) {
+				$("#iso_list").empty();
 				var iso_list = "";
 				for (var i = 0; i < data.length; i++) {
+				    	CurrTaskMap["key_"+data[i].id]=data[i];
 					if (i == 0) {
-						iso_list += "<li class=\"active\" id='record_"
-								+ data[i].id + "'_'" + data[i].status
+						iso_list += "<li class='active' id='record_"
+								+ data[i].id 
 								+ "'><a href=\"javascript:void(0)\">"
 								+ obj.imageDef.imageName + "-"
 								+ data[i].backBuildId + "</a></li>";
 					} else {
-						iso_list += "<li class=\"active\" id='record_"
-								+ data[i].id + "'_'" + data[i].status
+						iso_list += "<li  id='record_" + data[i].id 
 								+ "'><a href=\"javascript:void(0)\">"
 								+ obj.imageDef.imageName + "-"
 								+ data[i].backBuildId + "</a></li>";
 					}
-					$("#record_" + data[i].id + "'_'" + data[i].status)
-							.bind(
-									"click",
-									function() {
-										var status = this.id.substring(this.id
-												.lastIndexOf("_") + 1);
-										if (status == 2) {
-											taskTimer(true, obj.def.buildName,
-													data[i].backBuildId,
-													data[i].depTag);
-										} else {
-											taskTimer(false, obj.def.buildName,
-													data[i].backBuildId,
-													data[i].depTag);
-											queryTaskRecord(obj.def.buildName,
-													data[i].backBuildId,
-													data[i].depTag);
-										}
-									});
-					if (data[i].status == 2) {
-						taskTimer(true, obj.def.buildName, data[i].backBuildId,
-								data[i].depTag);
-					} else {
-						taskTimer(false, obj.def.buildName,
-								data[i].backBuildId, data[i].depTag);
-						queryTaskRecord(obj.def.buildName, data[i].backBuildId,
-								data[i].depTag);
-					}
+					
 
 				}
+				$("#iso_list").append(iso_list);
+				for(var i = 0; i < data.length; i++){
+					$("#record_" + data[i].id ).bind("click",function() {
+						$(this).addClass("active").siblings()
+								.removeClass("active");
+						var task = CurrTaskMap["key_"+this.id.substring(this.id
+							.lastIndexOf("_") + 1)];
+						if (status == 2) {
+							taskTimer(true, obj.def.buildName,
+								task);
+						} else {
+							taskTimer(false, obj.def.buildName,
+								task);
+							queryTaskRecord(obj.def.buildName,
+								task);
+						}
+					});
+				}
+				if (data[0].status == 2) {
+					taskTimer(true, obj.def.buildName, data[0]);
+				} else {
+					taskTimer(false, obj.def.buildName, data[0]);
+					queryTaskRecord(obj.def.buildName, data[0]);
+				}
+				
 			}
 			$("#buildTask_modal").modal("show");
 		}
@@ -333,45 +338,38 @@ function PcBuild_ZD(id) {// 构建中止
 
 }
 
-function queryTaskRecord(buildName, build_id, tag) {
-	if (buildName == null || buildName == "" || build_id == ""
-			|| build_id == null) {
-		var ps = {
-			repo_name : buildName,
-			build_id : build_id
-		};
-		RS.ajax({
-			url : "/dev/buildtask/queryTaskRecord",
-			ps : ps,
-			cb : function(data) {
-				if (CU.isEmpty(data)) {
-					$("#startTime").text(data.startTime);
-					$("#cost").text(data.duration);
-					$("#iso_tag").text(tag);
-					$("#status").text(data.status);
-					var stdout = '';
-					$("#stdoutList").empty();
-					for (var i = 0; i < data.stdoutlist.length; i++) {
-						stdout += "<li>" + stdoutlist[i] + "</li>";
-					}
-					$("#stdoutList").append(stdout);
-					if (data.building == 'flase') {
-						clearInterval(timer);
-					}
+function queryTaskRecord(buildName, task) {
+    var build_id=task.backBuildId;
+    $("#iso_tag").text(task.depTag);
+    if (buildName!=null || buildName!="" || build_id!="" || build_id!=null){ 
+	var ps = { repo_name : buildName, build_id : build_id }; 
+	RS.ajax({ url :"/dev/buildtask/queryTaskRecord", ps : ps, cb :function(data) { 
+	    if(!CU.isEmpty(data)) { 
+		$("#start_time").text(data.started_at);
+		$("#cost").text(data.duration); 
+		$("#status").text(data.status); 
+		var stdoutlist=data.stdout.split("\r\n");
+		var stdout = ''; 
+		$("#stdoutList").empty(); 
+		for(var i = 0; i <stdoutlist.length; i++) { 
+		    stdout += "<li>" + stdoutlist[i]+ "</li>"; 
+		    } 
+		$("#stdoutList").append(stdout); 
+		if (data.building == 'flase') {
+		    clearInterval(timer); }
+		} }
+	}) 
+    } else { 
 
-				}
-			}
-		})
-	} else {
-
-	}
-
+    }
+	 
+	 
 }
 
-function taskTimer(flag, buildName, build_id, tag) {
+function taskTimer(flag, buildName, task) {
 	if (!flag) {
 		clearInterval(timer);
 	} else {
-		timer = setInterval(queryTaskRecord(buildName, build_id, tag), 1000);
+		timer = setInterval(queryTaskRecord(buildName, task), 1000);
 	}
 }
