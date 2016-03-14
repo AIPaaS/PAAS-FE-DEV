@@ -105,7 +105,7 @@ String ContextPath = request.getContextPath();
 				<span class="close new_close" data-dismiss="modal" aria-hidden="true">&times</span>
 				<div class="diag_dos">
 					<div class="diag_left">
-						<ul>
+						<ul id="iso_list">
 							<li class="active"><a href="javascript:void(0)">crm-web-1.0</a></li>
 							<li><a href="javascript:void(0)">crm-web-0.9</a></li>
 							<li><a href="javascript:void(0)">crm-web-0.8</a></li>
@@ -120,7 +120,7 @@ String ContextPath = request.getContextPath();
 					</div>
 					<div class="diag_right">
 						<div id="mon_scroll" class="scrollDiv">
-							<ul>
+							<ul id="stdoutList">
 								<li>jquery 滚动条 Scrollbar 设置浏览器默认滚动条样式</li>
 								<li>jquery 图片切换 switchable 带左右按钮控制分页索引图片切换</li>
 								<li>jquery powerFloat万能浮动框提示插件 支持图片、文字、ajax异步加载、表单验证等</li>
@@ -167,12 +167,12 @@ String ContextPath = request.getContextPath();
 							</ul>
 
 							<ul>
-								<li>2016-02-30</li>
-								<li>366s</li>
-								<li>Tag</li>
-								<li>镜像</li>
-								<li>产品\工程</li>
-								<li>状态</li>
+								<li id="start_time">2016-02-30</li>
+								<li id="cost">366s</li>
+								<li id="iso_tag">Tag</li>
+								<li id="iso_name">镜像</li>
+								<li id="prod_proj">产品\工程</li>
+								<li id="status">状态</li>
 							</ul>
 						</div>
 					</div>
@@ -257,6 +257,7 @@ String ContextPath = request.getContextPath();
 	</tr>
 {{/each}}
 </script>
+ 
 
 
 

@@ -14,7 +14,7 @@ String ContextPath = request.getContextPath();
 			<div class="filter-block pull-left">
 				<div class="form-group pull-left">
 					<div class="form-group pull-left">
-						&nbsp;&nbsp;镜像名:
+						&nbsp;镜像名:
 					</div>
 					<div class="form-group pull-left">
 						<input type="text" name="imageFullName" id="imageFullName" class="form-control" style="width:120px;">
