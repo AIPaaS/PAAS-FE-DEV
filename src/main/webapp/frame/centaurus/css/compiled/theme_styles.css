@@ -2168,9 +2168,13 @@ html,body{font-family:"Open Sans",sans-serif;-webkit-font-smoothing:antialiased;
 }
 /*20160311 jia add*/
 .filter-block .form-group{line-height:36px;margin-top:10px;}
-.filter-block .btn{margin-top:10px;}
+.filter-block .btn{margin-top:20px;}
+.filter-block .btn_gj{margin-top:10px;}
 .main-box .main-box-header{padding:0px;min-height:0px;}
-#buildName{width:82%;float:right}
+#buildName{width:60%;float:right}
 .set_num{clear:both;overflow:hidden;}
-.num_tit{float:left;height:34px;line-height:34px;}
+.num_tit{float:left;height:34px;line-height:34px;border:1px solid #ccc;width:38%;background:#eee;}
+
+.btn_red{color:#e6264d!important;}
+.btn_red:hover{color:#ce244b!important;}
 

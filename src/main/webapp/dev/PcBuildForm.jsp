@@ -47,7 +47,9 @@ String ContextPath = request.getContextPath();
 			<div class="form-group">
 				<label for="buildName" class="col-lg-2 control-label">构建名<font color="red">*</font>:</label>
 				<div class="col-lg-5">
+					
 					<div id="buildNameText" class="num_tit"></div>
+					
 					<input type="text" name="buildName" onblur="checkBuildFullName();" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,200}" placeholder="必填">
 				</div>
 				<div class="col-lg-5 set_num">
@@ -153,7 +155,7 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="depTag" class="col-lg-2 control-label">tag标记<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字">
+						<input type="text" name="depTag" class="form-control" required id="depTag" onkeyup="value=value.replace(/[^\d]/g,'')" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字">
 					</div>
 					<div class="col-lg-5">
 						<span>1-40位</span>
