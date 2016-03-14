@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.mvc;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,13 +64,14 @@ public class PcBuildTaskMvc {
 	
 	
 	@RequestMapping("/queryTaskRecord")
-	public void queryTaskRecord(HttpServletRequest request, HttpServletResponse response, String repo_name, String build_id){
+	public void queryTaskRecord(HttpServletRequest request, HttpServletResponse response, String repo_name, String build_id) throws IOException, URISyntaxException{
 		JSONObject object=new JSONObject();
+		BinaryUtils.checkEmpty(repo_name, "repo_name");
+		BinaryUtils.checkEmpty(build_id, "build_id");
 		object.put("repo_name", repo_name);
 		object.put("build_id", build_id);
-		BuildTaskRecord record;
-		
-//		ControllerUtils.returnJson(request, response, record);
+		BuildTaskRecord record =buildTaskPeer.queryTaskRecord(object);
+ 		ControllerUtils.returnJson(request, response, record);
 	}
 	
 

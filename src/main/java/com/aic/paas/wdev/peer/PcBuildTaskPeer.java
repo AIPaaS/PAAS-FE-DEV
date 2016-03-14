@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.peer;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import com.aic.paas.wdev.bean.BuildTaskRecord;
@@ -55,5 +57,5 @@ public interface PcBuildTaskPeer {
 	 * @param object
 	 * @return
 	 */
-	public BuildTaskRecord queryTaskRecord(JSONObject object);
+	public BuildTaskRecord queryTaskRecord(JSONObject object) throws IOException, URISyntaxException;
 }

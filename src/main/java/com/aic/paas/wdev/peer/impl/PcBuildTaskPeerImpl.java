@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.peer.impl;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.apache.http.client.utils.HttpClientUtils;
@@ -12,9 +14,11 @@ import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.rest.PcBuildTaskSvc;
+import com.aic.paas.wdev.util.HttpClientUtil;
 import com.alibaba.dubbo.common.json.JSONObject;
 import com.binary.core.http.HttpClient;
 import com.binary.core.util.BinaryUtils;
+import com.binary.json.JSON;
 
 public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	
@@ -57,11 +61,19 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	}
 
 	@Override
-	public BuildTaskRecord queryTaskRecord(JSONObject object) {
+	public BuildTaskRecord queryTaskRecord(JSONObject object) throws IOException, URISyntaxException {
+		BuildTaskRecord record=new BuildTaskRecord();
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		BinaryUtils.checkEmpty(user.getMerchent().getMntCode(), "mntCode");
 		object.put("namespace", user.getMerchent().getMntCode());
-		
-		return null;
+		String data=HttpClientUtil.sendPostRequest("http://127.0.0.1:16009/paas-task/dev/buildTask/queryTaskRecord", object.toString());
+		if(data==null ||data.equals("")){
+			record.setResultCode("999999");
+			record.setResultMsg("请求失败");
+			return record;
+		}
+		record=JSON.toObject(data, BuildTaskRecord.class);
+		return record;
 	}
 	
 	 
