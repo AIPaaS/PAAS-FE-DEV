@@ -54,8 +54,8 @@ String ContextPath = request.getContextPath();
 				</div>
 				<div class="col-lg-5 set_num">
 					<span>1-200位字母、数字、下划线或斜线的组合</span>
-					<span class="error_tit">此构建名已存在!</span>
-					<span class="success_tit">此构建名ok!</span>
+					<span class="error_tit">构建名已存在!</span>
+					<span class="success_tit">构建名通过!</span>
 				</div>
 			</div>
 			

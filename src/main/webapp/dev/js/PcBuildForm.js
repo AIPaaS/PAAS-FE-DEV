@@ -302,17 +302,18 @@ function checkBuildFullName(){
 	if(!CU.isEmpty(CurrentId)){
 		id= CurrentId;
 	} 
+	if(CU.isEmpty($("#buildName").val())){
+		$(".error_tit").hide();
+		$(".success_tit").hide();
+		return;
+	}
 	RS.ajax({url:"/dev/build/checkBuildFullName",ps:{id:id,buildName:buildName},cb:function(rs) {
 		var id=rs;
 		if(id==0){
-			//CC.showMsg({msg:"此构建名已存在!"});
 			$(".error_tit").show();
 			$(".success_tit").hide();
-			//$("#buildName").addClass("buildName_error");
-			
 			$("#buildName").val("");
 		}else{
-			//CC.showMsg({msg:"此构建名ok!"});
 			$(".success_tit").show();
 			$(".error_tit").hide();
 			
