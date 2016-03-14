@@ -1,5 +1,6 @@
 var CurrDataMap = {};
 var ParamPageNum = 1;
+var timer;
 
 function init() {
 	initData(function() {
@@ -196,6 +197,21 @@ function PcBuild_ZD(id){//构建中止
 		alert("构建返回的BackBuildId为空,找不到中止对象！")
 	}
 
+}
+
+function queryTaskRecord(buildName,build_id){
+    var ps={repo_name:buildName,build_id:build_id}
+	RS.ajax({url:"/",ps:ps,cb:function(data){
+		
+	}})
+}
+
+function taskTimer(flag){
+	if(!flag){
+		clearInterval(timer);
+	}else{
+		timer = setInterval(queryTaskRecord(), 1000);
+	}
 }
 
 

@@ -2,14 +2,18 @@ package com.aic.paas.wdev.peer.impl;
 
 import java.util.List;
 
+import org.apache.http.client.utils.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
+import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.rest.PcBuildTaskSvc;
+import com.alibaba.dubbo.common.json.JSONObject;
+import com.binary.core.http.HttpClient;
 import com.binary.core.util.BinaryUtils;
 
 public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
@@ -59,4 +63,13 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		}
 	}
 
+	@Override
+	public BuildTaskRecord queryTaskRecord(JSONObject object) {
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		object.put("namespace", user.getMerchent().getMntCode());
+		
+		return null;
+	}
+	
+	 
 }

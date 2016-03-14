@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
+import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
+import com.alibaba.dubbo.common.json.JSONObject;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.util.ControllerUtils;
 
@@ -58,6 +60,16 @@ public class PcBuildTaskMvc {
 		ControllerUtils.returnJson(request, response, cc);
 	}
 	
+	
+	@RequestMapping("/queryTaskRecord")
+	public void queryTaskRecord(HttpServletRequest request, HttpServletResponse response, String repo_name, String build_id){
+		JSONObject object=new JSONObject();
+		object.put("repo_name", repo_name);
+		object.put("build_id", build_id);
+		BuildTaskRecord record;
+		
+//		ControllerUtils.returnJson(request, response, record);
+	}
 	
 
 	

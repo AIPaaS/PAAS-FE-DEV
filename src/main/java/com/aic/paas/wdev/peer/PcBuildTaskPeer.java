@@ -2,8 +2,10 @@ package com.aic.paas.wdev.peer;
 
 import java.util.List;
 
+import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
+import com.alibaba.dubbo.common.json.JSONObject;
 
 
 
@@ -46,4 +48,11 @@ public interface PcBuildTaskPeer {
 	 * @return
 	 */
 	public int updatePcBuildTaskCdt(PcBuildTask record ,CPcBuildTask cdt);
+	
+	/**
+	 * 查询单条构建记录
+	 * @param object
+	 * @return
+	 */
+	public BuildTaskRecord queryTaskRecord(JSONObject object);
 }
