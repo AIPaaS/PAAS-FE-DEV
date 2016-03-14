@@ -53,7 +53,7 @@ String ContextPath = request.getContextPath();
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="mgrIds" class="col-lg-2 control-label">工程管理员:</label>
+				<label for="mgrIds" class="col-lg-2 control-label">工程管理员<font color="red">*</font>:</label>
 				<div class="col-lg-5">
 					<input type="text" name="mgrIds" class="form-control" readonly id="mgrIds" placeholder="">
 				</div>
