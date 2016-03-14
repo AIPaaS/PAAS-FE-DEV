@@ -35,10 +35,10 @@ String ContextPath = request.getContextPath();
 						style="width: 120px;">
 					</select>
 				</div>
-				<button id="btn_query" class="btn btn-primary">
+				<button id="btn_query" class="btn btn-primary btn_gj">
 					<i class="fa fa-search fa-lg"></i> 查询
 				</button>
-				<button id="btn_add" class="btn btn-primary">
+				<button id="btn_add" class="btn btn-primary btn_gj">
 					<i class="fa fa-plus-circle fa-lg"></i> 添加
 				</button>
 			</div>
