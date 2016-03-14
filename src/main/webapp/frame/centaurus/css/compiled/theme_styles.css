@@ -2178,3 +2178,9 @@ html,body{font-family:"Open Sans",sans-serif;-webkit-font-smoothing:antialiased;
 .btn_red{color:#e6264d!important;}
 .btn_red:hover{color:#ce244b!important;}
 
+.error_tit,.success_tit{padding-left:166px;display:none;}
+.buildName_error{border:1px solid #f00;}
+.tag_tit{display:none;}
+.tag_success{display:none}
+
+
