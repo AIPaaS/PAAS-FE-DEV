@@ -14,9 +14,10 @@ public interface PcBuildTaskPeer {
 	/**
 	 * 保存获更新，判断主键ID[id]是否存在, 存在则更新, 不存在则插入
 	 * @param record : PcBuildTask数据记录
-	 * @return 当前记录主键[id]值
+	 * @return 当前回调BuildId[backBuildId]值
 	 */
-	public Long saveOrUpdateBuildTask(PcBuildTask pbt);
+	public Long saveBuildTask(PcBuildTask pbt);
+	
 	
 	/**
 	 * 查询构建历史任务，只显示最近的10条

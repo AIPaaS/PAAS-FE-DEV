@@ -27,13 +27,13 @@ public class PcBuildTaskMvc {
 	PcBuildTaskPeer buildTaskPeer;
 	
 	
-	@RequestMapping("/saveOrUpdateBuildTask")
-	public void  saveOrUpdateBuildTask(HttpServletRequest request,HttpServletResponse response, Long buildDefId){
-		System.out.println("aaaaa");
+	@RequestMapping("/saveBuildTask")
+	public void  saveBuildTask(HttpServletRequest request,HttpServletResponse response, Long id){
+		
 		PcBuildTask pbt = new PcBuildTask();
-		pbt.setBuildDefId(buildDefId);
-		Long id = buildTaskPeer.saveOrUpdateBuildTask(pbt);
-		ControllerUtils.returnJson(request, response, id);
+		pbt.setBuildDefId(id);
+		Long backBuildId = buildTaskPeer.saveBuildTask(pbt);
+		ControllerUtils.returnJson(request, response, backBuildId);
 	}
 	
 	@RequestMapping("/queryBuildTaskInfoList")
