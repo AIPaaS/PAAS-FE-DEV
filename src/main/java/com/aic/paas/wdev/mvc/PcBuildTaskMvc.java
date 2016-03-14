@@ -9,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.aic.paas.comm.util.SystemUtil;
+import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
+import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
+import com.alibaba.dubbo.common.json.JSONObject;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.util.ControllerUtils;
 
@@ -23,13 +27,13 @@ public class PcBuildTaskMvc {
 	PcBuildTaskPeer buildTaskPeer;
 	
 	
-	@RequestMapping("/saveOrUpdateBuildTask")
-	public void  saveOrUpdateBuildTask(HttpServletRequest request,HttpServletResponse response, Long buildDefId){
-		System.out.println("aaaaa");
+	@RequestMapping("/saveBuildTask")
+	public void  saveBuildTask(HttpServletRequest request,HttpServletResponse response, Long id){
+		
 		PcBuildTask pbt = new PcBuildTask();
-		pbt.setBuildDefId(buildDefId);
-		Long id = buildTaskPeer.saveOrUpdateBuildTask(pbt);
-		ControllerUtils.returnJson(request, response, id);
+		pbt.setBuildDefId(id);
+		Long backBuildId = buildTaskPeer.saveBuildTask(pbt);
+		ControllerUtils.returnJson(request, response, backBuildId);
 	}
 	
 	@RequestMapping("/queryBuildTaskInfoList")
@@ -39,7 +43,12 @@ public class PcBuildTaskMvc {
 	}
 	
 	@RequestMapping("/updateBuildTaskStatusByBackId")
-	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response, Long backBuildId){
+	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response, Long backBuildId, String alls){
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		String namespace = user.getMerchent().getMntCode();
+		String back_build_id = backBuildId.toString();
+		String repo_name = alls; //产品code/工程code/构建名
+		
 		 PcBuildTask record =new PcBuildTask();//更新的映射对象
 		 record.setStatus(3);// 3=构建已中断
 		 Long timeL =BinaryUtils.getNumberDateTime();
@@ -51,6 +60,16 @@ public class PcBuildTaskMvc {
 		ControllerUtils.returnJson(request, response, cc);
 	}
 	
+	
+	@RequestMapping("/queryTaskRecord")
+	public void queryTaskRecord(HttpServletRequest request, HttpServletResponse response, String repo_name, String build_id){
+		JSONObject object=new JSONObject();
+		object.put("repo_name", repo_name);
+		object.put("build_id", build_id);
+		BuildTaskRecord record;
+		
+//		ControllerUtils.returnJson(request, response, record);
+	}
 	
 
 	

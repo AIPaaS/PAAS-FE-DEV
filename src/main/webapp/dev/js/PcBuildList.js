@@ -1,5 +1,6 @@
 var CurrDataMap = {};
 var ParamPageNum = 1;
+var timer;
 
 function init() {
 	initData(function() {
@@ -108,7 +109,7 @@ function query(pageNum){
 				});
 				
 				//中止
-				$("#a_zd_build_"+data[i].def.id).bind("click",function(){
+				$("#a_build_task_zd_"+data[i].def.id).bind("click",function(){
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
 					PcBuild_ZD(obj.def.id);
 				});
@@ -119,28 +120,39 @@ function query(pageNum){
 	
 }
 
-
+//构建
 function gj_BuildDef(id){
 	
-	alert("ajax");
-
+	$("#thisBackBuildId_"+id).val("");//每次构建时情况上次的返回id
+	var backId = "";
 	
-	$(".td_build_task_"+id).css("height", "52px"); 
+	alert("--------------------调ajax-------------");
+	
+	backId ="123456"; //掉完ajax返回的BackBuildId值
+	$("#thisBackBuildId_"+id).val(backId);
+	
 	$("#a_build_task_gj_"+id).css("display", "none"); 
-	$("#a_zd_build_"+id).css("display", "block");
-	$("#td_build_task_msage_"+id).text("构建中");
+	$("#a_build_task_zd_"+id).css("display", "inline-block");
+	$("#td_build_task_msage_"+id).text("构建运行中");
 	
 	
 }
 
+//删除
 function removeBuildDef(id){
-	alert("removeBuildDef :"+id)
+	//var gjname =$("#a_build_task_gjname_"+id).text().trim();//构建名
+	//var productCode =$("#s_build_task_gjproduct_"+id).text().trim();//对应产品code
+	//var projectCode =$("#s_build_task_gjproject_"+id).text().trim();//对应工程code
+	//var allS = productCode+"/"+projectCode+"/"+ gjname; //（产品code/工程code/构建名）
+	var allS = $("#a_build_task_gjname_"+id).text().trim();
+	alert("removeBuildDef :id="+id+",allS(产品code/工程code/构建名) ="+allS)
+	
 	var obj = CurrDataMap["key_"+id];
 	CC.showMsg({msg:"您确定要删除构建任务[<font color='blue'>"+obj.def.buildName+"</font>]吗?",option:2,callback:function(r) {
 		if(r != "ok") return ;
-		RS.ajax({url:"/dev/build/removeDefById",ps:{id:id},cb:function(data) {
+		RS.ajax({url:"/dev/build/removeDefById",ps:{id:id,alls:allS},cb:function(data) {
 			if(data!=null && data!=undefined && data=="-1"){
-				alert("Code:="+data+"  操作进行中，拒绝删除！");
+				alert("Code:="+data+"  构建运行中，拒绝删除！");
 				return false;
 			}else{
 				alert("Code:="+data+"  删除成功");
@@ -162,8 +174,12 @@ function queryBuildTaskRecord(obj){
 
 function PcBuild_ZD(id){//构建中止
 	alert("PcBuild_ZD :"+id)
-	var bId = 123456;
-	RS.ajax({url:"/dev/buildtask/updateBuildTaskStatusByBackId",ps:{backBuildId:bId},cb:function(data) {
+	var bId = $("#thisBackBuildId_"+id).val();//获取BackBuildId
+	var allS = $("#a_build_task_gjname_"+id).text().trim(); //(产品code/工程code/构建名)
+
+	
+	if(bId!=null && bId!=undefined && !bId==""){
+		RS.ajax({url:"/dev/buildtask/updateBuildTaskStatusByBackId",ps:{backBuildId:bId,alls:allS},cb:function(data) {
 			if(data!=null && data!=undefined && data=="0"){
 				alert("Code:="+data+"中止失败！");
 				$("#td_build_task_msage_"+id).text("中止失败！");
@@ -177,6 +193,25 @@ function PcBuild_ZD(id){//构建中止
 			alert(errorCode+" : "+errorMsg)
 		}
 		});
+	}else{
+		alert("构建返回的BackBuildId为空,找不到中止对象！")
+	}
+
+}
+
+function queryTaskRecord(buildName,build_id){
+    var ps={repo_name:buildName,build_id:build_id}
+	RS.ajax({url:"/",ps:ps,cb:function(data){
+		
+	}})
+}
+
+function taskTimer(flag){
+	if(!flag){
+		clearInterval(timer);
+	}else{
+		timer = setInterval(queryTaskRecord(), 1000);
+	}
 }
 
 
