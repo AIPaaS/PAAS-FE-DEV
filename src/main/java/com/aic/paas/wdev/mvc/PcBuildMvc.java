@@ -73,12 +73,6 @@ public class PcBuildMvc {
 		
 		int c = -1; //构建运行中 ,构建中断中 标注
 		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中   3=构建已中断 ）
-			//String address = paasTaskUrl+"/dev/buildMvc/deleteBuild"; //"http://localhost:16009/paas-task/dev/buildMvc/deleteBuild";
-			//String param = "namespace={"+namespace+"}&repo_name={"+repo_name+"}";
-			//String result  = HttpRequestUtil.sendPost(address, param);
-			//if(result!=null && "success".equals(result)){
-			//	 c = buildPeer.removeDefById(build_id,namespace,repo_name);
-			//}
 			c = buildPeer.removeDefById(id,namespace,repo_name);;
 		}
 		ControllerUtils.returnJson(request, response, c);
