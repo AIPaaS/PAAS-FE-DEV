@@ -232,9 +232,13 @@ function removeBuildDef(id) {
 				cb : function(data) {
 					if (data != null && data != undefined && data == "-1") {
 						 RS.showErrMsg(null, "Code:=" + data + "  构建运行中，拒绝删除！");
-						 //CC.showMsg({msg:"111"});
 						return false;
-					} else {
+					}
+					else if (data != null && data != undefined && data == "-2") {
+						 RS.showErrMsg(null, "Code:=" + data + "  删除失败！");
+						return false;
+					}
+					else {
 						//CC.showMsg({msg:"Code:=" + data + "  删除成功"});
 						query(ParamPageNum);
 					}
@@ -326,7 +330,7 @@ function PcBuild_ZD(id) {// 构建中止
 				alls : allS
 			},
 			cb : function(data) {
-				if (data != null && data != undefined && data == "0") {
+				if (data != null && data != undefined && (data=="0"||data=="-1")) {
 					 RS.showErrMsg(null, "Code:=" + data + "中止失败！");
 					$("#td_build_task_msage_" + id).text("中止失败！");
 					return false;
