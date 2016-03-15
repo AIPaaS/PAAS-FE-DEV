@@ -85,7 +85,6 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 
 	@Override
 	public String updatePcBuildTaskApi(String namespace, String back_build_id, String repo_name) {
-		//http://localhost:16009/paas-task/dev/buildTaskMvc/stopBuilding";
 		String address = paasTaskUrl+"/dev/buildTaskMvc/stopBuilding"; 
 		String param = "namespace="+namespace+"&build_id="+back_build_id+"&repo_name="+repo_name;	
 		String result  = HttpRequestUtil.sendPost(address, param);
