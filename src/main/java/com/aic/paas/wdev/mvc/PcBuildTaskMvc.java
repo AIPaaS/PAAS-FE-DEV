@@ -52,10 +52,6 @@ public class PcBuildTaskMvc {
 		String repo_name = alls; //产品code/工程code/构建名
 		
 		String result = buildTaskPeer.updatePcBuildTaskApi(namespace, back_build_id, repo_name);
-		//String address = paasTaskUrl+"/dev/buildTaskMvc/stopBuilding"; //http://localhost:16009/paas-task/dev/buildTaskMvc/stopBuilding";
-		//String param = "namespace="+namespace+"&build_id="+back_build_id+"&repo_name="+repo_name;	
-		//String result  = HttpRequestUtil.sendPost(address, param);
-		
 		int cc = -1;
 		if(result!=null && "aborted".equals(result)){  // "status": "aborted",  //error 为不存在此构建
 			 PcBuildTask record =new PcBuildTask();//更新的映射对象
