@@ -208,8 +208,9 @@ function removeBuildDef(id) {
 	// =$("#s_build_task_gjproject_"+id).text().trim();//对应工程code
 	// var allS = productCode+"/"+projectCode+"/"+ gjname; //（产品code/工程code/构建名）
 	var allS = $("#a_build_task_gjname_" + id).text().trim();
-	alert("removeBuildDef :id=" + id + ",allS(产品code/工程code/构建名) =" + allS)
-
+	//alert("removeBuildDef :id=" + id + ",allS(产品code/工程code/构建名) =" + allS)
+	
+	if (allS.substr(0,1)=='/') allS=allS.substr(1);
 	var obj = CurrDataMap["key_" + id];
 	CC.showMsg({
 		msg : "您确定要删除构建任务[<font color='blue'>" + obj.def.buildName
@@ -226,10 +227,11 @@ function removeBuildDef(id) {
 				},
 				cb : function(data) {
 					if (data != null && data != undefined && data == "-1") {
-						alert("Code:=" + data + "  构建运行中，拒绝删除！");
+						 RS.showErrMsg(null, "Code:=" + data + "  构建运行中，拒绝删除！");
+						 //CC.showMsg({msg:"111"});
 						return false;
 					} else {
-						alert("Code:=" + data + "  删除成功");
+						//CC.showMsg({msg:"Code:=" + data + "  删除成功"});
 						query(ParamPageNum);
 					}
 
@@ -307,10 +309,10 @@ function queryBuildTaskRecord(obj) {
 }
 
 function PcBuild_ZD(id) {// 构建中止
-	alert("PcBuild_ZD :" + id)
+	//alert("PcBuild_ZD :" + id)
 	var bId = $("#thisBackBuildId_" + id).val();// 获取BackBuildId
 	var allS = $("#a_build_task_gjname_" + id).text().trim(); // (产品code/工程code/构建名)
-
+	if (allS.substr(0,1)=='/') allS=allS.substr(1);
 	if (bId != null && bId != undefined && !bId == "") {
 		RS.ajax({
 			url : "/dev/buildtask/updateBuildTaskStatusByBackId",
@@ -321,22 +323,21 @@ function PcBuild_ZD(id) {// 构建中止
 			},
 			cb : function(data) {
 				if (data != null && data != undefined && data == "0") {
-					alert("Code:=" + data + "中止失败！");
+					 RS.showErrMsg(null, "Code:=" + data + "中止失败！");
 					$("#td_build_task_msage_" + id).text("中止失败！");
 					return false;
 				} else {
-					//RS.showErrMsg
-					alert("Code:=" + data + "中止成功！");
-					$("#td_build_task_msage_" + id).text("中止成功！");
+					//CC.showMsg({msg:"Code:=" + data + "构建已中断"});
+					$("#td_build_task_msage_" + id).text("构建已中断");
 					query(ParamPageNum);
 				}
 			},
 			errcb : function(errorCode, errorMsg) {
-				alert(errorCode + " : " + errorMsg)
+				 RS.showErrMsg(null, errorCode + " : " + errorMsg);
 			}
 		});
 	} else {
-		alert("构建返回的BackBuildId为空,找不到中止对象！")
+		 RS.showErrMsg(null, "构建返回的BackBuildId为空,找不到中止对象！");
 	}
 
 }
