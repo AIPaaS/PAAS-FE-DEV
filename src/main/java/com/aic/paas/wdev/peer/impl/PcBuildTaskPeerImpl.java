@@ -16,10 +16,9 @@ import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.rest.PcBuildTaskSvc;
 import com.aic.paas.wdev.util.HttpClientUtil;
 import com.aic.paas.wdev.util.HttpRequestUtil;
-import com.alibaba.dubbo.common.json.JSONObject;
-import com.binary.core.http.HttpClient;
 import com.binary.core.util.BinaryUtils;
 import com.binary.json.JSON;
+import com.binary.json.JSONObject;
 
 public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	
@@ -92,11 +91,12 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		String data = HttpClientUtil.sendPostRequest(paasTaskUrl+"/dev/buildTaskMvc/queryTaskRecord",
 				param.toString());
 		if (data == null || data.equals("")) {
-			record.setResultCode("999999");
-			record.setResultMsg("请求失败");
+			record.setError_code("99999");
+			record.setError_info("请求失败");
 			return record;
 		}
 		record = JSON.toObject(data, BuildTaskRecord.class);
+		//record.setStarted_at(DateUtils.parseFormat(record.getStarted_at()));
 		return record;
 	}
 	

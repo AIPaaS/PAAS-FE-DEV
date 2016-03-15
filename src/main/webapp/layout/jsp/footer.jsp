@@ -17,7 +17,7 @@
               	 <font color='red'>出现错误</font>
             </h4>
          </div>
-         <div id="BSMODAL_AJAX_ERROR_MSG" class="modal-body">
+         <div id="BSMODAL_AJAX_ERROR_MSG" class="modal-body modal_diag_com">
          </div>
       </div>
 	</div>

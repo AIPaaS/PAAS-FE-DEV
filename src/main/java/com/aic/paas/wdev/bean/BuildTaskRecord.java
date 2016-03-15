@@ -1,6 +1,5 @@
 package com.aic.paas.wdev.bean;
 
-import java.util.Date;
 
 public class BuildTaskRecord {
 	private String namespace;
@@ -11,26 +10,27 @@ public class BuildTaskRecord {
 	private String started_at;
 	private String status;
 	private String stdout;
-	private Date startTime;
-	private String resultCode;
-	private String resultMsg;
-	public String getResultCode() {
-		return resultCode;
+	private String error_info;
+	private String error_code;
+	private String error_reason;
+	 
+	public String getError_info() {
+		return error_info;
 	}
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
+	public void setError_info(String error_info) {
+		this.error_info = error_info;
 	}
-	public String getResultMsg() {
-		return resultMsg;
+	public String getError_code() {
+		return error_code;
 	}
-	public void setResultMsg(String resultMsg) {
-		this.resultMsg = resultMsg;
+	public void setError_code(String error_code) {
+		this.error_code = error_code;
 	}
-	public Date getStartTime() {
-		return startTime;
+	public String getError_reason() {
+		return error_reason;
 	}
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+	public void setError_reason(String error_reason) {
+		this.error_reason = error_reason;
 	}
 	public String getNamespace() {
 		return namespace;
