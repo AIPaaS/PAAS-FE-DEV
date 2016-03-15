@@ -161,7 +161,7 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 			e.printStackTrace();
 		}
 		
-		if(result!=null && "success".equals(result)){
+		if(result!=null && "success".equals(result)){ //"status": "success", //error
 			return buildSvc.removeDefById(build_id);
 		}else{
 			return -1;

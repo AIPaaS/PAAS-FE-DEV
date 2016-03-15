@@ -57,7 +57,7 @@ public class PcBuildTaskMvc {
 		//String result  = HttpRequestUtil.sendPost(address, param);
 		
 		int cc = -1;
-		if(result!=null && "success".equals(result)){
+		if(result!=null && "aborted".equals(result)){  // "status": "aborted",  //error 为不存在此构建
 			 PcBuildTask record =new PcBuildTask();//更新的映射对象
 			 record.setStatus(3);// 3=构建已中断
 			 Long timeL =BinaryUtils.getNumberDateTime();
