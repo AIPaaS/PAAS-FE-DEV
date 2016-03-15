@@ -182,21 +182,25 @@ function query(pageNum) {
 
 }
 
-// 构建
-function gj_BuildDef(id) {
-
-	$("#thisBackBuildId_" + id).val("");// 每次构建时情况上次的返回id
+//构建
+function gj_BuildDef(id){
+	
+	$("#thisBackBuildId_"+id).val("");//每次构建时情况上次的返回id
 	var backId = "";
+	var obj = CurrDataMap["key_"+id];
+		
+	RS.ajax({url:"/dev/buildtask/saveBuildTask",ps:{id:id},cb:function(data) {
+		 //调用完ajax返回的BackBuildId值
+		backId = data;
 
-	alert("--------------------调ajax-------------");
+		$("#thisBackBuildId_"+id).val(backId);
+		
+		$("#a_build_task_gj_"+id).css("display", "none"); 
+		$("#a_build_task_zd_"+id).css("display", "inline-block");
+		$("#td_build_task_msage_"+id).text("构建运行中");
 
-	backId = "123456"; // 掉完ajax返回的BackBuildId值
-	$("#thisBackBuildId_" + id).val(backId);
-
-	$("#a_build_task_gj_" + id).css("display", "none");
-	$("#a_build_task_zd_" + id).css("display", "inline-block");
-	$("#td_build_task_msage_" + id).text("构建运行中");
-
+	}});
+	
 }
 
 // 删除

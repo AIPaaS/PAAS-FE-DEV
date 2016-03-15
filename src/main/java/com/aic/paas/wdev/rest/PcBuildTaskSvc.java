@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 
 public interface PcBuildTaskSvc {
 
@@ -47,4 +48,19 @@ public interface PcBuildTaskSvc {
 	 * @return
 	 */
 	public int updatePcBuildTaskCdt(PcBuildTask record ,CPcBuildTask cdt);
+	
+	/**
+	 * 不分页查询
+	 * @param pbtc : 构建任务回调对象
+	 * @param imgRespId : 所属镜像库Id
+	 * @return 
+	 */
+	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc);
+	/**
+	 * 不分页查询
+	 * @param pbtc : 构建任务回调对象
+	 * @param imgRespId : 所属镜像库Id
+	 * @return 
+	 */
+	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc,String imgRespId);
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
+import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
@@ -15,6 +16,7 @@ import com.aic.paas.wdev.peer.PcBuildPeer;
 import com.aic.paas.wdev.rest.PcBuildSvc;
 import com.aic.paas.wdev.util.HttpClientUtil;
 import com.aic.paas.wdev.util.HttpRequestUtil;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.core.util.BinaryUtils;
 import com.binary.jdbc.Page;
 
@@ -179,7 +181,10 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		return buildSvc.checkBuildFullName(record);
 	}
 	
-	
+	@Override
+	public String queryCompRoomIdByCallBack(PcBuildTaskCallBack pbtc){
+		return buildSvc.queryCompRoomIdByCallBack(pbtc);
+	}
 	
 	
 

@@ -7,7 +7,7 @@ import java.util.List;
 import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
-import com.alibaba.dubbo.common.json.JSONObject;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 
 
 
@@ -63,4 +63,11 @@ public interface PcBuildTaskPeer {
 	 * @throws URISyntaxException
 	 */
 	public BuildTaskRecord queryTaskRecord(String repo_name,String build_id) throws IOException, URISyntaxException;
+	/**
+	 * 不分页查询
+	 * @param pbtc : 构建任务回调对象
+	 * @param imgRespId : 所属镜像库Id
+	 * @return 
+	 */
+	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc);
 }

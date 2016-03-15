@@ -17,7 +17,7 @@ import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
-import com.alibaba.dubbo.common.json.JSONObject;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.util.ControllerUtils;
 
@@ -80,7 +80,24 @@ public class PcBuildTaskMvc {
 		BuildTaskRecord record =buildTaskPeer.queryTaskRecord(repo_name,build_id);
 		ControllerUtils.returnJson(request, response, record);
 	}
-	
+	@RequestMapping("/updateBuildTaskByCallBack")
+	public void updateBuildTaskByCallBack(HttpServletRequest request,HttpServletResponse response, 
+		String namespace,String repo_name,String tag,String build_id,String duration,String time,String status){
+		
+		PcBuildTaskCallBack pbtc = new PcBuildTaskCallBack();
+		pbtc.setNamespace(namespace);
+		pbtc.setRepo_name(repo_name);
+		pbtc.setTag(tag);
+		pbtc.setBuild_id(build_id);
+		pbtc.setDuration(duration);
+		pbtc.setTime(time);
+		pbtc.setStatus(status);//success,  error
+				
+		
+		String result = buildTaskPeer.updateBuildTaskByCallBack(pbtc);
+		
+		ControllerUtils.returnJson(request, response, result);
+	}
 
 	
 }
