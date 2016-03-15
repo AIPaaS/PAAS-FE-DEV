@@ -314,6 +314,7 @@ function PcBuild_ZD(id) {// 构建中止
 		RS.ajax({
 			url : "/dev/buildtask/updateBuildTaskStatusByBackId",
 			ps : {
+				buildDefId: id,
 				backBuildId : bId,
 				alls : allS
 			},
@@ -323,6 +324,7 @@ function PcBuild_ZD(id) {// 构建中止
 					$("#td_build_task_msage_" + id).text("中止失败！");
 					return false;
 				} else {
+					//RS.showErrMsg
 					alert("Code:=" + data + "中止成功！");
 					$("#td_build_task_msage_" + id).text("中止成功！");
 					query(ParamPageNum);

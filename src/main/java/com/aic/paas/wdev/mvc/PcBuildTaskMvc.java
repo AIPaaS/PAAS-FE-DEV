@@ -45,7 +45,7 @@ public class PcBuildTaskMvc {
 	}
 	
 	@RequestMapping("/updateBuildTaskStatusByBackId")
-	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response, Long backBuildId, String alls){
+	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response,Long buildDefId ,Long backBuildId, String alls){
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
 		String namespace = user.getMerchent().getMntCode();
 		String back_build_id = backBuildId.toString();
@@ -64,7 +64,9 @@ public class PcBuildTaskMvc {
 			 record.setModifyTime(timeL);// yyyyMMddHHmmss    
 			 
 			 CPcBuildTask cdt = new  CPcBuildTask();//条件对象
-			 cdt.setBackBuildId(backBuildId.toString());
+			 cdt.setBuildDefId(buildDefId);
+			 cdt.setStatus(2);//构建中的
+			 cdt.setBackBuildIdEqual(backBuildId.toString());
 			  cc = buildTaskPeer.updatePcBuildTaskCdt(record, cdt);
 		}
 		ControllerUtils.returnJson(request, response, cc);
