@@ -1,7 +1,7 @@
 var CurrDataMap = {};
 var CurrTaskMap = {};
 var ParamPageNum = 1;
-var CurrBuildName;
+var CurrObj;
 var CurrTask;
 var timer;
 
@@ -152,7 +152,8 @@ function query(pageNum) {
 								var obj = CurrDataMap["key_"
 										+ this.id.substring(this.id
 												.lastIndexOf("_") + 1)];
-								queryBuildTaskRecord(obj);
+								CurrObj=obj;
+								queryBuildTaskRecord();
 							});
 
 					// 删除
@@ -249,11 +250,11 @@ function removeBuildDef(id) {
 	});
 }
 
-function queryBuildTaskRecord(obj) {
+function queryBuildTaskRecord() {
     var pagenum = 1;
     var pageSize = 10;
     var orders = "CREATE_TIME desc";
-    var buildDefId = obj.def.id;
+    var buildDefId = CurrObj.def.id;
     var ps = {
 	pageNum : pagenum,
 	pageSize : pageSize,
@@ -264,8 +265,6 @@ function queryBuildTaskRecord(obj) {
 	url : "/dev/buildtask/queryBuildTaskInfoList",
 	ps : ps,
 	cb : function(data) {
-	    $("#iso_name").text(obj.imageDef.imageName);
-	    $("#prod_proj").text(obj.product.code + "_" + obj.project.code);
 	    if (!CU.isEmpty(data)) {
 		$("#iso_list").empty();
 		var iso_list = "";
@@ -275,12 +274,12 @@ function queryBuildTaskRecord(obj) {
 			iso_list += "<li class='active' id='record_"
 				+ data[i].id
 				+ "'><a href=\"javascript:void(0)\">"
-				+ obj.imageDef.imageName + "-"
+				+ CurrObj.imageDef.imageName + "-"
 				+ data[i].backBuildId + "</a></li>";
 		    } else {
 			iso_list += "<li  id='record_" + data[i].id
 				+ "'><a href=\"javascript:void(0)\">"
-				+ obj.imageDef.imageName + "-"
+				+ CurrObj.imageDef.imageName + "-"
 				+ data[i].backBuildId + "</a></li>";
 		    }
 
@@ -296,13 +295,11 @@ function queryBuildTaskRecord(obj) {
 				var task = CurrTaskMap["key_"
 					+ this.id.substring(this.id
 						.lastIndexOf("_") + 1)];
-				CurrBuildName = obj.def.buildName;
 				CurrTask = task;
 				queryTaskRecord();
 			    });
 		}
 
-		CurrBuildName = obj.def.buildName;
 		CurrTask = data[0];
 		queryTaskRecord();
 
@@ -352,9 +349,14 @@ function PcBuild_ZD(id) {// 构建中止
 
 function queryTaskRecord() {
     var task = CurrTask;
-    var buildName = CurrBuildName;
+    var buildName = CurrObj.def.buildName;
     var build_id = task.backBuildId;
-    $("#iso_tag").text(task.depTag);
+    $("#iso_name").text("");
+    $("#prod_proj").text("");
+    $("#start_time").text("");
+    $("#iso_tag").text("");
+    $("#cost").text("");
+    $("#status").text("");
     if (buildName != null || buildName != "" || build_id != ""
 	    || build_id != null) {
 	var ps = {
@@ -368,18 +370,20 @@ function queryTaskRecord() {
 		if (!CU.isEmpty(data)) {
 		    if (data.hasOwnProperty("error_code")) {
 			RS.showErrMsg(null, "查询失败");
-		    } else {
+		    } else if(data.duration!=""){
+			$("#iso_name").text(CurrObj.imageDef.imageName);
+			$("#prod_proj").text(CurrObj.product.code + '|' + CurrObj.project.code);
 			$("#start_time").text(data.started_at);
-			$("#cost").text(data.duration);
+			$("#iso_tag").text(task.depTag);
+			$("#cost").text(data.duration+"s");
 			$("#status").text(data.status);
-			var stdoutlist = data.stdout.split("\r\n");
+			var stdoutlist = data.stdout.split("\n");
 			var stdout = '';
 			$("#stdoutList").empty();
 			for (var i = 0; i < stdoutlist.length; i++) {
-			    stdout += "<li>" + stdoutlist[i] + "</li>";
+			    stdout += "<li style='width:676px; height:auto'>" + stdoutlist[i] + "</li>";
 			}
 			$("#stdoutList").append(stdout);
-			console.log(typeof (data.building));
 			if (data.building == false) {
 			    clearInterval(timer);
 			}else{
@@ -387,6 +391,8 @@ function queryTaskRecord() {
 			    timer = setInterval(queryTaskRecord(), 10000);	
 			}
 
+		    }else{
+			RS.showErrMsg(null, "查询失败");
 		    }
 
 		} else {
@@ -395,7 +401,7 @@ function queryTaskRecord() {
 	    }
 	})
     } else {
-
+	 RS.showErrMsg(null, "请求失败");
     }
  
 }

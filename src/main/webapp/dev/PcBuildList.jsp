@@ -106,54 +106,13 @@ String ContextPath = request.getContextPath();
 				<div class="diag_dos">
 					<div class="diag_left">
 						<ul id="iso_list">
-							<li class="active"><a href="javascript:void(0)">crm-web-1.0</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.9</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.8</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.7</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.6</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.5</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.4</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.3</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.2</a></li>
-							<li><a href="javascript:void(0)">crm-web-0.1</a></li>
+							
 						</ul>
 					</div>
 					<div class="diag_right">
 						<div id="mon_scroll" class="scrollDiv">
 							<ul id="stdoutList">
-								<li>jquery 滚动条 Scrollbar 设置浏览器默认滚动条样式</li>
-								<li>jquery 图片切换 switchable 带左右按钮控制分页索引图片切换</li>
-								<li>jquery powerFloat万能浮动框提示插件 支持图片、文字、ajax异步加载、表单验证等</li>
-								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
-								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
-								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
-								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
-								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
-								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
-								<li>1111111111111111111</li>
-								<li>2222222222222</li>
-								<li>3333333333333333</li>
-								<li>1111111111111111111</li>
-								<li>2222222222222</li>
-								<li>3333333333333333</li>
-								<li>4444</li>
 								
-								<li>jquery 滚动条 Scrollbar 设置浏览器默认滚动条样式</li>
-								<li>jquery 图片切换 switchable 带左右按钮控制分页索引图片切换</li>
-								<li>jquery powerFloat万能浮动框提示插件 支持图片、文字、ajax异步加载、表单验证等</li>
-								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
-								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
-								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
-								<li>jquery 弹出层插件 ThickBox 多功能弹出层插件支持图片、ajax、内嵌内容弹等</li>
-								<li>jquery 表单美化 jquery tzCheckbox 复选框美化 自定义默认复选框</li>
-								<li>jquery HTML5 幻灯片插件 用 Canvas 制作类似百叶窗拍摄快门摄影拍摄效果</li>
-								<li>1111111111111111111</li>
-								<li>2222222222222</li>
-								<li>3333333333333333</li>
-								<li>1111111111111111111</li>
-								<li>2222222222222</li>
-								<li>3333333333333333</li>
-								<li>4444</li>
 							</ul>
 						</div>
 						<div class="dos_list">
@@ -167,12 +126,12 @@ String ContextPath = request.getContextPath();
 							</ul>
 
 							<ul>
-								<li id="start_time">2016-02-30</li>
-								<li id="cost">366s</li>
-								<li id="iso_tag">Tag</li>
-								<li id="iso_name">镜像</li>
-								<li id="prod_proj">产品\工程</li>
-								<li id="status">状态</li>
+								<li id="start_time"></li>
+								<li id="cost"></li>
+								<li id="iso_tag"></li>
+								<li id="iso_name"></li>
+								<li id="prod_proj"></li>
+								<li id="status"></li>
 							</ul>
 						</div>
 					</div>

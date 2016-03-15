@@ -6,7 +6,7 @@ public class BuildTaskRecord {
 	private String repo_name;
 	private String build_id;
 	private boolean building;
-	private Integer duration;
+	private String duration;
 	private String started_at;
 	private String status;
 	private String stdout;
@@ -56,10 +56,10 @@ public class BuildTaskRecord {
 	public void setBuilding(boolean building) {
 		this.building = building;
 	}
-	public Integer getDuration() {
+	public String getDuration() {
 		return duration;
 	}
-	public void setDuration(Integer duration) {
+	public void setDuration(String duration) {
 		this.duration = duration;
 	}
 	public String getStarted_at() {

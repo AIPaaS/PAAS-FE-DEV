@@ -98,8 +98,6 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		BinaryUtils.checkEmpty(repo_name, "repo_name");
 		BinaryUtils.checkEmpty(build_id, "build_id");
 		BinaryUtils.checkEmpty(user.getMerchent().getMntCode(), "mntCode");
-		/*String param = "namespace={" + user.getMerchent().getMntCode() + "}&repo_name={" + repo_name + "}&build_id={"
-				+ build_id + "}";*/
 		JSONObject param=new JSONObject();
 		param.put("namespace", user.getMerchent().getMntCode());
 		param.put("repo_name", repo_name);
@@ -112,7 +110,6 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 			return record;
 		}
 		record = JSON.toObject(data, BuildTaskRecord.class);
-		//record.setStarted_at(DateUtils.parseFormat(record.getStarted_at()));
 		return record;
 	}
 
