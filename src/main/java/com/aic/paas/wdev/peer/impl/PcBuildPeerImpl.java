@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
-import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
 import com.aic.paas.wdev.peer.PcBuildPeer;
 import com.aic.paas.wdev.rest.PcBuildSvc;
 import com.aic.paas.wdev.util.HttpClientUtil;
-import com.aic.paas.wdev.util.HttpRequestUtil;
 import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.core.util.BinaryUtils;
 import com.binary.jdbc.Page;
@@ -148,12 +146,7 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		if(def == null) return 0;
 		
 		String address = paasTaskUrl+"/dev/buildMvc/deleteBuild"; //"http://localhost:16009/paas-task/dev/buildMvc/deleteBuild";
-		//String s1[] = {namespace};
-		//String s2[] = {repo_name};
-		//String param = "namespace="+s1+"&repo_name="+s2;
-		//String result  = HttpRequestUtil.sendPost(address, param);
-		
-		String param = "namespace={"+namespace+"}&repo_name={"+repo_name+"}";
+		String param = "namespace="+namespace+"&repo_name="+repo_name;
 		String result = null;
 		try {
 			result = HttpClientUtil.sendPostRequest(address, param);
@@ -166,7 +159,7 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		if(result!=null && "success".equals(result)){ //"status": "success", //error
 			return buildSvc.removeDefById(build_id);
 		}else{
-			return -1;
+			return -2;
 		}
 
 	}
