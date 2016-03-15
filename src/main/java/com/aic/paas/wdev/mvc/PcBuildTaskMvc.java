@@ -45,13 +45,13 @@ public class PcBuildTaskMvc {
 	}
 	
 	@RequestMapping("/updateBuildTaskStatusByBackId")
-	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response,Long buildDefId ,Long backBuildId, String alls){
+	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response,Long buildDefId ,String backBuildId, String alls){
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
 		String namespace = user.getMerchent().getMntCode();
-		String back_build_id = backBuildId.toString();
+		//String back_build_id = backBuildId.toString();
 		String repo_name = alls; //产品code/工程code/构建名
 		
-		String result = buildTaskPeer.updatePcBuildTaskApi(namespace, back_build_id, repo_name);
+		String result = buildTaskPeer.updatePcBuildTaskApi(namespace, backBuildId, repo_name);
 		int cc = -1;
 		if(result!=null && "aborted".equals(result)){  // "status": "aborted",  //error 为不存在此构建
 			 PcBuildTask record =new PcBuildTask();//更新的映射对象
