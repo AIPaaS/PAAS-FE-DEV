@@ -75,6 +75,7 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
 		record.setMntId(user.getMerchent().getId());
 		String userCode = user.getUserCode();
+		String mntCode = user.getMerchent().getMntCode();
 		
 		boolean isadd = record.getId() == null;
 		if(isadd) {
@@ -110,7 +111,7 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 			BinaryUtils.checkEmpty(record.getRespBranch(), "record.respBranch");
 			BinaryUtils.checkEmpty(record.getDepTag(), "record.depTag");
 		}
-		return buildSvc.saveOrUpdateDef(record,userCode);
+		return buildSvc.saveOrUpdateDef(record,userCode,mntCode);
 	}
 
 	
