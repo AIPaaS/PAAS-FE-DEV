@@ -50,7 +50,7 @@ String ContextPath = request.getContextPath();
 					
 					<div id="buildNameText" class="num_tit"></div>
 					
-					<input type="text" name="buildName" onblur="checkBuildFullName();" class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,200}" placeholder="必填">
+					<input type="text" name="buildName"  class="form-control" id="buildName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,200}" placeholder="必填">
 				</div>
 				<div class="col-lg-5 set_num">
 					<span>1-200位字母、数字、下划线或斜线的组合</span>
@@ -107,33 +107,6 @@ String ContextPath = request.getContextPath();
 					</div>
 				</div>
 			</div>
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="buildCmd" class="col-lg-2 control-label">构建命令<font color="red">*</font>:</label> -->
-<!-- 				<div class="col-lg-5"> -->
-<!-- 					<textarea name="buildCmd" rows="3" cols="3" class="form-control" required id="buildCmd" maxlength="1500"></textarea> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-5"> -->
-<!-- 					<span></span> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="autoBuild" class="col-lg-2 control-label"><input type="checkbox" name="isSupportHook" id="isSupportHook"></label> -->
-<!-- 				<div class="col-lg-5"> -->
-<!-- 					<span>是否支持代码提交自动触发构建 [build][package][deploy]</span> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-5"> -->
-<!-- 					<span></span> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="form-group"> -->
-<!-- 				<label for="isBuildImage" class="col-lg-2 control-label"><input type="checkbox" name="isBuildImage" id="isBuildImage"></label> -->
-<!-- 				<div class="col-lg-5"> -->
-<!-- 					<span>是否生成镜像(提示生成镜像保留10个最近版本)</span> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-5"> -->
-<!-- 					<span></span> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
 			<div id="div_isBuildImage_yes">
 				<div class="form-group">
 					<label for="imageDefId" class="col-lg-2 control-label">镜像定义<font color="red">*</font>:</label>
@@ -157,11 +130,11 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="depTag" class="col-lg-2 control-label">tag标记<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字">
+						<input type="text" name="depTag" class="form-control" required id="depTag" pattern=".{1,40}" placeholder="格式为X.X.X 且X为0~9的数字 (必填)">
 					</div>
 					<div class="col-lg-5">
-						<span class="tag_tit">请输入格式为X.X.X 且X为0~9的数字</span>
-						<span class="tag_success">输入格式正确</span>
+						<span class="tag_tit" style="color:red">输入格式有误!</span>
+						<span class="tag_success" style="color:green">输入格式正确!</span>
 					</div>
 				</div>
 				<div class="form-group"> 
@@ -183,29 +156,6 @@ String ContextPath = request.getContextPath();
 					</div>
 				</div>
 				
-				
-				
-				
-<!-- 				<div class="form-group"> -->
-<!-- 					<label for="isAutoPush1" class="col-lg-2 control-label"><input type="checkbox" name="isAutoPush1" id="isAutoPush1"></label> -->
-<!-- 					<div class="col-lg-5"> -->
-<!-- 						<span>是否自动推送到开发环境</span> -->
-<!-- 					</div> -->
-<!-- 					<div class="col-lg-5"> -->
-<!-- 						<span></span> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div id="div_isAutoPush1_yes"> -->
-<!-- 					<div class="form-group"> -->
-<!-- 						<label for="forcenter" class="col-lg-2 control-label">资源中心:<font color="red">*</font>:</label> -->
-<!-- 						<div class="col-lg-5"> -->
-<!-- 							<input type="text" name="forcenter" id="forcenter" class="form-control" readOnly /> -->
-<!-- 						</div> -->
-<!-- 						<div class="col-lg-5"> -->
-<!-- 							<span></span> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
 			</div>
 			<div class="form-group">
 				<div class="col-lg-offset-2 col-lg-10">
@@ -219,22 +169,3 @@ String ContextPath = request.getContextPath();
 <div id="sel_forcenter" style="width:300px;position:absolute;display:none;"></div>
 
 <jsp:include page="/layout/jsp/footer.jsp"></jsp:include>
-<script type="text/javascript">
-	$(function(){
-		//tag标记
-		$("#depTag").keyup(
-			function(){
-				var code = $(this).val();
-		   		var tag_reg = /^\d{1}.\d{1}.\d{1}$/;
-		   		if(tag_reg.test(code)){
-		   			$(".tag_success").show();
-		   			$(".tag_tit").hide();
-		   		}else{
-		   			$(".tag_tit").show();
-		   			$(".tag_success").hide();
-		   			}
-				}
-			);
-		
-	})
-</script>
