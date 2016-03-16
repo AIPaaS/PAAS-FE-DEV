@@ -93,7 +93,8 @@ function initListener() {
 	});
 	$("#projectId").bind("change", resetBuildFace);
 	//新添加构建名校验事件
-//	$("#buildName").bind("change", checkBuildFullName);
+	$("#buildName").bind("blur", checkBuildFullName);
+	$("#depTag").bind("blur", checkDepTag);
 	
 	$("#forcenter").bind("focus",function(){
 		var sul = $('#sel_forcenter');
@@ -316,10 +317,24 @@ function checkBuildFullName(){
 		}else{
 			$(".success_tit").show();
 			$(".error_tit").hide();
-			
-			
 		}
 	}});
 }
-
+function checkDepTag(){
+	var code = $("#depTag").val();
+	var tag_reg = /^\d{1}\.\d{1}\.\d{1}$/;
+	if(code==null || code==""){
+		$(".tag_success").hide();
+		$(".tag_tit").hide();
+		return;
+	}
+	if(tag_reg.test(code)){
+		$(".tag_success").show();
+		$(".tag_tit").hide();
+	}else{
+		$(".tag_tit").show();
+		$(".tag_success").hide();
+		$("#depTag").val("");
+	}
+}
 
