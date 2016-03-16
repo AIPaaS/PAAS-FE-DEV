@@ -105,11 +105,30 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		String data = HttpClientUtil.sendPostRequest(paasTaskUrl+"/dev/buildTaskMvc/queryTaskRecord",
 				param.toString());
 		if (data == null || data.equals("")) {
-			record.setError_code("99999");
+			record.setError_code("999999");
 			record.setError_info("请求失败");
 			return record;
 		}
 		record = JSON.toObject(data, BuildTaskRecord.class);
+		if(!record.getStatus().equals("")&&record.getStatus()!=null){
+			String status=record.getStatus();
+			switch (status) {
+			case "success":
+				record.setStatus("成功");
+				break;
+			case "error":
+				record.setStatus("失败");
+				break;
+			case "started":
+				record.setStatus("构建运行中");
+				break;
+			case "aborted":
+				record.setStatus("构建中断中");
+				break;
+			default:
+				break;
+			}
+		}
 		return record;
 	}
 
