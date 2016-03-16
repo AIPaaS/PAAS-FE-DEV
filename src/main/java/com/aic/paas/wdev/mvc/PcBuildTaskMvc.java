@@ -47,8 +47,7 @@ public class PcBuildTaskMvc {
 	@RequestMapping("/updateBuildTaskStatusByBackId")
 	public void updateBuildTaskStatusByBackId(HttpServletRequest request,HttpServletResponse response,Long buildDefId ,String backBuildId, String alls){
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
-		//String namespace = user.getMerchent().getMntCode();
-		String namespace = user.getUserCode();
+		String namespace = user.getMerchent().getMntCode()+"_____"+user.getUserCode();
 		//String back_build_id = backBuildId.toString();
 		String repo_name = alls; //产品code/工程code/构建名
 		
