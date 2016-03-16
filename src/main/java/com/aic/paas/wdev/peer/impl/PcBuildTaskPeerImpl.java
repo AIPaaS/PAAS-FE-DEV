@@ -97,9 +97,9 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser) SystemUtil.getLoginUser();
 		BinaryUtils.checkEmpty(repo_name, "repo_name");
 		BinaryUtils.checkEmpty(build_id, "build_id");
-		BinaryUtils.checkEmpty(user.getMerchent().getMntCode(), "mntCode");
+		BinaryUtils.checkEmpty(user.getUserCode(), "userCode");
 		JSONObject param=new JSONObject();
-		param.put("namespace", user.getMerchent().getMntCode());
+		param.put("namespace", user.getUserCode());
 		param.put("repo_name", repo_name);
 		param.put("build_id", build_id);
 		String data = HttpClientUtil.sendPostRequest(paasTaskUrl+"/dev/buildTaskMvc/queryTaskRecord",
