@@ -13,10 +13,10 @@ public interface PcBuildTaskSvc {
 	/**
 	 * 保存获更新，判断主键ID[id]是否存在, 存在则更新, 不存在则插入
 	 * @param record : PcBuildTask数据记录
-	 * @param mntCode : 租户code
+	 * @param namespace : 租户code+"+"+用户code
 	 * @return 当前回调BuildId[backBuildId]值
 	 */
-	public Long saveBuildTask(PcBuildTask record ,String mntCode);
+	public Long saveBuildTask(PcBuildTask record ,String namespace);
 	
 	/**
 	 * 查询历史构建记录 只查询最近的10个

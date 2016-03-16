@@ -53,11 +53,11 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	public Long saveBuildTask(PcBuildTask record){
 		BinaryUtils.checkEmpty(record, "record");
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
-		String mntCode = user.getMerchent().getMntCode();
+		String namespace = user.getMerchent().getMntCode() +"_____"+user.getUserCode();
 		record.setTaskUserId(user.getId());
 		record.setTaskUserName(user.getUserName());
 			
-		return buildTaskSvc.saveBuildTask(record,mntCode);
+		return buildTaskSvc.saveBuildTask(record,namespace);
 	}
 
 	@Override
@@ -133,6 +133,7 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		return record;
 	}
 
+
 	@Override
 	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc){
 		
@@ -164,6 +165,7 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		
 		return buildTaskSvc.updateBuildTaskByCallBack(pbtc,imgRespId);
 	}
+	 
 	 
 	
 	 
