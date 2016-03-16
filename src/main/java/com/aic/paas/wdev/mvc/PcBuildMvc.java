@@ -65,7 +65,8 @@ public class PcBuildMvc {
 	
 		System.out.println(id+"|"+alls);
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
-		String namespace = user.getMerchent().getMntCode();
+		//String namespace = user.getMerchent().getMntCode();
+		String namespace = user.getUserCode();
 		String repo_name = alls; //产品code/工程code/构建名
 		
 		Integer[] statuss = {2};  // {2,3} 1=就绪    2=构建运行中   3=构建已中断     4=成功   5=失败
