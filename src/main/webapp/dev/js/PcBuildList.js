@@ -3,7 +3,6 @@ var CurrTaskMap = {};
 var ParamPageNum = 1;
 var CurrObj;
 var CurrTask;
-var timer;
 
 
 function init() {
@@ -260,12 +259,12 @@ function queryBuildTaskRecord() {
 	buildDefId : buildDefId,
 	orders : orders
     };
+    $("#iso_list").empty();
     RS.ajax({
 	url : "/dev/buildtask/queryBuildTaskInfoList",
 	ps : ps,
 	cb : function(data) {
 	    if (!CU.isEmpty(data)) {
-		$("#iso_list").empty();
 		var iso_list = "";
 		for (var i = 0; i < data.length; i++) {
 		    CurrTaskMap["key_" + data[i].id] = data[i];
@@ -295,11 +294,17 @@ function queryBuildTaskRecord() {
 					+ this.id.substring(this.id
 						.lastIndexOf("_") + 1)];
 				CurrTask = task;
+				$("#stdoutList").empty();
+				$("#iso_tag").text(task.depTag);
 				queryTaskRecord();
 			    });
 		}
-
+		$("#iso_name").text(CurrObj.imageDef.imageName);
+		$("#prod_proj").text(
+			CurrObj.product.code + '|'
+				+ CurrObj.project.code);
 		CurrTask = data[0];
+		$("#iso_tag").text(data[0].depTag);
 		queryTaskRecord();
 
 		$("#buildTask_modal").modal("show");
@@ -349,12 +354,9 @@ function PcBuild_ZD(id) {// 构建中止
 function queryTaskRecord() {
     var task = CurrTask;
     var buildName = CurrObj.def.buildName;
+    if (buildName.substr(0, 1) == '/')
+	buildName = buildName.substr(1);
     var build_id = task.backBuildId;
-    $("#iso_name").text("");
-    $("#prod_proj").text("");
-    $("#start_time").text("");
-    $("#iso_tag").text("");
-    $("#cost").text("");
     $("#status").text("");
     if (buildName != null || buildName != "" || build_id != ""
 	    || build_id != null) {
@@ -369,29 +371,31 @@ function queryTaskRecord() {
 		if (!CU.isEmpty(data)) {
 		    if (data.hasOwnProperty("error_code")) {
 			RS.showErrMsg(null, "查询失败");
-		    } else if(data.duration!=""){
-			$("#iso_name").text(CurrObj.imageDef.imageName);
-			$("#prod_proj").text(CurrObj.product.code + '|' + CurrObj.project.code);
+		    } else if (data.duration != "") {
 			$("#start_time").text(data.started_at);
-			$("#iso_tag").text(task.depTag);
-			$("#cost").text(data.duration+"s");
 			$("#status").text(data.status);
 			var stdoutlist = data.stdout.split("\n");
 			var stdout = '';
-			$("#stdoutList").empty();
-			for (var i = 0; i < stdoutlist.length; i++) {
-			    stdout += "<li style='width:676px; height:auto'>" + stdoutlist[i] + "</li>";
+			var length=$(".stdout li").length;
+			for (var i = length; i < stdoutlist.length; i++) {
+			    stdout += "<li style='width:676px; height:auto'>"
+				    + stdoutlist[i] + "</li>";
 			}
 			$("#stdoutList").append(stdout);
 			if (data.building == false) {
-			    clearInterval(timer);
-			}else{
-			    clearInterval(timer);
-			    timer = setInterval(queryTaskRecord(), 10000);	
+			} else {
+			    setTimeout('queryTaskRecord()', 3000);
 			}
 
-		    }else{
-			RS.showErrMsg(null, "查询失败");
+		    } else if (data.duration == "") {
+			if (task.status == 2){
+			    RS.showErrMsg(null, '镜像构建在启动中，请稍后进行查询！');
+			   
+			    
+			}else{
+			    RS.showErrMsg(null, "查询失败,请稍后重试");
+			}
+			   
 		    }
 
 		} else {
@@ -400,9 +404,9 @@ function queryTaskRecord() {
 	    }
 	})
     } else {
-	 RS.showErrMsg(null, "请求失败");
+	RS.showErrMsg(null, "请求失败");
     }
- 
+
 }
 
  
