@@ -315,7 +315,7 @@ function checkBuildFullName(){
 			$(".success_tit").hide();
 			$("#buildName").val("");
 		}else{
-			$(".success_tit").show();
+//			$(".success_tit").show();
 			$(".error_tit").hide();
 		}
 	}});
@@ -329,7 +329,7 @@ function checkDepTag(){
 		return;
 	}
 	if(tag_reg.test(code)){
-		$(".tag_success").show();
+//		$(".tag_success").show();
 		$(".tag_tit").hide();
 	}else{
 		$(".tag_tit").show();
