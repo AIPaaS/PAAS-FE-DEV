@@ -134,6 +134,14 @@ function query(pageNum) {
 				});
 				$('#buildTable-tmpl').tmpl(r).appendTo("#buildTable");
 				for (var i = 0; i < data.length; i++) {
+					
+					//console.log(data);
+					if(data[i].lastBuildTask.status=="2"){
+						$("#thisBackBuildStatues_"+ data[i].def.id).val("2");
+						$("#thisBackBuildId_"+ data[i].def.id).val(data[i].lastBuildTask.backBuildId);
+						$("#a_build_task_gj_"+data[i].def.id).css("display", "none"); 
+						$("#a_build_task_zd_"+data[i].def.id).css("display", "inline-block");
+					}
 
 					// 构建
 					$("#a_build_task_gj_" + data[i].def.id).bind(
@@ -185,7 +193,6 @@ function query(pageNum) {
 
 //构建
 function gj_BuildDef(id){
-	
 	$("#thisBackBuildId_"+id).val("");//每次构建时情况上次的返回id
 	var backId = "";
 	var obj = CurrDataMap["key_"+id];
@@ -206,15 +213,7 @@ function gj_BuildDef(id){
 
 // 删除
 function removeBuildDef(id) {
-	// var gjname =$("#a_build_task_gjname_"+id).text().trim();//构建名
-	// var productCode
-	// =$("#s_build_task_gjproduct_"+id).text().trim();//对应产品code
-	// var projectCode
-	// =$("#s_build_task_gjproject_"+id).text().trim();//对应工程code
-	// var allS = productCode+"/"+projectCode+"/"+ gjname; //（产品code/工程code/构建名）
 	var allS = $("#a_build_task_gjname_" + id).text().trim();
-	//alert("removeBuildDef :id=" + id + ",allS(产品code/工程code/构建名) =" + allS)
-	
 	if (allS.substr(0,1)=='/') allS=allS.substr(1);
 	var obj = CurrDataMap["key_" + id];
 	CC.showMsg({
@@ -314,8 +313,8 @@ function queryBuildTaskRecord() {
 }
 
 function PcBuild_ZD(id) {// 构建中止
-	//alert("PcBuild_ZD :" + id)
 	var bId = $("#thisBackBuildId_" + id).val();// 获取BackBuildId
+	//alert("id:" + id+",bId:"+bId)
 	var allS = $("#a_build_task_gjname_" + id).text().trim(); // (产品code/工程code/构建名)
 	if (allS.substr(0,1)=='/') allS=allS.substr(1);
 	if (bId != null && bId != undefined && !bId == "") {

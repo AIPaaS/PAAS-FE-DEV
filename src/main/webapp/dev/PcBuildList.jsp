@@ -183,9 +183,11 @@ String ContextPath = request.getContextPath();
 		</td>
 
 		<td class="text-center">
+		
+		 <input type="hidden" id="thisBackBuildStatues_{{= row.def.id}}" />	
          <input type="hidden" id="thisBackBuildId_{{= row.def.id}}" />
 
-			<a id="a_build_task_zd_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">               
+			<a id="a_build_task_zd_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">     <!--hidden style="display:none" -->          
 				<span class="fa-stack"> 
 					<i class="fa fa-square fa-stack-2x"></i>
 					<i class="fa  fa-stack-1x fa-inverse"><font size="-3">中断</font></i>
