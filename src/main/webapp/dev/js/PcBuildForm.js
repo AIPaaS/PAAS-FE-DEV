@@ -1,7 +1,8 @@
 var CurrentId = "";
 var CurrentPageNum = 1;
 
-
+var TreeData = null;
+var SelResCenterId = null;
 
 var mouseenter = false;
 /** 初始化 **/
@@ -13,6 +14,7 @@ function init() {
 		if(!CU.isEmpty(CurrentId)) {
 			queryInfo();
 		}
+		$("#div_isBuildImage_yes").show();
 	});
 }
 
@@ -22,6 +24,7 @@ function initData(cb) {
 	setDisabled(false);
 	$("#div_isExternal_no").show();
 	$("#div_isBuildImage_yes").hide();
+	$("#div_isAutoPush1_yes").hide();
 	CurrentId = PRQ.get("id");
 	CurrentPageNum = PRQ.get("pageNum");
 	if(CU.isEmpty(CurrentPageNum)) CurrentPageNum = 1;
@@ -32,14 +35,30 @@ function initData(cb) {
 		var selhtml = PU.getSelectOptionsHtml("DV_PRODUCT_CODE");
 		$("#productId").html(selhtml);
 		
-		if(CU.isFunction(cb))cb();
+		RS.ajax({url:"/res/res/getResRegionDropListMap",ps:{addEmpty:false, addAttr:true,opts:"dc|rc"},cb:function(result) {
+			DROP["DV_DATA_CENTER_CODE"] = result["dc"];
+			DROP["DV_RES_CENTER_CODE"] = result["rc"];
+			var dropList = [];
+			for(var i=0; i<result["dc"].length; i++) dropList.push(result["dc"][i]);
+			for(var i=0; i<result["rc"].length; i++) dropList.push(result["rc"][i]);
+			TreeData = toTreeData(dropList);
+			
+			if(CU.isFunction(cb))cb();
+		}});
 	}});
 
 }
 
 /** 初始化组件 **/
 function initComponent() {
-	
+	$("#sel_forcenter").treeview({data:TreeData,color:"#428bca",selectedBackColor:"#f0f8ff",selectedColor:"#428bca",collapseIcon:"fa fa-minus-square-o",expandIcon:"fa fa-plus-square-o",onNodeSelected: function(e, node) {
+		if(node.param1==2 || node.param1=="2") {
+			SelResCenterId = node.id;
+			$("#forcenter").val(node.text);
+			$('#sel_forcenter').hide();
+		}
+	}});
+	$("#sel_forcenter").treeview("collapseAll", {silent:true});
 	
 }
 
@@ -52,19 +71,35 @@ function initListener() {
 		}else{
 			$("#imageDefId").val("");
 			$("#dockerFilePath").val("");
+			$("#isAutoPush1").val("");
 			$("#div_isBuildImage_yes").hide();
+		}
+	});
+	$("#isAutoPush1").bind("change",function(){
+		if($("#isAutoPush1").prop("checked")){
+			$("#div_isAutoPush1_yes").show();
+			
+		}else{
+			$("#div_isAutoPush1_yes").hide();
 		}
 	});
 	$("#productId").bind("change",function(){
 		var productId = $("#productId").val();
-		reloadProjectDropList(productId);
+		var item = CU.getDropItemRecord("DV_PRODUCT_CODE", productId);
+		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)) {
+			$("#buildNameText").text("/"+item.attributes.code);
+			reloadProjectDropList(productId);
+		}
 	});
 	$("#projectId").bind("change", resetBuildFace);
+	//新添加构建名校验事件
+	$("#buildName").bind("blur", checkBuildFullName);
+	$("#depTag").bind("blur", checkDepTag);
 	
 	$("#forcenter").bind("focus",function(){
 		var sul = $('#sel_forcenter');
-		sul.css("top", $("#forcenter").offset().top-$("#forcenter").height()+ParentHeaderHeight+10);
-		sul.css("left", $("#forcenter").offset().left-$("#forcenter").width()-90+ParentLeftWidth+5);
+		sul.css("top", $("#forcenter").offset().top-$("#forcenter").height());
+		sul.css("left", $("#forcenter").offset().left-$("#forcenter").width()/2);
 		sul.show(); 
 	});
 	$("#forcenter").on("blur", function() {
@@ -89,6 +124,31 @@ function initFace() {
 	
 }
 
+function toTreeData(dropList) {
+	var tree = [{}];
+	var pnobj = {};
+	for(var i=0; i<dropList.length; i++) {
+		var item = dropList[i];
+		var type = item.param1;
+		
+		item.id = item.code;
+		item.text = item.name;
+		
+		pnobj[item.code+"_"+type] = item;
+		
+		if(type == "1") {
+			item.icon = "fa fa-database";
+			tree.push(item);
+		}else {
+			item.icon = type=="2" ? "fa fa-sitemap" : "fa fa-flash";
+			var pn = pnobj[item.parentCode+"_"+(parseInt(type, 10)-1)];
+			if(CU.isEmpty(pn)) continue ;
+			if(CU.isEmpty(pn.childNodes)) pn.childNodes = [];
+			pn.childNodes.push(item);
+		}
+	}
+	return tree;
+}
 
 function setDisabled(isExternal){
 	if(isExternal){
@@ -135,6 +195,7 @@ function resetBuildFace(){
 			$("#respType1").prop("checked", item.attributes.respCodeType==1);
 			$("#respType2").prop("checked", item.attributes.respCodeType==2);
 			$("#respUrl").val(item.attributes.respCodeUrl);
+			$("#buildNameText").text("/"+$("#buildNameText").text().split("/")[1]+"/"+item.attributes.code+"/");
 		}
 	}
 	reloadDefDropList(isExternal, projectId);
@@ -155,7 +216,8 @@ function reloadDefDropList(isExternal, projectId, cb) {
 function queryInfo(){
 	RS.ajax({url:"/dev/build/queryDefInfoById",ps:{id:CurrentId},cb:function(rs) {
 		var isExternal = rs.def.isExternal;
-		$("#buildName").val(rs.def.buildName);
+		$("#buildNameText").text(rs.def.buildName.substr(0,rs.def.buildName.lastIndexOf("/")+1));
+		$("#buildName").val(rs.def.buildName.substr(rs.def.buildName.lastIndexOf("/")+1));
 		$("#imageName").val(rs.def.imageName);
 		if(isExternal){
 			setDisabled(true);
@@ -186,21 +248,20 @@ function queryInfo(){
 		}
 		$("#respUser").val(rs.def.respUser);
 		$("#respPwd").val(rs.def.respPwd);
-		$("#buildCmd").val(rs.def.buildCmd);
-		var isSupportHook = rs.def.isSupportHook;
-		if(isSupportHook) $("#isSupportHook").prop("checked",true);
-		var isBuildImage = rs.def.isBuildImage;
-		if(isBuildImage){
-			$("#isBuildImage").prop("checked",true);
-			reloadDefDropList(isExternal,rs.def.projectId,function(){
-				$("#imageDefId").val(rs.def.imageDefId);
-			});
-			
-			$("#dockerFilePath").val(rs.def.dockerFilePath);
-			$("#div_isBuildImage_yes").show();
-		}else{
-			$("#isBuildImage").prop("checked",false);
-			$("#div_isBuildImage_yes").hide();
+		reloadDefDropList(isExternal,rs.def.projectId,function(){
+			$("#imageDefId").val(rs.def.imageDefId);
+		});
+		$("#dockerFilePath").val(rs.def.dockerFilePath);
+		
+		$("#respBranch").val(rs.def.respBranch);
+		$("#depTag").val(rs.def.depTag);
+		var openEmail = rs.def.openEmail;
+		if(openEmail){
+			$("#openEmail").prop("checked",true);
+		}
+		var openCache = rs.def.openCache;
+		if(openCache){
+			$("#openCache").prop("checked",true);
 		}
 	}});
 }
@@ -209,6 +270,7 @@ function queryInfo(){
 function submitForm(){
 	var bean = PU.getFormData("form_buildDef");
 	
+	bean.buildName=$("#buildNameText").text()+$("#buildName").val();
 	bean.respType = $("#respType1").prop("checked") ? 1 : 2;
 	if(bean.isExternal){
 		delete bean.productId;
@@ -219,13 +281,9 @@ function submitForm(){
 		if(CU.isEmpty(productId)){CC.showMsg({msg:"所属产品不能为空"}); return;}
 		if(CU.isEmpty(projectId)){CC.showMsg({msg:"所属工程不能为空"}); return;}
 	}
-	if(bean.isBuildImage == 1){
 		if(CU.isEmpty(bean.imageDefId)){CC.showMsg({msg:"镜像定义不能为空"}); return;}
 		if(CU.isEmpty(bean.dockerFilePath)){CC.showMsg({msg:"DockerFilePath不能为空"}); return;}
-	}else{
-		delete bean.imageDefId;
-		delete bean.dockerFilePath;
-	}
+
 	
 	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
 	
@@ -236,6 +294,47 @@ function submitForm(){
 		window.location = url;
 	}});
 }
-
-
+/**
+ *校验构建名是否重复
+ */
+function checkBuildFullName(){
+	var buildName=$("#buildNameText").text()+$("#buildName").val();
+	var id="";
+	if(!CU.isEmpty(CurrentId)){
+		id= CurrentId;
+	} 
+	if(CU.isEmpty($("#buildName").val())){
+		$(".error_tit").hide();
+		$(".success_tit").hide();
+		return;
+	}
+	RS.ajax({url:"/dev/build/checkBuildFullName",ps:{id:id,buildName:buildName},cb:function(rs) {
+		var id=rs;
+		if(id==0){
+			$(".error_tit").show();
+			$(".success_tit").hide();
+			$("#buildName").val("");
+		}else{
+//			$(".success_tit").show();
+			$(".error_tit").hide();
+		}
+	}});
+}
+function checkDepTag(){
+	var code = $("#depTag").val();
+	var tag_reg = /^\d{1}\.\d{1}\.\d{1}$/;
+	if(code==null || code==""){
+		$(".tag_success").hide();
+		$(".tag_tit").hide();
+		return;
+	}
+	if(tag_reg.test(code)){
+//		$(".tag_success").show();
+		$(".tag_tit").hide();
+	}else{
+		$(".tag_tit").show();
+		$(".tag_success").hide();
+		$("#depTag").val("");
+	}
+}
 

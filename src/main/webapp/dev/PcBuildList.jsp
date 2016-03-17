@@ -12,37 +12,37 @@ String ContextPath = request.getContextPath();
 	<div class="col-lg-12">
 		<div class="main-box clearfix">
 			<div class="filter-block pull-left">
+				<div class="form-group pull-left">&nbsp;&nbsp;&nbsp;构建名:</div>
 				<div class="form-group pull-left">
-					&nbsp;构建名:
+					<input type="text" name="buildName" id="buildName"
+						class="form-control" style="width: 120px;">
 				</div>
+				<div class="form-group pull-left">产品:</div>
 				<div class="form-group pull-left">
-					<input type="text" name="buildName" id="buildName" class="form-control" style="width:100px;">
-				</div>
-				<div class="form-group pull-left">
-					产品:
-				</div>
-				<div class="form-group pull-left">
-					<select id="sel_productId" class="form-control" style="width:100px;">
+					<select id="sel_productId" class="form-control"
+						style="width: 120px;">
 					</select>
 				</div>
+				<div class="form-group pull-left">工程:</div>
 				<div class="form-group pull-left">
-					工程:
-				</div>
-				<div class="form-group pull-left">
-					<select id="sel_projectId" class="form-control" style="width:100px;">
+					<select id="sel_projectId" class="form-control"
+						style="width: 120px;">
 					</select>
 				</div>
+				<div class="form-group pull-left">是否生成镜像:</div>
 				<div class="form-group pull-left">
-						是否生成镜像:
-					</div>
-					<div class="form-group pull-left">
-						<select id="sel_isBuildImage" class="form-control" style="width:100px;">
-						</select>
-					</div>
-				<button id="btn_query" class="btn btn-primary"><i class="fa fa-search fa-lg"></i> 查询</button>
-				<button id="btn_add" class="btn btn-primary"> <i class="fa fa-plus-circle fa-lg"></i> 添加</button>
+					<select id="sel_isBuildImage" class="form-control"
+						style="width: 120px;">
+					</select>
+				</div>
+				<button id="btn_query" class="btn btn-primary btn_gj">
+					<i class="fa fa-search fa-lg"></i> 查询
+				</button>
+				<button id="btn_add" class="btn btn-primary btn_gj">
+					<i class="fa fa-plus-circle fa-lg"></i> 添加
+				</button>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -68,24 +68,22 @@ String ContextPath = request.getContextPath();
 							</tr>
 						</thead>
 						<tbody id="buildTable">
-							
+
 						</tbody>
 					</table>
 				</div>
 				<div class="row-fluid">
 					<div class="col-lg-6">
-						<label>
-							每页
-								<select name="selPageSize"  class="pagination" id="grid_pageSize" >
-									<option value="10">10</option>
-									<option value="15">15</option>
-									<option value="20" selected>20</option>
-									<option value="25">25</option>
-									<option value="30">30</option>
-									<option value="40">40</option>
-									<option value="50">50</option>
-								</select>
-							条记录
+						<label> 每页 <select name="selPageSize" class="pagination"
+							id="grid_pageSize">
+								<option value="10">10</option>
+								<option value="15">15</option>
+								<option value="20" selected>20</option>
+								<option value="25">25</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+								<option value="50">50</option>
+						</select> 条记录
 						</label>
 					</div>
 					<div class="col-lg-6">
@@ -94,7 +92,50 @@ String ContextPath = request.getContextPath();
 						</div>
 					</div>
 				</div>
-				
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="buildTask_modal" tabindex="-1" role="dialog"
+	aria-hidden="true">
+	<div class="modal-dialog" style="width: 900px;">
+		<div class="modal-content">
+			<div class="modal-body">
+				<span class="close new_close" data-dismiss="modal" aria-hidden="true">&times</span>
+				<div class="diag_dos">
+					<div class="diag_left">
+						<ul id="iso_list">
+							
+						</ul>
+					</div>
+					<div class="diag_right">
+						<div id="mon_scroll" class="scrollDiv">
+							<ul id="stdoutList" class="stdout">
+								
+							</ul>
+						</div>
+						<div class="dos_list">
+							<ul>
+								<li>开始时间</li>
+								<li>Tag</li>
+								<li>镜像</li>
+								<li>产品|工程</li>
+								<li>状态</li>
+							</ul>
+
+							<ul>
+								<li id="start_time"></li>
+								<li id="iso_tag"></li>
+								<li id="iso_name"></li>
+								<li id="prod_proj"></li>
+								<li id="status"></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -103,7 +144,10 @@ String ContextPath = request.getContextPath();
 <script id="buildTable-tmpl" type="text/x-jquery-tmpl">
 {{each(i,row) data}}
 	<tr>
-		<td class="text-center"><a href="<%=ContextPath%>/dispatch/mc/1030501?id={{= row.def.id}}&pageNum={{= pageNum}}" class="table-link" title="编辑">{{= row.def.buildName}}</a></td>
+		<td class="text-center">
+			<a id="a_build_task_gjname_{{= row.def.id}}" href="<%=ContextPath%>/dispatch/mc/1030501?id={{= row.def.id}}&pageNum={{= pageNum}}" class="table-link" title="编辑">{{= row.def.buildName}}</a>
+		</td>
+
 		<td class="text-center">
 			{{if !CU.isEmpty(row.product) && row.def.isExternal!=1}}
 				{{= row.product.name}}
@@ -117,7 +161,7 @@ String ContextPath = request.getContextPath();
 		<td class="text-center">{{html PU.getDropValue("V_PC_BUILD_DEF_IS_BUILD_IMAGE",row.def.isBuildImage,true)}}</td>
 		<td class="text-left">
 			{{if !CU.isEmpty(row.imageDef)}}
-				{{= row.imageDef.dirName}}/{{= row.imageDef.imageName}}
+				{{= row.imageDef.imageFullName}}
 			{{/if}}
 		</td>
 		<td class="text-center">
@@ -130,19 +174,32 @@ String ContextPath = request.getContextPath();
 				{{= row.lastBuildTask.codeVersion}}
 			{{/if}}
 		</td>
-		<td class="text-center">
+		<td class="text-center" id="td_build_task_msage_{{= row.def.id}}">
 			{{if !CU.isEmpty(row.lastBuildTask)}}
 				{{= PU.getDropValue("V_PC_BUILD_TASK_STATUS",row.lastBuildTask.status,false)}}
 			{{/if}}
 		</td>
+
 		<td class="text-center">
-			<a href="###" class="table-link" title="构建">
+		
+		 <input type="hidden" id="thisBackBuildStatues_{{= row.def.id}}" />	
+         <input type="hidden" id="thisBackBuildId_{{= row.def.id}}" />
+
+			<a id="a_build_task_zd_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">     <!--hidden style="display:none" -->          
+				<span class="fa-stack"> 
+					<i class="fa fa-square fa-stack-2x"></i>
+					<i class="fa  fa-stack-1x fa-inverse"><font size="-3">中断</font></i>
+				</span>
+			</a>
+
+			<a id="a_build_task_gj_{{= row.def.id}}" href="###" class="table-link" title="构建">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>
 					<i class="fa fa-cog fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
-			<a href="###" class="table-link" title="历史任务">
+
+			<a id="a_build_task_{{= row.def.id}}" href="###" class="table-link" title="历史任务">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>
 					<i class="fa fa-history fa-stack-1x fa-inverse"></i>
@@ -154,10 +211,12 @@ String ContextPath = request.getContextPath();
 					<i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
+
 		</td>
 	</tr>
 {{/each}}
 </script>
+ 
 
 
 

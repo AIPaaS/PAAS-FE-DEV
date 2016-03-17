@@ -30,7 +30,7 @@
 	<dubbox:rest id="DubboxRest_SysRoleSvc" interface="com.aic.paas.frame.cross.rest.SysRoleSvc" client="DubboRestClient_SYS" />
 	<dubbox:rest id="DubboxRest_SysOpSvc" interface="com.aic.paas.wdev.rest.SysOpSvc" client="DubboRestClient_SYS" />
 	
-	
+	<dubbox:rest id="DubboxRest_PcImageRepositorySvc" interface="com.aic.paas.wdev.rest.PcImageRepositorySvc" client="DubboRestClient_DEP" />
 	<dubbox:rest id="DubboxRest_PcCompRoomSvc" interface="com.aic.paas.wdev.rest.PcCompRoomSvc" client="DubboRestClient_DEP" />
 	<dubbox:rest id="DubboxRest_PcDataCenterSvc" interface="com.aic.paas.wdev.rest.PcDataCenterSvc" client="DubboRestClient_DEP" />
 	<dubbox:rest id="DubboxRest_PcResCenterSvc" interface="com.aic.paas.wdev.rest.PcResCenterSvc" client="DubboRestClient_DEP" />
@@ -39,6 +39,7 @@
 	
 	
 	<dubbox:rest id="DubboxRest_PcBuildSvc" interface="com.aic.paas.wdev.rest.PcBuildSvc" client="DubboRestClient_DEV" />
+	<dubbox:rest id="DubboxRest_PcBuildTaskSvc" interface="com.aic.paas.wdev.rest.PcBuildTaskSvc" client="DubboRestClient_DEV" />
 	<dubbox:rest id="DubboxRest_PcImageSvc" interface="com.aic.paas.wdev.rest.PcImageSvc" client="DubboRestClient_DEV" />
 	<dubbox:rest id="DubboxRest_PcProductSvc" interface="com.aic.paas.wdev.rest.PcProductSvc" client="DubboRestClient_DEV" />
 	<dubbox:rest id="DubboxRest_PcProjectSvc" interface="com.aic.paas.wdev.rest.PcProjectSvc" client="DubboRestClient_DEV" />

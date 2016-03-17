@@ -5,6 +5,7 @@ import java.util.List;
 import com.aic.paas.wdev.bean.CPcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.jdbc.Page;
 
 public interface PcBuildSvc {
@@ -91,7 +92,7 @@ public interface PcBuildSvc {
 	 * @param record : PcBuildDef数据记录
 	 * @return 当前记录主键[id]值
 	 */
-	public Long saveOrUpdateDef(PcBuildDef record);
+	public Long saveOrUpdateDef(PcBuildDef record,String userCode,String mntCode);
 	
 	
 	
@@ -103,6 +104,16 @@ public interface PcBuildSvc {
 	 * @return
 	 */
 	public int removeDefById(Long id);
-	
-
+	/**
+	 * 校验构建名是否已存在
+	 * @param record
+	 * @return
+	 */
+	public int checkBuildFullName(PcBuildDef record);
+	/**
+	 * 根据回调函数，查询所属机房的Id
+	 * @param pbtc 构建任务的回调对象
+	 * @return 该构建任务所属的构建定义的产品的所属机房的Id
+	 */
+	public String queryCompRoomIdByCallBack(PcBuildTaskCallBack pbtc);
 }

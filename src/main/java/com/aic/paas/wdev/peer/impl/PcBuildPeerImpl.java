@@ -1,5 +1,7 @@
 package com.aic.paas.wdev.peer.impl;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +13,19 @@ import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
 import com.aic.paas.wdev.peer.PcBuildPeer;
 import com.aic.paas.wdev.rest.PcBuildSvc;
+import com.aic.paas.wdev.util.HttpClientUtil;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.core.util.BinaryUtils;
 import com.binary.jdbc.Page;
 
 public class PcBuildPeerImpl implements PcBuildPeer {
 	
+	private String paasTaskUrl;
+	public void setPaasTaskUrl(String paasTaskUrl) {
+		if(paasTaskUrl != null) {
+			this.paasTaskUrl = paasTaskUrl.trim();
+		}
+	}
 	
 	@Autowired
 	PcBuildSvc buildSvc;
@@ -64,6 +74,8 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
 		record.setMntId(user.getMerchent().getId());
+		String userCode = user.getUserCode();
+		String mntCode = user.getMerchent().getMntCode();
 		
 		boolean isadd = record.getId() == null;
 		if(isadd) {
@@ -77,18 +89,11 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 			BinaryUtils.checkEmpty(record.getRespUrl(), "record.respUrl");
 			BinaryUtils.checkEmpty(record.getRespUser(), "record.respUser");
 			BinaryUtils.checkEmpty(record.getRespPwd(), "record.respPwd");
-			BinaryUtils.checkEmpty(record.getBuildCmd(), "record.buildCmd");
-			BinaryUtils.checkEmpty(record.getIsSupportHook(), "record.isSupportHook");
-			BinaryUtils.checkEmpty(record.getIsBuildImage(), "record.isBuildImage");
-			if(record.getIsBuildImage().intValue() == 1) {
-				BinaryUtils.checkEmpty(record.getImageDefId(), "record.imageDefId");
-				BinaryUtils.checkEmpty(record.getDockerFilePath(), "record.dockerFilePath");
-				BinaryUtils.checkEmpty(record.getIsAutoPush1(), "record.isAutoPush1");
-				if(record.getIsAutoPush1().intValue() == 1) {
-					BinaryUtils.checkEmpty(record.getDataCenterId(), "record.dataCenterId");
-					BinaryUtils.checkEmpty(record.getResCenterId(), "record.resCenterId");
-				}
-			}
+			
+			BinaryUtils.checkEmpty(record.getRespBranch(), "record.respBranch");
+			BinaryUtils.checkEmpty(record.getDepTag(), "record.depTag");
+			BinaryUtils.checkEmpty(record.getImageDefId(), "record.imageDefId");
+			BinaryUtils.checkEmpty(record.getDockerFilePath(), "record.dockerFilePath");
 		}else {
 			if(record.getBuildName() != null) BinaryUtils.checkEmpty(record.getBuildName(), "record.buildName");
 			if(record.getIsExternal() != null) BinaryUtils.checkEmpty(record.getIsExternal(), "record.isExternal");
@@ -98,39 +103,60 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 			if(record.getRespUrl() != null) BinaryUtils.checkEmpty(record.getRespUrl(), "record.respUrl");
 			if(record.getRespUser() != null) BinaryUtils.checkEmpty(record.getRespUser(), "record.respUser");
 			if(record.getRespPwd() != null) BinaryUtils.checkEmpty(record.getRespPwd(), "record.respPwd");
-			if(record.getBuildCmd() != null) BinaryUtils.checkEmpty(record.getBuildCmd(), "record.buildCmd");
-			if(record.getIsSupportHook() != null) BinaryUtils.checkEmpty(record.getIsSupportHook(), "record.isSupportHook");
-			if(record.getIsBuildImage() != null) BinaryUtils.checkEmpty(record.getIsBuildImage(), "record.isBuildImage");
 			if(record.getImageDefId() != null) BinaryUtils.checkEmpty(record.getImageDefId(), "record.imageDefId");
 			if(record.getDockerFilePath() != null) BinaryUtils.checkEmpty(record.getDockerFilePath(), "record.dockerFilePath");
-			if(record.getIsAutoPush1() != null) BinaryUtils.checkEmpty(record.getIsAutoPush1(), "record.isAutoPush1");
-			if(record.getDataCenterId() != null) BinaryUtils.checkEmpty(record.getDataCenterId(), "record.dataCenterId");
-			if(record.getResCenterId() != null) BinaryUtils.checkEmpty(record.getResCenterId(), "record.resCenterId");
-			if(record.getIsBuildImage().intValue() == 1) {
-				BinaryUtils.checkEmpty(record.getImageDefId(), "record.imageDefId");
-				BinaryUtils.checkEmpty(record.getDockerFilePath(), "record.dockerFilePath");
-				BinaryUtils.checkEmpty(record.getIsAutoPush1(), "record.isAutoPush1");
-				if(record.getIsAutoPush1().intValue() == 1) {
-					BinaryUtils.checkEmpty(record.getDataCenterId(), "record.dataCenterId");
-					BinaryUtils.checkEmpty(record.getResCenterId(), "record.resCenterId");
-				}
-			}
+			BinaryUtils.checkEmpty(record.getImageDefId(), "record.imageDefId");
+			BinaryUtils.checkEmpty(record.getDockerFilePath(), "record.dockerFilePath");
+			
+			BinaryUtils.checkEmpty(record.getRespBranch(), "record.respBranch");
+			BinaryUtils.checkEmpty(record.getDepTag(), "record.depTag");
 		}
-		return buildSvc.saveOrUpdateDef(record);
+		return buildSvc.saveOrUpdateDef(record,userCode,mntCode);
 	}
 
 	
 	
 	
 	@Override
-	public int removeDefById(Long id) {
-		BinaryUtils.checkEmpty(id, "id");
-		PcBuildDef def = buildSvc.queryDefById(id);
+	public int removeDefById(Long build_id,String namespace,String repo_name) {
+		BinaryUtils.checkEmpty(build_id, "build_id");
+
+		PcBuildDef def = buildSvc.queryDefById(build_id);
 		if(def == null) return 0;
-		return buildSvc.removeDefById(id);
+		
+		String address = paasTaskUrl+"/dev/buildMvc/deleteBuild"; //"http://localhost:16009/paas-task/dev/buildMvc/deleteBuild";
+		String param = "namespace="+namespace+"&repo_name="+repo_name;
+		String result = null;
+		try {
+			result = HttpClientUtil.sendPostRequest(address, param);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+		if(result!=null && "success".equals(result)){ //"status": "success", //error
+			return buildSvc.removeDefById(build_id);
+		}else{
+			return -2;
+		}
+
+	}
+
+
+
+
+	@Override
+	public int checkBuildFullName(PcBuildDef record) {
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		record.setMntId(user.getMerchent().getId());
+		return buildSvc.checkBuildFullName(record);
 	}
 	
-	
+	@Override
+	public String queryCompRoomIdByCallBack(PcBuildTaskCallBack pbtc){
+		return buildSvc.queryCompRoomIdByCallBack(pbtc);
+	}
 	
 	
 

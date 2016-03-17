@@ -18,7 +18,14 @@
   	<!-- dev -->
    	<bean class="com.aic.paas.wdev.peer.impl.PcProductPeerImpl" />
    	<bean class="com.aic.paas.wdev.peer.impl.PcProjectPeerImpl" />
-   	<bean class="com.aic.paas.wdev.peer.impl.PcBuildPeerImpl" />
+   	
+   	<bean class="com.aic.paas.wdev.peer.impl.PcBuildPeerImpl" >
+   	  <property name="paasTaskUrl" value="${paas-task.interface.url}" />
+   	</bean>
+   	<bean class="com.aic.paas.wdev.peer.impl.PcBuildTaskPeerImpl" >
+   	 <property name="paasTaskUrl" value="${paas-task.interface.url}" />
+   	</bean>
+   	
    	<bean class="com.aic.paas.wdev.peer.impl.PcImagePeerImpl" />
     
     

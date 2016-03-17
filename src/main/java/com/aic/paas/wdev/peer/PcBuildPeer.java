@@ -5,6 +5,7 @@ import java.util.List;
 import com.aic.paas.wdev.bean.CPcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDef;
 import com.aic.paas.wdev.bean.PcBuildDefInfo;
+import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.jdbc.Page;
 
 public interface PcBuildPeer {
@@ -63,6 +64,17 @@ public interface PcBuildPeer {
 	 * @param id
 	 * @return
 	 */
-	public int removeDefById(Long id);
-
+	public int removeDefById(Long build_id,String namespace,String repo_name);
+	/**
+	 * 校验构建名是否已存在
+	 * @param record
+	 * @return
+	 */
+	public int checkBuildFullName(PcBuildDef record);
+	/**
+	 * 根据回调函数，查询所属机房的Id
+	 * @param pbtc 构建任务的回调对象
+	 * @return 该构建任务所属的构建定义的产品的所属机房的Id
+	 */
+	public String queryCompRoomIdByCallBack(PcBuildTaskCallBack pbtc);
 }
