@@ -87,7 +87,15 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	public String updatePcBuildTaskApi(String namespace, String back_build_id, String repo_name) {
 		String address = paasTaskUrl+"/dev/buildTaskMvc/stopBuilding"; 
 		String param = "namespace="+namespace+"&build_id="+back_build_id+"&repo_name="+repo_name;	
-		String result  = HttpRequestUtil.sendPost(address, param);
+		//String result  = HttpRequestUtil.sendPost(address, param);
+		String result = null;
+		try {
+			result = HttpClientUtil.sendPostRequest(address, param);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 	
