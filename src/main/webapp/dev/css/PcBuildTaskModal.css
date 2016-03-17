@@ -26,9 +26,9 @@ dd{ margin: 0;}
 .diag_left ul li:last-child:after{height:0px;padding-top:0px;}
 .diag_left li.active a,.diag_left ul li a:active,.diag_left ul li a:hover{text-decoration:none;color:#1abd9e;}
 .diag_right{margin-left:190px;}
-.dos_list ul li{width:118px;float:left;font-size:12px;color:#333;font-weight:normal;}
+.dos_list ul li{width:20%;float:left;font-size:12px;color:#333;font-weight:normal;}
 .dos_list ul:nth-child(1) li{color:#a8a8a8;}
-.scrollDiv{height:436px;background:#000;line-height:25px;overflow:auto;width:98%;margin:10px auto 0px;}
+.scrollDiv{height:436px;background:#000;line-height:25px;overflow:auto;width:98%;margin:10px auto;}
 .scrollDiv li{width:100%;word-break:break-all;height:25px;padding-left:30px;color:#fff;text-align:left;font-weight:normal;color:#5aa660;}
 .modal-body{padding:0px;}
 .new_close{position:absolute;z-index:3;right:0px;width:40px;height:40px;-webkit-border-radius:50%;background:#fff;border:1px solid #dedede;
