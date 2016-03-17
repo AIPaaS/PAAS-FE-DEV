@@ -111,23 +111,21 @@ String ContextPath = request.getContextPath();
 					</div>
 					<div class="diag_right">
 						<div id="mon_scroll" class="scrollDiv">
-							<ul id="stdoutList">
+							<ul id="stdoutList" class="stdout">
 								
 							</ul>
 						</div>
 						<div class="dos_list">
 							<ul>
 								<li>开始时间</li>
-								<li>耗时</li>
 								<li>Tag</li>
 								<li>镜像</li>
-								<li>产品\工程</li>
+								<li>产品|工程</li>
 								<li>状态</li>
 							</ul>
 
 							<ul>
 								<li id="start_time"></li>
-								<li id="cost"></li>
 								<li id="iso_tag"></li>
 								<li id="iso_name"></li>
 								<li id="prod_proj"></li>
