@@ -149,7 +149,7 @@ function query(pageNum) {
 								var obj = CurrDataMap["key_"
 										+ this.id.substring(this.id
 												.lastIndexOf("_") + 1)];
-								gj_BuildDef(obj.def.id);
+								gj_BuildDef(obj.def.id,obj.def.depTag,obj.def.imageDefId,obj.def.buildName,obj.imageDef.imageFullName);
 							});
 
 					// 历史
@@ -191,12 +191,12 @@ function query(pageNum) {
 }
 
 //构建
-function gj_BuildDef(id){
+function gj_BuildDef(id,depTag,imageDefId,imageDefId,buildName,imageFullName){
 	$("#thisBackBuildId_"+id).val("");//每次构建时情况上次的返回id
 	var backId = "";
 	var obj = CurrDataMap["key_"+id];
 		
-	RS.ajax({url:"/dev/buildtask/saveBuildTask",ps:{id:id},cb:function(data) {
+	RS.ajax({url:"/dev/buildtask/saveBuildTask",ps:{id:id,"depTag":depTag,"imageDefId":imageDefId,"buildName":buildName,"imageFullName":imageFullName},cb:function(data) {
 		 //调用完ajax返回的BackBuildId值
 		backId = data;
 
