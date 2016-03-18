@@ -188,7 +188,7 @@ String ContextPath = request.getContextPath();
 			<a id="a_build_task_zd_{{= row.def.id}}" href="###" class="table-link" title="中段" style="display:none">     <!--hidden style="display:none" -->          
 				<span class="fa-stack"> 
 					<i class="fa fa-square fa-stack-2x"></i>
-					<i class="fa  fa-stack-1x fa-inverse"><font size="-3">中断</font></i>
+					<i class="fa fa-pause fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
 
