@@ -99,7 +99,7 @@ function query(pageNum){
 }
 
 function removeImageDef(id){
-	alert(id)
+	//alert(id)
 	var obj = CurrDataMap["key_"+id];
 	CC.showMsg({msg:"您确定要删除镜像[<font color='blue'>"+obj.def.imageFullName+"</font>]吗?",option:2,callback:function(r) {
 		if(r != "ok") return ;
