@@ -215,12 +215,12 @@ public class PcImagePeerImpl implements PcImagePeer {
 	
 	@Override
 	public String deployImage2Test(Long imageId, Long dataCenterId, Long resCenterId, String remark) {
-		return deployImage(imageId, ImageStatus.DEV, ImageStatus.TEST, dataCenterId, resCenterId, remark);
+		return deployImage(imageId, ImageStatus.SNAPSHOOT, ImageStatus.TEST, dataCenterId, resCenterId, remark);
 	}
 	
 	@Override
 	public String deployImage2Release(Long imageId, Long dataCenterId, Long resCenterId, String remark) {
-		return deployImage(imageId, ImageStatus.TEST, ImageStatus.RELEASE, dataCenterId, resCenterId, remark);
+		return deployImage(imageId, ImageStatus.SNAPSHOOT, ImageStatus.RELEASE, dataCenterId, resCenterId, remark);
 	}
 	
 	

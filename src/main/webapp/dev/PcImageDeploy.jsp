@@ -119,7 +119,7 @@ String ContextPath = request.getContextPath();
 					</a>
 				{{/if}}
 				{{if !CU.isEmpty(row.deployingCount)&&row.deployingCount>0}}
-					<a id="a_deploy_status_{{= row.image.id}}" href="<%=ContextPath%>/dispatch/mc/1030701?id={{= row.image.id}}"><img src="<%=ContextPath%>/layout/img/loading_2.gif" style="width:26px;height:26px;"></img></a>
+					<a id="a_deploy_status_{{= row.image.id}}" href="<%=ContextPath%>/dispatch/mc/1030701?id={{= row.image.id}}"><img src="<%=ContextPath%>/layout/img/task_loading.gif" style="width:26px;height:26px;"></img></a>
 				{{else}}
 					<a id="a_deploy_status_{{= row.image.id}}" href="<%=ContextPath%>/dispatch/mc/1030701?id={{= row.image.id}}" class="table-link" title="发布状态">
 						<span class="fa-stack">
