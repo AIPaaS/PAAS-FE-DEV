@@ -186,6 +186,9 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	 
 	
 	public List<PcBuildTask> selectTaskListByCdt(CPcBuildTask cdt,String orders){
+		if(BinaryUtils.isEmpty(cdt) ){
+			return null;
+		}
 		return buildTaskSvc.selectTaskListByCdt(cdt, orders);
 	}
 	
