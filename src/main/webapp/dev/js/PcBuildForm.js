@@ -64,6 +64,9 @@ function initComponent() {
 
 /** 对组件设置监听 **/
 function initListener() {
+	$("#isExternal").bind("click", function(){
+		$("#buildNameText").text("");
+	});
 	$("#isExternal").bind("change", resetBuildFace);
 	$("#isBuildImage").bind("change",function(){
 		if($("#isBuildImage").prop("checked")){
