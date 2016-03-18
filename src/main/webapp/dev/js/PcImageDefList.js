@@ -99,11 +99,21 @@ function query(pageNum){
 }
 
 function removeImageDef(id){
+	alert(id)
 	var obj = CurrDataMap["key_"+id];
 	CC.showMsg({msg:"您确定要删除镜像[<font color='blue'>"+obj.def.imageFullName+"</font>]吗?",option:2,callback:function(r) {
 		if(r != "ok") return ;
-		RS.ajax({url:"/dev/image/removeDefById",ps:{id:id},cb:function() {
-			query(ParamPageNum);
+		RS.ajax({url:"/dev/image/removeDefById",ps:{id:id},cb:function(data) {
+			
+			if (data != null && data != undefined && data=="-1") {
+				 //RS.showErrMsg(null, "Code:=" + data + "删除失败！");
+				alert("Code:=" + data + "该镜像定义存在  构建中的任务，拒绝删除！")
+				return false;
+			} else {
+				alert("Code:=" + data + "删除成功")
+				query(ParamPageNum);
+			}
+			
 		}});
 	}});
 }
