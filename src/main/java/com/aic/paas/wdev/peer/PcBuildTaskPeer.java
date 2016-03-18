@@ -16,9 +16,11 @@ public interface PcBuildTaskPeer {
 	/**
 	 * 保存获更新，判断主键ID[id]是否存在, 存在则更新, 不存在则插入
 	 * @param record : PcBuildTask数据记录
+	 * @param buildName : 构建名称
+	 * @param imageFullName :  镜像全名
 	 * @return 当前回调BuildId[backBuildId]值
 	 */
-	public Long saveBuildTask(PcBuildTask pbt);
+	public Long saveBuildTask(PcBuildTask pbt,String buildName,String imageFullName);
 	
 	
 	/**
