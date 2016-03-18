@@ -292,7 +292,6 @@ function queryBuildTaskRecord() {
 			    function() {
 				$(this).addClass("active").siblings()
 					.removeClass("active");
-				clearInterval(timer);
 				var task = CurrTaskMap["key_"
 					+ this.id.substring(this.id
 						.lastIndexOf("_") + 1)];
