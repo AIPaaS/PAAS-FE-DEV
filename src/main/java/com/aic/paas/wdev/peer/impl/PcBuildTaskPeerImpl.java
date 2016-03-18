@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
@@ -22,14 +24,13 @@ import com.aic.paas.wdev.rest.PcBuildSvc;
 import com.aic.paas.wdev.rest.PcBuildTaskSvc;
 import com.aic.paas.wdev.rest.PcImageRepositorySvc;
 import com.aic.paas.wdev.util.HttpClientUtil;
-import com.aic.paas.wdev.util.HttpRequestUtil;
 import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.core.util.BinaryUtils;
 import com.binary.json.JSON;
 import com.binary.json.JSONObject;
 
 public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
-	
+	static final Logger logger = LoggerFactory.getLogger(PcBuildTaskPeerImpl.class);
 	private String paasTaskUrl;
 	public void setPaasTaskUrl(String paasTaskUrl) {
 		if(paasTaskUrl != null) {
@@ -50,14 +51,22 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	PcImageRepositorySvc imageRepositorySvc;
 	
 	
-	public Long saveBuildTask(PcBuildTask record){
+	public Long saveBuildTask(PcBuildTask record,String buildName,String imageFullName){
 		BinaryUtils.checkEmpty(record, "record");
+		BinaryUtils.checkEmpty(buildName, "buildName");
+		BinaryUtils.checkEmpty(imageFullName, "imageFullName");
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
 		String namespace = user.getMerchent().getMntCode() +"_____"+user.getUserCode();
 		record.setTaskUserId(user.getId());
 		record.setTaskUserName(user.getUserName());
-			
-		return buildTaskSvc.saveBuildTask(record,namespace);
+		Long backBuildId = 0l;
+		try {
+			backBuildId =  buildTaskSvc.saveBuildTask(record,namespace,buildName,imageFullName);
+		} catch (Exception e) {
+			logger.error("", e);
+		}
+		return backBuildId;
+		
 	}
 
 	@Override

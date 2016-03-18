@@ -30,11 +30,13 @@ public class PcBuildTaskMvc {
 	
 	
 	@RequestMapping("/saveBuildTask")
-	public void  saveBuildTask(HttpServletRequest request,HttpServletResponse response, Long id){
+	public void  saveBuildTask(HttpServletRequest request,HttpServletResponse response, Long id,String depTag,String imageDefId,String buildName,String imageFullName){
 		
 		PcBuildTask pbt = new PcBuildTask();
 		pbt.setBuildDefId(id);
-		Long backBuildId = buildTaskPeer.saveBuildTask(pbt);
+		pbt.setDepTag(depTag);
+		pbt.setImageDefId(Long.parseLong(imageDefId));
+		Long backBuildId = buildTaskPeer.saveBuildTask(pbt,buildName,imageFullName);
 		ControllerUtils.returnJson(request, response, backBuildId);
 	}
 	

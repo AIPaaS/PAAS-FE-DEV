@@ -12,11 +12,13 @@ public interface PcBuildTaskSvc {
 
 	/**
 	 * 保存获更新，判断主键ID[id]是否存在, 存在则更新, 不存在则插入
-	 * @param record : PcBuildTask数据记录
-	 * @param namespace : 租户code+"+"+用户code
-	 * @return 当前回调BuildId[backBuildId]值
+	 * @param record : PcBuildDef数据记录
+	 * @param namespace :  租户code+"+"+用户code
+	 * @param buildName : 构建名称
+	 * @param imageFullName :  镜像全名
+	 * @return backBuildId 回调的构建Id
 	 */
-	public Long saveBuildTask(PcBuildTask record ,String namespace);
+	public Long saveBuildTask(PcBuildTask record,String namespace,String buildName,String imageFullName) ;
 	
 	/**
 	 * 查询历史构建记录 只查询最近的10个
