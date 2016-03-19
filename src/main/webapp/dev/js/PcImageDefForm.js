@@ -149,9 +149,10 @@ function submitForm(){
 	}
 	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
 	RS.ajax({url:"/dev/image/saveOrUpdateDef",ps:bean,cb:function(r) {
-		alert("code:"+r);
+		//alert("code:"+r);
 		if(r!=null && r!=undefined && r=="-999999"){
-			alert("保存失败，ImageFullName重复！请修改后重试")
+			//alert("保存失败，ImageFullName重复！请修改后重试");
+			 RS.showErrMsg(null, "Code:=" + r + "保存失败，ImageFullName重复！请修改后重试");
 		}else{
 			var url = ContextPath+"/dispatch/mc/10308";
 			if(!CU.isEmpty(CurrentPageNum)) url += "?pageNum="+CurrentPageNum;

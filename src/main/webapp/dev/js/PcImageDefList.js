@@ -106,11 +106,12 @@ function removeImageDef(id){
 		RS.ajax({url:"/dev/image/removeDefById",ps:{id:id},cb:function(data) {
 			
 			if (data != null && data != undefined && data=="-1") {
-				 //RS.showErrMsg(null, "Code:=" + data + "删除失败！");
-				alert("Code:=" + data + "该镜像定义存在  构建中的任务，拒绝删除！")
+				 RS.showErrMsg(null, "Code:=" + data + "该镜像定义存在  构建中的任务，拒绝删除！");
+				//alert("Code:=" + data + "该镜像定义存在  构建中的任务，拒绝删除！")
 				return false;
 			} else {
-				alert("Code:=" + data + "删除成功")
+				//alert("Code:=" + data + "删除成功")
+				CC.showMsg({msg:"Code:=" + data + "删除成功"});
 				query(ParamPageNum);
 			}
 			
