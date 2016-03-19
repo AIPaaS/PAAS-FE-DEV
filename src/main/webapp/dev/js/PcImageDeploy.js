@@ -24,8 +24,8 @@ function init() {
 function initData(cb) {
 	ParamPageNum = PRQ.get("pageNum");
 	if(CU.isEmpty(ParamPageNum)) ParamPageNum = 1;
-//	var selhtml = PU.getSelectOptionsHtml("V_PC_IMAGE_STATUS");
-//	$("#status").html(selhtml);
+	var selhtml = PU.getSelectOptionsHtml("V_PC_IMAGE_STATUS");
+	$("#status").html(selhtml);
 	RS.ajax({url:"/dev/product/getProductDropList",ps:{addEmpty:true, addAttr:true},cb:function(rs) {
 		DROP["DV_PRODUCT_CODE"] = rs;
 		var selhtml = PU.getSelectOptionsHtml("DV_PRODUCT_CODE");
@@ -85,7 +85,7 @@ function initListener() {
 		query();
 	});
 	$("#projectId").bind("change",function(){query();});
-//	$("#status").bind("change",function(){query();});
+	$("#status").bind("change",function(){query();});
 	$("#btn_query").bind("click",function(){query();});
 	$("#grid_pageSize").bind("change",function(){query();});
 }
@@ -145,7 +145,7 @@ function query(pageNum){
 	var imageFullName = $("#imageFullName").val();
 	var productId = $("#productId").val();
 	var projectId = $("#projectId").val();
-	var status = 1;
+	var status = $("#status").val();
 	var orders = "ID";
 	
 	var ps = {pageNum:pageNum,pageSize:pageSize,imageFullName:imageFullName,productId:productId,projectId:projectId,status:status,orders:orders};
@@ -174,6 +174,10 @@ function query(pageNum){
 			for(var i=0; i<data.length; i++) {
 				$("#a_deploy_image_"+data[i].image.id).bind("click",function() {
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
+					if(obj.image.status!=1){
+						CC.showMsg({msg:"只能从快照发布镜像！"});
+						return;
+					}
 					SelLinkCenter = $(this);
 					SelOpenCenter = $("#sel_forcenter_env"+obj.image.status);
 					showResCenter();

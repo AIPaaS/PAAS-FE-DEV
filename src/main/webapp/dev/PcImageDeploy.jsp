@@ -31,12 +31,12 @@ String ContextPath = request.getContextPath();
 					<div class="form-group pull-left">
 						<select id="projectId" class="form-control" style="width:120px;"></select>
 					</div>
-<!-- 					<div class="form-group pull-left">环境:</div> -->
-<!-- 						<div class="form-group pull-left"> -->
-<!-- 							<select id="status" class="form-control" style="width: 120px;"></select> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-				<button id="btn_query" class="btn btn-primary" style="margin-top:11px;margin-left:47px"><i class="fa fa-search fa-lg"></i> 查询</button>
+					<div class="form-group pull-left">环境:</div>
+						<div class="form-group pull-left">
+							<select id="status" class="form-control" style="width: 120px;"></select>
+						</div>
+					</div>
+				<button id="btn_query" class="btn btn-primary" ><i class="fa fa-search fa-lg"></i> 查询</button>
 			</div>
 		</div>
 	</div>
