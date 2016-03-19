@@ -15,5 +15,15 @@ public interface PcImageDefSvc {
 	 * @return
 	 */
 	public List<PcImageDef> selectTaskListByCdt(CPcImageDef cid,String orders);
+	
+	
+	/**
+	 * aic.tsd_hyh  2016.03.19
+	 * 根据状态 mntId, imageFullName 去查 PC_IMAGE_DEF表
+	 * @param mntId
+	 * @param imageFullName
+	 * @return PcImageDef
+	 */
+	public PcImageDef selectDefByFullName(Long mntId, String imageFullName);
 
 }

@@ -39,6 +39,12 @@ public class PcImageDefPeerImpl implements PcImageDefPeer {
 	}
 
 
+	@Override
+	public PcImageDef selectDefByFullName(Long mntId, String imageFullName) {
+		return imageDefSvc.selectDefByFullName(mntId, imageFullName);
+	}
+
+
 
 	
 	
