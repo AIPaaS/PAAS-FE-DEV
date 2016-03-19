@@ -111,7 +111,7 @@ function removeImageDef(id){
 				return false;
 			} else {
 				//alert("Code:=" + data + "删除成功")
-				CC.showMsg({msg:"Code:=" + data + "删除成功"});
+				//CC.showMsg({msg:"Code:=" + data + "删除成功"});
 				query(ParamPageNum);
 			}
 			
