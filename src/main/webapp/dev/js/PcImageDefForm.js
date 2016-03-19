@@ -36,6 +36,7 @@ function initComponent() {
 /** 对组件设置监听 **/
 function initListener() {
 	$("#isExternal").bind("change",function(){
+		$("#imageLockName").text("");
 		if($("#isExternal").prop("checked")){
 			$("#productId").val("");
 			$("#projectId").val("");
@@ -48,8 +49,29 @@ function initListener() {
 	});
 	$("#productId").bind("change",function(){
 		var productId = $("#productId").val();
+		var item = CU.getDropItemRecord("DV_PRODUCT_CODE", productId);
 		reloadProjectDropList(productId);
+		
+		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)) {
+			$("#imageLockName").text("/"+item.attributes.code);
+		}else{
+			$("#imageLockName").text("");
+		}
 	});
+	
+	
+	
+	
+	$("#projectId").bind("change",function(){
+		var projectId = $("#projectId").val();
+		var item = CU.getDropItemRecord("DV_PROJECT_CODE", projectId);
+		if(!CU.isEmpty(item) && !CU.isEmpty(item.attributes)) {
+			$("#imageLockName").text("/"+$("#imageLockName").text().split("/")[1]+"/"+item.attributes.code+"/");
+		}else{
+			$("#imageLockName").text("/"+$("#imageLockName").text().split("/")[1]);
+		}
+	});
+
 	$("#form_imageDef").submit(function(e){
 	    e.preventDefault();
 	    submitForm();
@@ -103,9 +125,13 @@ function queryInfo(){
 /**提交表单**/
 function submitForm(){
 	var bean = PU.getFormData("form_imageDef");
-	bean.isExternal = 1;
+	bean.isExternal = 1; //1=是 0=否
 	var isChecked = $("#isExternal").prop("checked");
-	if(!isChecked) bean.isExternal = 0;
+	if(!isChecked){
+		bean.isExternal = 0;
+		bean.dirName=$("#imageLockName").text()+$("#dirName").val();
+	} 
+		
 	if(isChecked){
 		bean.productId = 0;
 		bean.projectId = 0;
@@ -123,11 +149,15 @@ function submitForm(){
 	}
 	if(!CU.isEmpty(CurrentId)) bean.id = CurrentId;
 	RS.ajax({url:"/dev/image/saveOrUpdateDef",ps:bean,cb:function(r) {
-		var url = ContextPath+"/dispatch/mc/10308";
-		if(!CU.isEmpty(CurrentPageNum)) url += "?pageNum="+CurrentPageNum;
-		window.location = url;
+		alert("code:"+r);
+		if(r!=null && r!=undefined && r=="-999999"){
+			alert("保存失败，ImageFullName重复！请修改后重试")
+		}else{
+			var url = ContextPath+"/dispatch/mc/10308";
+			if(!CU.isEmpty(CurrentPageNum)) url += "?pageNum="+CurrentPageNum;
+			window.location = url;
+		}
 	}});
 }
-
 
 
