@@ -25,6 +25,8 @@
    	<bean class="com.aic.paas.wdev.peer.impl.PcBuildTaskPeerImpl" >
    	 <property name="paasTaskUrl" value="${paas-task.interface.url}" />
    	</bean>
+   	<bean class="com.aic.paas.wdev.peer.impl.PcImageDefPeerImpl" />
+   	
    	
    <bean class="com.aic.paas.wdev.util.SFTPUtils">
    		<property name="directory" value="${SFTP.REQ.DIRECTORY}"/>
