@@ -266,6 +266,9 @@ function queryInfo(){
 		if(openCache){
 			$("#openCache").prop("checked",true);
 		}
+		$("#productId").attr("disabled",true);
+		$("#projectId").attr("disabled",true);
+		$("#buildName").attr("disabled",true);
 	}});
 }
 
