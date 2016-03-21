@@ -98,7 +98,7 @@ String ContextPath = request.getContextPath();
 			<td class="text-center">{{= row.depor}}</td>
 			<td class="text-center">
 				{{if row.depStatus==1 || row.depStatus==2}}
-					<img src="<%=ContextPath%>/layout/img/loading_2.gif" style="width:26px;height:26px;"></img>
+					<img src="<%=ContextPath%>/layout/img/task_loading.gif" style="width:26px;height:26px;"></img>
 				{{else}}
 					{{html PU.getDropValue("V_PC_IMAGE_DEPLOY_DEP_STATUS",row.depStatus,true)}}
 				{{/if}}

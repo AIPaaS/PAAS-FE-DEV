@@ -174,6 +174,10 @@ function query(pageNum){
 			for(var i=0; i<data.length; i++) {
 				$("#a_deploy_image_"+data[i].image.id).bind("click",function() {
 					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
+					if(obj.image.status!=1){
+						CC.showMsg({msg:"只能从快照发布镜像！"});
+						return;
+					}
 					SelLinkCenter = $(this);
 					SelOpenCenter = $("#sel_forcenter_env"+obj.image.status);
 					showResCenter();

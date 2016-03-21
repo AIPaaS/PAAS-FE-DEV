@@ -72,4 +72,13 @@ public interface PcBuildTaskPeer {
 	 * @return 
 	 */
 	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc);
+	
+	/**
+	 * aic.tsd_hyh  2016.03.18
+	 * 根据状态 buildId 去查 数据状态为2，3的List
+	 * @param CPcBuildTask
+	 * * @param orders
+	 * @return
+	 */
+	public List<PcBuildTask> selectTaskListByCdt(CPcBuildTask cdt,String orders);
 }

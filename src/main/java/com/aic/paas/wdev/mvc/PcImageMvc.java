@@ -9,16 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.bean.DropRecord;
+import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
 import com.aic.paas.frame.util.ComponentUtil;
+import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.CPcImage;
 import com.aic.paas.wdev.bean.CPcImageDef;
 import com.aic.paas.wdev.bean.CPcImageDeploy;
+import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.bean.PcImage;
 import com.aic.paas.wdev.bean.PcImageDef;
 import com.aic.paas.wdev.bean.PcImageDefInfo;
 import com.aic.paas.wdev.bean.PcImageDeploy;
 import com.aic.paas.wdev.bean.PcImageInfo;
+import com.aic.paas.wdev.peer.PcBuildTaskPeer;
+import com.aic.paas.wdev.peer.PcImageDefPeer;
 import com.aic.paas.wdev.peer.PcImagePeer;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.util.ControllerUtils;
@@ -30,6 +36,12 @@ public class PcImageMvc {
 	
 	@Autowired
 	PcImagePeer pcImagePeer;
+	
+	@Autowired
+	PcBuildTaskPeer buildTaskPeer;
+	
+	@Autowired
+	PcImageDefPeer imageDefPeer;
 	
 	@RequestMapping("/getDefDropList")
 	public void getDefDropList(HttpServletRequest request, HttpServletResponse response, Boolean addEmpty, Boolean addAttr, CPcImageDef cdt) {
@@ -78,13 +90,44 @@ public class PcImageMvc {
 	
 	@RequestMapping("/saveOrUpdateDef")
 	public void  saveOrUpdateDef(HttpServletRequest request,HttpServletResponse response, PcImageDef record){
-		Long id = pcImagePeer.saveOrUpdateDef(record);
-		ControllerUtils.returnJson(request, response, id);
+		
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		Long mntId = user.getMerchent().getId();
+
+		Integer isExternal = record.getIsExternal();  //1=是 0=否
+		String fullName = "";
+		String imageName = record.getImageName();
+		String versionNo = record.getVersionNo();
+		String dirName =record.getDirName();
+		
+		if(isExternal!=null && isExternal.intValue()==1){
+			fullName = "/" + dirName +"/"+ imageName + "-" +versionNo;	
+		}
+		if(isExternal!=null && isExternal.intValue()==0){
+			fullName = dirName + "/"+ imageName + "-" +versionNo;		
+		} 
+		/*CPcImageDef cid = new CPcImageDef();
+		cid.setImageFullName(fullName);
+		List<PcImageDef> list =imageDefPeer.selectTaskListByCdt(cid, null);*/
+		PcImageDef pcImageDef =imageDefPeer.selectDefByFullName(mntId, fullName);
+		
+		Long res_id = -999999l;
+		if(pcImageDef==null || "".equals(pcImageDef)){
+			res_id = pcImagePeer.saveOrUpdateDef(record);
+		}
+		ControllerUtils.returnJson(request, response, res_id);
 	}
 
 	@RequestMapping("/removeDefById")
 	public void  removeDefById(HttpServletRequest request,HttpServletResponse response, Long id){
-		int c = pcImagePeer.removeDefById(id);
+		int c = -1;
+		CPcBuildTask cdt =new CPcBuildTask();
+		cdt.setImageDefId(id);
+		cdt.setStatus(2);//构建中的
+		List<PcBuildTask> list =buildTaskPeer.selectTaskListByCdt(cdt, null);
+		if(list!=null && list.size()==0){
+		    c = pcImagePeer.removeDefById(id);
+		}
 		ControllerUtils.returnJson(request, response, c);
 	}
 	

@@ -135,12 +135,15 @@ function query(pageNum) {
 				for (var i = 0; i < data.length; i++) {
 					
 					//console.log(data);
-					if(data[i].lastBuildTask.status=="2"){
-						$("#thisBackBuildStatues_"+ data[i].def.id).val("2");
-						$("#thisBackBuildId_"+ data[i].def.id).val(data[i].lastBuildTask.backBuildId);
-						$("#a_build_task_gj_"+data[i].def.id).css("display", "none"); 
-						$("#a_build_task_zd_"+data[i].def.id).css("display", "inline-block");
+					if(data[i].lastBuildTask!=null){
+						if(data[i].lastBuildTask.status=="2"){
+							$("#thisBackBuildStatues_"+ data[i].def.id).val("2");
+							$("#thisBackBuildId_"+ data[i].def.id).val(data[i].lastBuildTask.backBuildId);
+							$("#a_build_task_gj_"+data[i].def.id).css("display", "none"); 
+							$("#a_build_task_zd_"+data[i].def.id).css("display", "inline-block");
+						}
 					}
+					
 
 					// 构建
 					$("#a_build_task_gj_" + data[i].def.id).bind(
@@ -191,7 +194,7 @@ function query(pageNum) {
 }
 
 //构建
-function gj_BuildDef(id,depTag,imageDefId,imageDefId,buildName,imageFullName){
+function gj_BuildDef(id,depTag,imageDefId,buildName,imageFullName){
 	$("#thisBackBuildId_"+id).val("");//每次构建时情况上次的返回id
 	var backId = "";
 	var obj = CurrDataMap["key_"+id];
@@ -289,7 +292,6 @@ function queryBuildTaskRecord() {
 			    function() {
 				$(this).addClass("active").siblings()
 					.removeClass("active");
-				clearInterval(timer);
 				var task = CurrTaskMap["key_"
 					+ this.id.substring(this.id
 						.lastIndexOf("_") + 1)];
