@@ -111,7 +111,11 @@ function toTreeData(dcs, rcs) {
 		var envType = rcs[i].attributes.envType;
 		if(CU.isEmpty(pnmap["env"+envType])) pnmap["env"+envType] = {};
 		if(CU.isEmpty(pnmap["env"+envType][rcs[i].parentCode])) {
-			pnmap["env"+envType][rcs[i].parentCode] = CU.clone(dcmap[rcs[i].parentCode]);
+			if(dcmap[rcs[i].parentCode]==null || dcmap[rcs[i].parentCode]==undefined){
+				continue;
+			}else{
+				pnmap["env"+envType][rcs[i].parentCode] = CU.clone(dcmap[rcs[i].parentCode]);
+			}
 		}
 		
 		rcs[i].id = rcs[i].code;
