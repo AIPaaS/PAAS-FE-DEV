@@ -39,11 +39,6 @@ public class HttpRequestUtil {
             // 建立实际的连接
             connection.connect();
             // 获取所有响应头字段
-//            Map<String, List<String>> map = connection.getHeaderFields();
-            // 遍历所有的响应头字段
-//            for (String key : map.keySet()) {
-//                System.out.println(key + "--->" + map.get(key));
-//            }
             // 定义 BufferedReader输入流来读取URL的响应
             in = new BufferedReader(new InputStreamReader(
                     connection.getInputStream()));
@@ -133,17 +128,9 @@ public class HttpRequestUtil {
         //发送 POST 请求
         String sr;
 		try {
-//			ad.setAuthSource("SDK");
-//	    	ad.setAuthUserId("1234|5678");
-//	    	ad.setPassword("123");@RequestParam String authUserId,
-//			@RequestParam String password, @RequestParam String authSource
-//			sr = HttpRequestUtil.sendPost("http://localhost:8080/iPaaS-Auth-DEV/auth/login", "authSource=SDK&password=123&authUserId=1234|5678");
-			//System.out.println(CiperUtil.encrypt("7331c9b6b1a1d521363f7bca8acb095f", "jibalian"));
-			//sr = HttpRequestUtil.sendPost("http://10.1.228.198:10888/ipaas/dss/manage/create", "authSource=WEB&password=2ef7e7e19404160e3e393393fa6f6393&authUserId=18501114411");  
 			sr = HttpClientUtil.sendPostRequest("http://10.1.50.62:20880/ipaas/rcs/manage/showList", "{\"currentPage\":\"1\",\"PageSize\":\"10\",\"name\":\"test\"}");
 			System.out.println(sr);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
        
