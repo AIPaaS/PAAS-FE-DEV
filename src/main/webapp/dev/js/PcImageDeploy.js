@@ -15,6 +15,7 @@ function init() {
 		initComponent();
 		initListener();
 		initFace();
+		$("#status").val(1);
 		query(ParamPageNum);
 	});
 	

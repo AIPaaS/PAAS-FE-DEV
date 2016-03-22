@@ -269,6 +269,8 @@ function queryInfo(){
 		$("#productId").attr("disabled",true);
 		$("#projectId").attr("disabled",true);
 		$("#buildName").attr("disabled",true);
+		$("#isExternal").attr("disabled",true);
+		
 	}});
 }
 
