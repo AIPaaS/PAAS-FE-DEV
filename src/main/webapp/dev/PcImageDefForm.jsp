@@ -52,7 +52,7 @@ String ContextPath = request.getContextPath();
 				
 				<div class="col-lg-5" >
 				    <span id="imageLockName" class="num_tit" style="margin-right:5px;"></span> 
-					<input type="text" style="width:60%;"  name="dirName" class="form-control" id="dirName" required pattern="([0-9]|[a-zA-Z]|[_]|[/]){1,200}" placeholder="必填">
+					<input type="text" style="width:60%;"  name="dirName" class="form-control" id="dirName" required pattern="([0-9]|[a-z]|[_]|[/]){1,200}" placeholder="必填">
 				</div>
 				
 				<div class="col-lg-5">
