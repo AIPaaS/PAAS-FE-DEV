@@ -19,7 +19,7 @@ String ContextPath = request.getContextPath();
 					<input type="text" name="code" class="form-control" id="code" required pattern="([0-9]|[a-z]|[_]){1,40}" placeholder="必填">
 				</div>
 				<div class="col-lg-5">
-					<span>1-40位字母、数字或下划线的组合</span>
+					<span>1-40位   小写字母、数字或下划线的组合</span>
 				</div>
 			</div>			
 			<div class="form-group">

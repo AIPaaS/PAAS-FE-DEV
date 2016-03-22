@@ -47,8 +47,7 @@ String ContextPath = request.getContextPath();
 		
 			<div class="form-group">
 				<label for="dirName" class="col-lg-2 control-label">目录名<font color="red">*</font>:</label>
-				
-				
+
 				
 				<div class="col-lg-5" >
 				    <span id="imageLockName" class="num_tit" style="margin-right:5px;"></span> 
