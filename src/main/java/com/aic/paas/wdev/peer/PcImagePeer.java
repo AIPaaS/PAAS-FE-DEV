@@ -18,6 +18,7 @@ import com.binary.json.JSONObject;
 
 public interface PcImagePeer {
 
+	
 	/**
 	 * 分页查询
 	 * 
