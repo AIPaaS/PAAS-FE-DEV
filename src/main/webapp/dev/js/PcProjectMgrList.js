@@ -44,9 +44,10 @@ function query(pageNum){
 	var pageSize = $("#grid_pageSize").val();
 	var code = $("#code").val();
 	var name = $("#name").val();
+	var status = 1;
 	var orders = "CODE";
 	
-	var ps = {pageNum:pageNum,pageSize:pageSize,code:code,name:name,orders:orders};
+	var ps = {pageNum:pageNum,pageSize:pageSize,code:code,name:name,status:status,orders:orders};
 	RS.ajax({url:"/dev/project/queryMgrProdInfoPage",ps:ps,cb:function(r) {
 		if(!CU.isEmpty(r)){
 			var data = r.data;
