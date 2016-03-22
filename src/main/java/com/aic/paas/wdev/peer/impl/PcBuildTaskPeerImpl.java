@@ -79,7 +79,10 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 	public List<PcBuildTask> selectTaskListByStatueId(Long buildDefId, Integer[] statuss) {
 		BinaryUtils.checkEmpty(buildDefId, "buildDefId");
 		BinaryUtils.checkEmpty(statuss, "statuss");
+		
+		logger.info("---------构建删除-----------wdev工程------查询是否存在构建中的状态 入参buildDefId："+buildDefId+",statuss:"+statuss);
 		List<PcBuildTask> list =buildTaskSvc.selectTaskListByStatueId(buildDefId,statuss);
+		logger.info("---------构建删除-----------wdev工程------查询是否存在构建中的状态 回参list.size()："+list.size());
 		return list;
 	}
 
