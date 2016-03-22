@@ -1,0 +1,113 @@
+.box {
+	position: relative;
+	float: left;
+	width:268px;
+}
+
+input.uploadFile {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+	opacity:0;-moz-opacity:0;	
+	cursor: pointer;
+	width: 276px;
+	height: 36px;
+	overflow: hidden;
+}
+
+input.textbox {
+	float: left;
+	padding: 5px;
+	color: #999;
+	height: 30px;
+	line-height: 30px;
+	border: 1px #ccc solid;
+	width: 204px;
+	margin-right: 4px;
+}
+
+a.link {
+	float: left;
+	display: inline-block;
+	padding: 4px 18px;
+	color: #fff;
+	font-size: 12px;
+	cursor: pointer;
+	background-color: #0099ff;
+	line-height: 22px;
+	text-decoration: none;
+}
+
+.spinner {
+  width: 56px;
+  height: 60px;
+  text-align: center;
+  font-size: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -30px;
+  margin-left: -28px;
+}
+ 
+.spinner > div {
+  background-color:#2980b9;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+   
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+ 
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+ 
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+ 
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+ 
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+ 
+@-webkit-keyframes stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) } 
+  20% { -webkit-transform: scaleY(1.0) }
+}
+ 
+@keyframes stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
+
+/*20160321 jia add*/
+.error{font-size: 12px; color: #f00; float: right;padding-right:22px}
+.btn_upload{width: 108px; margin: 10px auto; clear: both; overflow: hidden; padding-top: 20px;margin-bottom:23px;}
+.notice{font-size: 12px; color: #98c6e4;}
+.input-group{width:270px;margin:0 auto 20px;}
+.input-group:nth-child(2){margin:0 auto 10px;}
+
+.new_cancle,.new_cancle:hover{background:#fff;border:1px solid #3299db;color:#3299db;padding:3px 12px;font-size:12px;}
+.new_upload,.new_upload:hover{background:#3299db;border:1px solid #0099ff;padding:3px 12px;font-size:12px;}
+.upload_info{position: absolute;top:50%;left:50%;margin-top:-21px;margin-left:-60px;font-size:30px;color:#0099ff}
+
+
+
+
