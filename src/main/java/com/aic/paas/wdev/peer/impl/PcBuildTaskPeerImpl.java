@@ -99,7 +99,10 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		//String result  = HttpRequestUtil.sendPost(address, param);
 		String result = null;
 		try {
+			logger.info("---------构建中止-----------wdev工程------掉task工程入参param："+param);
+			logger.info("---------构建中止-----------wdev工程------掉task工程入参address："+address);
 			result = HttpClientUtil.sendPostRequest(address, param);
+			logger.info("---------构建中止-----------wdev工程------掉task工程回餐result："+result);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
