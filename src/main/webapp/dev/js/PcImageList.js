@@ -85,6 +85,7 @@ function query(pageNum){
 		        }
 		    	
 		    });
+			$("#imageTable").text("");
 			$('#imageTable-tmpl').tmpl(r).appendTo("#imageTable");
 			for(var i=0; i<data.length; i++) {
 				$("#a_remove_image_"+data[i].def.id).bind("click",function(){
