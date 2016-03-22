@@ -316,6 +316,7 @@ function queryBuildTaskRecord() {
 			CurrObj.product.code + '|'
 				+ CurrObj.project.code);
 		CurrTask = data[0];
+		$("#stdoutList").empty();
 		$("#iso_tag").text(data[0].depTag);
 		queryTaskRecord();
 
