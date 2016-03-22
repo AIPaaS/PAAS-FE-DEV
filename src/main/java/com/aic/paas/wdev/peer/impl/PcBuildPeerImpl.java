@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
@@ -19,6 +21,7 @@ import com.binary.core.util.BinaryUtils;
 import com.binary.jdbc.Page;
 
 public class PcBuildPeerImpl implements PcBuildPeer {
+	static final Logger logger = LoggerFactory.getLogger(PcBuildPeerImpl.class);
 	
 	private String paasTaskUrl;
 	public void setPaasTaskUrl(String paasTaskUrl) {
@@ -128,7 +131,9 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		String param = "namespace="+namespace+"&repo_name="+repo_name;
 		String result = null;
 		try {
+			logger.info("---------构建删除-----------wdev工程------调task工程 入参address+param："+address+"?"+param);
 			result = HttpClientUtil.sendPostRequest(address, param);
+			logger.info("---------构建删除-----------wdev工程------调task工程 回参result："+result);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
@@ -136,7 +141,9 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		}
 		
 		if(result!=null && "success".equals(result)){ //"status": "success", //error
-			return buildSvc.removeDefById(build_id);
+			int rc = buildSvc.removeDefById(build_id);
+			logger.info("---------构建删除-----------wdev工程------调dev后场 回参rc："+rc);
+			return rc;
 		}else{
 			return -2;
 		}
