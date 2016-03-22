@@ -233,7 +233,7 @@ public class PcImageMvc {
 				try {
 					mpf.transferTo(extFile);
 					logger.info("上传成功");
-					export_file_url=rootURl+"/"+ExtName;
+					export_file_url=rootURl+"/downloadImage/"+ExtName;
 					flag=true;
 				} catch (IllegalStateException | IOException e) {
 					flag=false;
