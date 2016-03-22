@@ -88,7 +88,9 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		if(BinaryUtils.isEmpty(record) || BinaryUtils.isEmpty(cdt)) {
 			return 0;
 		}else{
-			return buildTaskSvc.updatePcBuildTaskCdt(record, cdt);
+			int cc = buildTaskSvc.updatePcBuildTaskCdt(record, cdt);
+			logger.info("---------构建中止-----------wdev工程------掉dev后场updatePcBuildTaskCdt回餐cc："+cc);
+			return cc;
 		}
 	}
 
