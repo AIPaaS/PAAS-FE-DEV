@@ -99,6 +99,56 @@ String ContextPath = request.getContextPath();
 	</div>
 </div>
 
+<div class="modal fade" id="uploadModal"  data-backdrop='static'>
+	<div class="modal-dialog" style="width: 470px;">
+		<div class="modal-content">
+			<div class="modal-body" style="height: 242px;">
+				<div class="spinner" style="display:none ;">
+						<div class="rect1"></div>
+						<div class="rect2"></div>
+						<div class="rect3"></div>
+						<div class="rect4"></div>
+						<div class="rect5"></div>
+					</div>
+				<div class="upload_info" style="display:none ;">
+						上传成功
+				</div>
+				<form id="uploadForm" enctype="multipart/form-data"
+					class="form-horizontal"
+					style="width: 408px; margin: 20px 5px 10px;" onsubmit="return false">
+					<div class="input-group" style="width:270px;margin:0 auto 20px;">
+						<span class="input-group-addon" style="border: 0px;">Tag
+							标记:</span> <input type="text" list="tagList" id="tag" name="tag"
+							style="margin-left: 5px; width:268px;border:1px solid #ccc;height:30px;">
+					</div>
+					<div class="input-group" style="width:270px;margin:0 auto 10px;">
+						<span class="input-group-addon" style="border: 0px;">上传文件：</span>
+						<div class="box">
+							<input type="text" name="copyFile" class="textbox" id="copyFile" /> <a
+								href="javascript:void(0);" class="link" >浏览</a> <input
+								type="file" class="uploadFile" name="file" id="imageFile" onchange="getFile(this, 'copyFile')"/>
+						</div>
+					</div>
+					<datalist id="tagList">
+					</datalist>
+					<span class="error">只支持.tar或tar.gz格式，不超过2G</span>
+					<p class="btn_upload">
+						<button class="btn btn-default new_cancle" id="cancleUpload">取消</button>
+						<button class="btn btn-primary new_upload" id="upLoad">上传</button>
+					</p>
+					<span class="notice">导出示例：docker
+						export -o registry.test.com/hello-world extname.tar</span>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
 <!-- jia【镜像管理】导出功能屏蔽掉 backup -->
 <!-- <a href="###" class="table-link" title="导出">
 					<span class="fa-stack">
@@ -132,7 +182,7 @@ String ContextPath = request.getContextPath();
 				{{/if}}
 			</td>
 			<td class="text-center">
-				<a href="###" class="table-link" title="上传">
+				<a id="a_upload_image_{{= row.def.id}}" href="###" class="table-link" title="上传">
 					<span class="fa-stack">
 						<i class="fa fa-square fa-stack-2x"></i>
 						<i class="fa fa-upload fa-stack-1x fa-inverse"></i>
