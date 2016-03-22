@@ -56,7 +56,7 @@ String ContextPath = request.getContextPath();
 				</div>
 				
 				<div class="col-lg-5">
-					<span>1-200位字母、数字、下划线或斜线的组合</span>
+					<span>1-200位  小写字母、数字、下划线或斜线的组合</span>
 				</div>
 			</div>
 			
