@@ -27,15 +27,6 @@
    	</bean>
    	<bean class="com.aic.paas.wdev.peer.impl.PcImageDefPeerImpl" />
    	
-   	
-   <bean class="com.aic.paas.wdev.util.SFTPUtils">
-   		<property name="directory" value="${SFTP.REQ.DIRECTORY}"/>
-   		<property name="host" value="${SFTP.REQ.HOST}"/>
-   		<property name="username" value="${SFTP.REQ.USERNAME}"/>
-   		<property name="password" value="${SFTP.REQ.PASSWORD}"/>
-   		<property name="port" value="${SFTP.REQ.PORT}"/>
-   	</bean>
-   	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
    	<bean class="com.aic.paas.wdev.peer.impl.PcImagePeerImpl" /> 
     
     
