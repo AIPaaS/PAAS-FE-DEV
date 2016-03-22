@@ -2,6 +2,7 @@ var ParamPageNum = 1;
 var CurrDataMap = {};
 var CurrObj;
  
+
 function init() {
     initData(function() {
 	initComponent();

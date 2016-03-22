@@ -49,6 +49,7 @@ import com.binary.json.JSONObject;
 @RequestMapping("/dev/image")
 public class PcImageMvc {
 	static final Logger logger = LoggerFactory.getLogger(PcImageMvc.class);
+	
 	@Autowired
 	PcImagePeer pcImagePeer;
 
