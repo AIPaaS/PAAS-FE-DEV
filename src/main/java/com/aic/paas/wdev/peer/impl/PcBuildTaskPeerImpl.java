@@ -160,7 +160,7 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 
 	@Override
 	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc){
-		
+		String updateResult = "error";
 		List<WsMerchent> list = new ArrayList<WsMerchent>();
 		CWsMerchent cdt = new  CWsMerchent();
 		cdt.setMntCodeEqual(pbtc.getNamespace());
@@ -171,12 +171,18 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		if(list!=null && list.size()>0){
 			pbtc.setMnt_id(list.get(0).getId().toString());
 		}
+		if(pbtc.getMnt_id()==null ||"".equals(pbtc.getMnt_id().toString())){
+			logger.info("========paas-wdev：PcBuildTaskPeerImpl：updateBuildTaskByCallBack：pbtc.getMnt_id() = 查询不到对应的租户Id");
+			return updateResult;
+		}
 		//2.根据	根据回调函数，查询所属机房的Id
 		String compRoomId = buildSvc.queryCompRoomIdByCallBack(pbtc);
+		if("".equals(updateResult)||"error".equals(compRoomId)){
+			return updateResult;
+		}
 		//3.根据机房Id，查询镜像库Id
 		CPcImageRepository cir = new CPcImageRepository();
 		cir.setRoomId(Long.parseLong(compRoomId));
-//		cir.setRoomId(Long.parseLong("74"));
 		cir.setImgRespType(1);//imgRespType=1(是否快照镜像库)
 		cir.setDataStatus(1);
 		
@@ -185,8 +191,11 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		String imgRespId = "";//所属镜像库
 		if(pirlist != null && pirlist.size()>0){
 			if(pirlist.get(0).getId()!=null)imgRespId = pirlist.get(0).getId().toString();
+		}		
+		if("".equals(imgRespId)){
+			logger.info("查询不到镜像库记录！");
+			return updateResult;
 		}
-		
 		return buildTaskSvc.updateBuildTaskByCallBack(pbtc,imgRespId);
 	}
 	 

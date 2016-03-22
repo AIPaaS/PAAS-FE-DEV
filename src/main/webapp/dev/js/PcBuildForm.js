@@ -266,10 +266,18 @@ function queryInfo(){
 		if(openCache){
 			$("#openCache").prop("checked",true);
 		}
+<<<<<<< HEAD
 		$("#productId").attr("disabled",true);
 		$("#projectId").attr("disabled",true);
 		$("#buildName").attr("disabled",true);
 		$("#isExternal").attr("disabled",true);
+=======
+		
+		$("#productId").attr("disabled",true);
+		$("#projectId").attr("disabled",true);
+		$("#buildName").attr("disabled",true);
+		
+>>>>>>> refs/heads/PAAS-FE-DEV-FEATURE-V1.0.0
 		
 	}});
 }

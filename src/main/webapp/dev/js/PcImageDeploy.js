@@ -117,6 +117,10 @@ function toTreeData(dcs, rcs) {
 			}else{
 				pnmap["env"+envType][rcs[i].parentCode] = CU.clone(dcmap[rcs[i].parentCode]);
 			}
+<<<<<<< HEAD
+=======
+			
+>>>>>>> refs/heads/PAAS-FE-DEV-FEATURE-V1.0.0
 		}
 		
 		rcs[i].id = rcs[i].code;

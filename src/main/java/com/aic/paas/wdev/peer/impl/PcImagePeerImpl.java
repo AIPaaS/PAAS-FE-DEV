@@ -1,7 +1,11 @@
 package com.aic.paas.wdev.peer.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
@@ -10,6 +14,7 @@ import com.aic.paas.wdev.bean.CPcImage;
 import com.aic.paas.wdev.bean.CPcImageDef;
 import com.aic.paas.wdev.bean.CPcImageDeploy;
 import com.aic.paas.wdev.bean.ImageStatus;
+import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.bean.PcImage;
 import com.aic.paas.wdev.bean.PcImageDef;
 import com.aic.paas.wdev.bean.PcImageDefInfo;
@@ -22,9 +27,13 @@ import com.binary.core.http.HttpUtils;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.exception.ServiceException;
 import com.binary.jdbc.Page;
+import com.binary.json.JSONObject;
+
+import sun.util.logging.resources.logging;
 
 public class PcImagePeerImpl implements PcImagePeer {
 	
+	static final Logger logger = LoggerFactory.getLogger(PcImagePeerImpl.class);
 	
 	@Autowired
 	PcImageSvc imageSvc;
@@ -33,6 +42,9 @@ public class PcImagePeerImpl implements PcImagePeer {
 	UserAuthentication userAuth;
 
 	
+	 
+	
+
 	@Override
 	public Page<PcImageDefInfo> queryDefInfoPage(Integer pageNum, Integer pageSize, CPcImageDef cdt, String orders) {
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
@@ -43,6 +55,9 @@ public class PcImagePeerImpl implements PcImagePeer {
 
 	
 	
+	 
+
+
 	@Override
 	public List<PcImageDefInfo> queryDefInfoList(CPcImageDef cdt, String orders) {
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
@@ -293,6 +308,36 @@ public class PcImagePeerImpl implements PcImagePeer {
 		return imageSvc.queryDeployPage(pageNum, pageSize, cdt, orders);
 	}
 
+
+
+	@Override
+	public JSONObject upLoadImage(String defid, String image_name, String tag,String export_file_url) {
+		JSONObject resultinfo=new JSONObject();
+		PcBuildTask buildTask=new PcBuildTask();
+		Map<String, String> uploadMap=new HashMap<>();
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		buildTask.setImageDefId(Long.parseLong(defid));
+		buildTask.setTaskUserId(user.getId());
+		buildTask.setTaskUserName(user.getUserName());
+		uploadMap.put("image_name",image_name);
+		uploadMap.put("tag",tag);
+		uploadMap.put("export_file_url", export_file_url);
+		logger.info("buildTask: "+ buildTask.toString());
+		logger.info("upLoadMap:" + uploadMap.toString());
+		String data=imageSvc.uploadImage(buildTask, uploadMap);
+		logger.info("result :" +data);
+		if(BinaryUtils.isEmpty(data)){
+			resultinfo.put("result", "error");
+		}else{
+			resultinfo.put("result", data);
+		}
+		  
+		return resultinfo;
+	}
+
+
+
+	 
 
 
 	
