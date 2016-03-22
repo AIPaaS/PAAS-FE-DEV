@@ -101,49 +101,7 @@ function doCdtTFKeyUp(e) {
 	query(1);
 }
 
-<<<<<<< HEAD
-function query(pageNum){
-	if(CU.isEmpty(pageNum)) pageNum = 1;
-	$("#imageTable").html("");
-	$("#ul_pagination").remove();
-	$("#pagination_box").html('<ul id="ul_pagination" class="pagination-sm"></ul>');
-	var pageSize = $("#grid_pageSize").val();
-	var imageFullName = $("#imageFullName").val();
-	var isExternal = $("#sel_isExternal").val();
-	var productId = $("#sel_productId").val();
-	var projectId = $("#sel_projectId").val();
-	var orders = "ID";
-	
-	var ps = {pageNum:pageNum,pageSize:pageSize,imageFullName:imageFullName,isExternal:isExternal,productId:productId,projectId:projectId,orders:orders};
-	RS.ajax({url:"/dev/image/queryDefInfoPage",ps:ps,cb:function(r) {
-		if(!CU.isEmpty(r)){
-			var data = r.data;
-			for(var i=0; i<data.length; i++) {
-				CurrDataMap["key_"+data[i].def.id] = data[i];
-			}
-			ParamPageNum = r.pageNum;
-			$("#ul_pagination").twbsPagination({
-		        totalPages: r.totalPages?r.totalPages:1,
-		        visiblePages: 7,
-		        startPage: r.pageNum,
-		        first:"首页",
-		        prev:"上一页",
-		        next:"下一页",
-		        last:"尾页",
-		        onPageClick: function (event, page) {
-		        	query(page);
-		        }
-		    	
-		    });
-			$("#imageTable").text("");
-			$('#imageTable-tmpl').tmpl(r).appendTo("#imageTable");
-			for(var i=0; i<data.length; i++) {
-				$("#a_remove_image_"+data[i].def.id).bind("click",function(){
-					var obj = CurrDataMap["key_"+this.id.substring(this.id.lastIndexOf("_")+1)];
-					removeImageDef(obj.lastImage.id);
-				});
-			}
-=======
+
 function query(pageNum) {
     if (CU.isEmpty(pageNum))
 	pageNum = 1;
@@ -175,7 +133,6 @@ function query(pageNum) {
 		var data = r.data;
 		for (var i = 0; i < data.length; i++) {
 		    CurrDataMap["key_" + data[i].def.id] = data[i];
->>>>>>> refs/heads/PAAS-FE-DEV-FEATURE-V1.0.0
 		}
 		ParamPageNum = r.pageNum;
 		$("#ul_pagination").twbsPagination({
