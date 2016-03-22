@@ -268,7 +268,7 @@ public class PcImageMvc {
 				 try {
 						//获取文件的长度
 					    long fileLength = file.length();  
-
+					    logger.info("fileName:" +fileName);
 					    //设置文件输出类型
 					    response.setContentType("application/octet-stream");  
 					    response.setHeader("Content-disposition", "attachment; filename="  
@@ -288,6 +288,7 @@ public class PcImageMvc {
 					    bis.close();  
 					    bos.close();  
 				} catch (Exception e) {
+					logger.info("下载失败");
 					// TODO: handle exception
 				}
 				
@@ -324,10 +325,12 @@ public class PcImageMvc {
 		int idx = url.indexOf("/delteImage/");
 		if(idx < 0) throw new ServiceException(" is wrong url '"+url+"'! ");
 		String fileName = url.substring(idx+12).trim();
+		logger.info("fileName :"+ fileName);
 		if(!BinaryUtils.isEmpty(fileName)){
 			File file=new File(folderUrl+"/"+fileName);
 			if(file.exists()){
 				this.deleteFile(file);
+				logger.info(fileName +"删除成功！");
 			}
 		}else{
 			
