@@ -30,7 +30,8 @@ String ContextPath = request.getContextPath();
 						工程:
 					</div>
 					<div class="form-group pull-left">
-						<select id="sel_projectId" class="form-control" style="width:160px;">
+					
+						<select id="sel_projectId" class="form-control" style="width:160px; background-color:#f5f5f5" disabled="false">
 						</select>
 					</div>
 					<div class="form-group pull-left">
