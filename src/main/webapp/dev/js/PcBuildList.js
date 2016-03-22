@@ -203,21 +203,23 @@ function gj_BuildDef(id,depTag,imageDefId,buildName,imageFullName){
 		url:"/dev/buildtask/saveBuildTask",
 		ps:{id:id,"depTag":depTag,"imageDefId":imageDefId,"buildName":buildName,"imageFullName":imageFullName},
 		cb:function(data) {
-		 //调用完ajax返回的BackBuildId值
-		backId = data;
-		if (data != null && data != undefined && data!="-999999") {//构建成功
+		if (data != null && data != undefined && data=="-999999") {//构建失败
+			 RS.showErrMsg(null, " 构建失败，请稍后重试！ ");
+		}
+		else if (data != null && data != undefined && data=="-888888") {
+			 RS.showErrMsg(null, " 构建资源已满，请稍后重试！");
+		}else{//构建成功
+			backId = data; //调用完ajax返回的BackBuildId值
 			$("#thisBackBuildId_"+id).val(backId);
 			$("#a_build_task_gj_"+id).css("display", "none"); 
 			$("#a_build_task_zd_"+id).css("display", "inline-block");
 			$("#td_build_task_msage_"+id).text("构建运行中");
-		}else{//构建失败
-			 RS.showErrMsg(null, " 构建失败！ ");
 		}
 	},
 	errcb : function(errorCode, errorMsg) {
 		 RS.showErrMsg(null, "系统异常 "+errorCode + " : " + errorMsg);
 	}
-		});
+	});
 	
 }
 
