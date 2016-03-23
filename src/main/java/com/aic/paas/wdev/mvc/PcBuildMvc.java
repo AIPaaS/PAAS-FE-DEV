@@ -69,7 +69,7 @@ public class PcBuildMvc {
 		String repo_name = alls; //产品code/工程code/构建名
 		
 		Integer[] statuss = {2};  // {2,3} 1=就绪    2=构建运行中   3=构建已中断     4=成功   5=失败
-		List<PcBuildTask> taskList = buildTaskPeer.selectTaskListByStatueId(id, statuss);
+		List<PcBuildTask> taskList = buildTaskPeer.selectTaskListByStatueId(id, statuss);//查询是否存在2状态的
 		
 		int c = -1; //构建运行中 ,构建中断中 标注
 		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中  ）
