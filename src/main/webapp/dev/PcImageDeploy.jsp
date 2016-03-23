@@ -110,7 +110,7 @@ String ContextPath = request.getContextPath();
 			<td class="text-center">{{= PU.getDropValue("DV_DATA_CENTER_CODE",row.image.dataCenterId,false)}}</td>
 			<td class="text-center">{{= PU.getDropValue("DV_RES_CENTER_CODE",row.image.resCenterId,false)}}</td>
 			<td class="text-center">
-				{{if row.image.status != 4}}
+				{{if row.image.status == 1}}
 					<a id="a_deploy_image_{{= row.image.id}}" href="###" class="table-link" title="发布">
 						<span class="fa-stack">
 							<i class="fa fa-square fa-stack-2x"></i>

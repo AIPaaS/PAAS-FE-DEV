@@ -35,42 +35,70 @@ function initData(cb) {
 		RS.ajax({url:"/res/res/getResRegionDropListMap",ps:{addEmpty:false, addAttr:true,opts:"dc|rc"},cb:function(result) {
 			DROP["DV_DATA_CENTER_CODE"] = result["dc"];
 			DROP["DV_RES_CENTER_CODE"] = result["rc"];
-			TreeData = toTreeData(DROP["DV_DATA_CENTER_CODE"], DROP["DV_RES_CENTER_CODE"]);
+//			TreeData = toTreeData(DROP["DV_DATA_CENTER_CODE"], DROP["DV_RES_CENTER_CODE"]);
+			var dropList = [];
+			for(var i=1; i<result["dc"].length; i++) dropList.push(result["dc"][i]);
+			for(var i=1; i<result["rc"].length; i++) dropList.push(result["rc"][i]);
+			TreeData = toTreeData(dropList);
 			
 			if(CU.isFunction(cb))cb();
 		}});
 	}});
 }
 function initComponent() {
-	for(var key in TreeData) {
-		var tree = TreeData[key];
-		$("#sel_forcenter_"+key).treeview({data:tree,color:"#428bca",selectedBackColor:"#f0f8ff",selectedColor:"#428bca",collapseIcon:"fa fa-minus-square-o",expandIcon:"fa fa-plus-square-o",onNodeSelected: function(e, node) {
-			if(node.param1!=2 && node.param1!="2") return ;
-			var linkid = SelLinkCenter.prop("id");
-			var imageId = linkid.substring(linkid.lastIndexOf("_")+1);
-			var obj = CurrDataMap["key_"+imageId];
-			CC.showMsg({msg:"您确定要将镜像[<font color='blue'>"+obj.image.imageFullName+"</font>]发布至资源中心[<font color='blue'>"+node.attributes.resName+"</font>]吗?",option:2,callback:function(r) {
-				if(r != "ok") {
-					SelOpenCenter.hide(); 
-					return ;
-				}
-				var envType = node.attributes.envType;
-				var dataCenterId = node.attributes.dataCenterId;
-				var resCenterId = node.attributes.id;
-				deployImage(envType, imageId, dataCenterId, resCenterId);
-				SelOpenCenter.hide();
-			}});
+//	for(var key in TreeData) {
+//		var tree = TreeData[key];
+//		$("#sel_forcenter_"+key).treeview({data:tree,color:"#428bca",selectedBackColor:"#f0f8ff",selectedColor:"#428bca",collapseIcon:"fa fa-minus-square-o",expandIcon:"fa fa-plus-square-o",onNodeSelected: function(e, node) {
+//			if(node.param1!=2 && node.param1!="2") return ;
+//			var linkid = SelLinkCenter.prop("id");
+//			var imageId = linkid.substring(linkid.lastIndexOf("_")+1);
+//			var obj = CurrDataMap["key_"+imageId];
+//			CC.showMsg({msg:"您确定要将镜像[<font color='blue'>"+obj.image.imageFullName+"</font>]发布至资源中心[<font color='blue'>"+node.attributes.resName+"</font>]吗?",option:2,callback:function(r) {
+//				if(r != "ok") {
+//					SelOpenCenter.hide(); 
+//					return ;
+//				}
+//				var envType = node.attributes.envType;
+//				var dataCenterId = node.attributes.dataCenterId;
+//				var resCenterId = node.attributes.id;
+//				deployImage(envType, imageId, dataCenterId, resCenterId);
+//				SelOpenCenter.hide();
+//			}});
+//		}});
+//	}
+	var key = "env1";
+	$("#sel_forcenter_"+key).treeview({data:TreeData,color:"#428bca",selectedBackColor:"#f0f8ff",selectedColor:"#428bca",collapseIcon:"fa fa-minus-square-o",expandIcon:"fa fa-plus-square-o",onNodeSelected: function(e, node) {
+		if(node.param1!=2 && node.param1!="2") return ;
+		var linkid = SelLinkCenter.prop("id");
+		var imageId = linkid.substring(linkid.lastIndexOf("_")+1);
+		var obj = CurrDataMap["key_"+imageId];
+		CC.showMsg({msg:"您确定要将镜像[<font color='blue'>"+obj.image.imageFullName+"</font>]发布至资源中心[<font color='blue'>"+node.attributes.resName+"</font>]吗?",option:2,callback:function(r) {
+			if(r != "ok") {
+				SelOpenCenter.hide(); 
+				return ;
+			}
+			var envType = node.attributes.envType;
+			var dataCenterId = node.attributes.dataCenterId;
+			var resCenterId = node.attributes.id;
+			deployImage(envType, imageId, dataCenterId, resCenterId);
+			SelOpenCenter.hide();
 		}});
-	}
+	}});
 }
 function initListener() {
-	for(var key in TreeData) {
-		$("#sel_forcenter_"+key).on("mouseenter",function(){mouseenter=true;});
-		$("#sel_forcenter_"+key).on("mouseleave",function(){mouseenter=false;});
-		$("#sel_forcenter_"+key).bind("click", function() {
-			if(!SelOpenCenter.is(":hidden")) SelLinkCenter.focus();
-		});
-	}
+//	for(var key in TreeData) {
+//		$("#sel_forcenter_"+key).on("mouseenter",function(){mouseenter=true;});
+//		$("#sel_forcenter_"+key).on("mouseleave",function(){mouseenter=false;});
+//		$("#sel_forcenter_"+key).bind("click", function() {
+//			if(!SelOpenCenter.is(":hidden")) SelLinkCenter.focus();
+//		});
+//	}
+	var key = "env1";
+	$("#sel_forcenter_"+key).on("mouseenter",function(){mouseenter=true;});
+	$("#sel_forcenter_"+key).on("mouseleave",function(){mouseenter=false;});
+	$("#sel_forcenter_"+key).bind("click", function() {
+		if(!SelOpenCenter.is(":hidden")) SelLinkCenter.focus();
+	});
 	
 	$("#imageFullName").bind("keyup", doCdtTFKeyUp);
 	$("#productId").bind("change",function(){
@@ -97,6 +125,34 @@ function doCdtTFKeyUp(e) {
 	if(e.keyCode === 13) query(1);
 }
 
+
+function toTreeData(dropList) {
+	var tree = [];
+	var pnobj = {};
+	for(var i=0; i<dropList.length; i++) {
+		var item = dropList[i];
+		var type = item.param1;
+		
+		item.id = item.code;
+		item.text = item.name;
+		
+		pnobj[item.code+"_"+type] = item;
+		
+		if(type == "1") {
+			item.icon = "fa fa-database";
+			tree.push(item);
+		}else {
+			item.icon = type=="2" ? "fa fa-sitemap" : "fa fa-flash";
+			var pn = pnobj[item.parentCode+"_"+(parseInt(type, 10)-1)];
+			if(CU.isEmpty(pn)) continue ;
+			if(CU.isEmpty(pn.childNodes)) pn.childNodes = [];
+			pn.childNodes.push(item);
+		}
+	}
+	return tree;
+}
+
+/**
 function toTreeData(dcs, rcs) {
 	var tree = {};
 	var pnmap = {};		//key=env value=pnobj
@@ -107,25 +163,26 @@ function toTreeData(dcs, rcs) {
 		dcs[i].text = dcs[i].name;
 		dcs[i].icon = "fa fa-database";
 	}
-	
+	alert(CU.toString(dcmap));
 	for(var i=0; i<rcs.length; i++) {
 		var envType = rcs[i].attributes.envType;
 		if(CU.isEmpty(pnmap["env"+envType])) pnmap["env"+envType] = {};
 		if(CU.isEmpty(pnmap["env"+envType][rcs[i].parentCode])) {
-			if(dcmap[rcs[i].parentCode]==null || dcmap[rcs[i].parentCode]==undefined){
-				continue;
-			}else{
+//			if(dcmap[rcs[i].parentCode]==null || dcmap[rcs[i].parentCode]==undefined){
+//				continue;
+//			}else{
 				pnmap["env"+envType][rcs[i].parentCode] = CU.clone(dcmap[rcs[i].parentCode]);
-			}
+//			}
 
 		}
-		
+//		alert(rcs[i].parentCode);
 		rcs[i].id = rcs[i].code;
 		rcs[i].text = rcs[i].name;
 		rcs[i].icon = "fa fa-sitemap";
 		var pn = pnmap["env"+envType][rcs[i].parentCode];
 		if(CU.isEmpty(pn.childNodes)) pn.childNodes = [];
 		pn.childNodes.push(rcs[i]);
+//		alert(rcs[i].parentCode);
 	}
 	
 	for(var key in pnmap) {
@@ -140,7 +197,7 @@ function toTreeData(dcs, rcs) {
 	}
 	
 	return tree;
-}
+}*/
 
 function query(pageNum){
 	if(CU.isEmpty(pageNum)) pageNum = 1;
@@ -185,7 +242,8 @@ function query(pageNum){
 						return;
 					}
 					SelLinkCenter = $(this);
-					SelOpenCenter = $("#sel_forcenter_env"+obj.image.status);
+//					SelOpenCenter = $("#sel_forcenter_env"+obj.image.status);
+					SelOpenCenter = $("#sel_forcenter_env1");
 					showResCenter();
 				});
 				$("#a_deploy_image_"+data[i].image.id).on("blur", function() {
