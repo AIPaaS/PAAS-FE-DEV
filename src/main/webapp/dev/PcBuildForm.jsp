@@ -26,7 +26,7 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="productId" class="col-lg-2 control-label">所属产品<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<select id="productId" name="productId" class="form-control" required>
+						<select id="productId" name="productId" class="form-control" >
 						</select>
 					</div>
 					<div class="col-lg-5">
@@ -36,7 +36,7 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label for="projectId" class="col-lg-2 control-label">所属工程<font color="red">*</font>:</label>
 					<div class="col-lg-5">
-						<select id="projectId" name="projectId" class="form-control" required>
+						<select id="projectId" name="projectId" class="form-control" >
 						</select>
 					</div>
 					<div class="col-lg-5">
