@@ -72,8 +72,8 @@ public class PcBuildMvc {
 		List<PcBuildTask> taskList = buildTaskPeer.selectTaskListByStatueId(id, statuss);
 		
 		int c = -1; //构建运行中 ,构建中断中 标注
-		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中   3=构建已中断 ）
-			c = buildPeer.removeDefById(id,namespace,repo_name);;
+		if( taskList ==null || ( taskList!=null && taskList.size()==0 ) ){// （ 2=构建运行中  ）
+			c = buildPeer.removeDefById(id,namespace,repo_name);
 		}
 		ControllerUtils.returnJson(request, response, c);
 	}
