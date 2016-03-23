@@ -33,6 +33,34 @@
 	<import resource="classpath:spring/spring-paas-frame.xml" />
 	<import resource="classpath:spring/spring-paas-wdev.xml" />
 	
+	
+	<!-- 邮件发送任务线程池 -->
+    <bean id="BinaryEmailSender_ThreadPool" class="com.binary.core.thread.BinaryThreadPool">
+    	<property name="poolSize" value="5" />
+    </bean>
+    <!-- 邮件发送器 -->
+	<bean class="com.binary.tools.mail.BinaryEmailSender" >
+		<constructor-arg>
+			<bean class="com.binary.tools.mail.JavaMailSenderExt">
+				<property name="protocol" value="${hpor.public.email.protocol}" />
+				<property name="host" value="${hpor.public.email.host}" />
+				<property name="port" value="${hpor.public.email.port}" />
+				<property name="defaultEncoding" value="UTF-8" />
+				<property name="javaMailProperties">
+					<props>
+						<prop key="mail.smtp.auth">true</prop>
+					</props>
+				</property>
+			</bean>
+		</constructor-arg>
+		<property name="senderMailName" value="${hpor.public.email.sender.name}" />
+		<property name="senderMailAddr" value="${hpor.public.email.sender.mailaddr}" />
+		<property name="senderMailPassword" value="${hpor.public.email.sender.mailpwd}" />
+		<property name="senderMailPwdEncrypted" value="${hpor.public.email.sender.encrypted}" />
+		<property name="threadPool" ref="BinaryEmailSender_ThreadPool" />
+	</bean>
+	
+			
 			
 	
 	
