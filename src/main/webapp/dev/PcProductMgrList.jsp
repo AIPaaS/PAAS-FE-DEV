@@ -109,12 +109,12 @@ String ContextPath = request.getContextPath();
 				{{/if}}
 			</td>
 			<td class="text-center">
-				<a href="###" id="a_permission_mgr_{{= row.id}}" class="table-link" title="文档库权限管理">
+				<%--<a href="###" id="a_permission_mgr_{{= row.id}}" class="table-link" title="文档库权限管理">
 					<span class="fa-stack">
 						<i class="fa fa-square fa-stack-2x"></i>
 						<i class="fa fa-flash fa-stack-1x fa-inverse"></i>
 					</span>
-				</a>
+				</a>--%>
 			</td>
 		</tr>
 {{/each}}
