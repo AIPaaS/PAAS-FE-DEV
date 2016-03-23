@@ -9,17 +9,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
 import com.aic.paas.wdev.bean.BuildTaskRecord;
 import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.PcBuildTask;
+import com.aic.paas.wdev.peer.EmailSenderPeer;
 import com.aic.paas.wdev.peer.PcBuildTaskPeer;
 import com.aic.paas.wdev.util.bean.PcBuildTaskCallBack;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.util.ControllerUtils;
+import com.binary.json.JSON;
 
 @Controller
 @RequestMapping("/dev/buildtask")
@@ -27,8 +31,8 @@ public class PcBuildTaskMvc {
 	
 	@Autowired
 	PcBuildTaskPeer buildTaskPeer;
-	
-	
+	@Autowired
+	EmailSenderPeer emailSenderPer;
 	@RequestMapping("/saveBuildTask")
 	public void  saveBuildTask(HttpServletRequest request,HttpServletResponse response, Long id,String depTag,String imageDefId,String buildName,String imageFullName){
 		
@@ -78,24 +82,39 @@ public class PcBuildTaskMvc {
 		BuildTaskRecord record =buildTaskPeer.queryTaskRecord(repo_name,build_id);
 		ControllerUtils.returnJson(request, response, record);
 	}
-	@RequestMapping("/updateBuildTaskByCallBack")
-	public void updateBuildTaskByCallBack(HttpServletRequest request,HttpServletResponse response, 
-		String namespace,String repo_name,String tag,String build_id,String duration,String time,String status){
-		
+//	@RequestMapping("/updateBuildTaskByCallBack")
+//	@ResponseBody
+//	public String updateBuildTaskByCallBack(HttpServletRequest request,HttpServletResponse response, 
+//			@RequestBody String sendParam){
+	@RequestMapping(value="updateBuildTaskByCallBack")
+	@ResponseBody
+	public String updateBuildTaskByCallBack(@RequestBody String sendParam){
+		String result ="error";
 		PcBuildTaskCallBack pbtc = new PcBuildTaskCallBack();
-		pbtc.setNamespace(namespace);
-		pbtc.setRepo_name(repo_name);
-		pbtc.setTag(tag);
-		pbtc.setBuild_id(build_id);
-		pbtc.setDuration(duration);
-		pbtc.setTime(time);
-		pbtc.setStatus(status);//success,  error
-				
+		pbtc = JSON.toObject(sendParam ,PcBuildTaskCallBack.class);
+		String imgRespId = pbtc.getImgRespId();
 		
-		String result = buildTaskPeer.updateBuildTaskByCallBack(pbtc);
+		String taskUserId = buildTaskPeer.updateBuildTaskByCallBack(pbtc, imgRespId);
+		if("error".equals(taskUserId)||taskUserId==null||"".equals(taskUserId)){
+			return result ;
+		}
+		String emailAddress = buildTaskPeer.queryEmailAdressByTaskUserId(taskUserId);
+		String namespace = pbtc.getNamespace();
+		String repo_name = pbtc.getRepo_name();
+		String build_id = pbtc.getBuild_id();
+		BuildTaskRecord buildTaskRecord = buildTaskPeer.queryTaskRecordToEmail(namespace, repo_name, build_id);
+		//远程调用task接口，获得某一个构建的详情
+		String status = buildTaskRecord.getStatus();
+		Integer flag = 0;
+		if("success".equals(status)){
+			flag = 1;
+		}
+		emailSenderPer.sendBuildTaskResult(taskUserId, flag, buildTaskRecord.getStdout(), emailAddress);
 		
-		ControllerUtils.returnJson(request, response, result);
+		return result ;
+//		ControllerUtils.returnJson(request, response, result);
 	}
+
 
 	
 }

@@ -65,13 +65,6 @@ public interface PcBuildTaskPeer {
 	 * @throws URISyntaxException
 	 */
 	public BuildTaskRecord queryTaskRecord(String repo_name,String build_id) throws IOException, URISyntaxException;
-	/**
-	 * 不分页查询
-	 * @param pbtc : 构建任务回调对象
-	 * @param imgRespId : 所属镜像库Id
-	 * @return 
-	 */
-	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc);
 	
 	/**
 	 * aic.tsd_hyh  2016.03.18
@@ -81,4 +74,22 @@ public interface PcBuildTaskPeer {
 	 * @return
 	 */
 	public List<PcBuildTask> selectTaskListByCdt(CPcBuildTask cdt,String orders);
+	/**
+	 * @param pbtc PcBuildTaskCallBack
+	 * @param imgRespId 镜像库Id
+	 * @return taskUserId 构建人的Id
+	 */
+	public String updateBuildTaskByCallBack(PcBuildTaskCallBack pbtc,String imgRespId);
+	/**
+	 * @param taskUserId 构建人的Id
+	 * @return 构建人的邮箱地址 
+	 */
+	public String queryEmailAdressByTaskUserId(String taskUserId);
+	/**
+	 * @param namespace 
+	 * @param repo_name
+	 * @param build_id
+	 * @return 构建过程的详细记录
+	 */
+	public BuildTaskRecord queryTaskRecordToEmail(String namespace,String repo_name, String build_id) ;
 }
