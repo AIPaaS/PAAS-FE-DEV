@@ -223,7 +223,7 @@ function queryImageId(obj) {
 		if (!CU.isEmpty(data)) {
 		    var tag = "";
 		    for (var i = 0; i < data.length; i++) {
-			tag += "<option>" + data[i].depTag + "</option>"
+			tag += "<option>" + data[i] + "</option>"
 		    }
 		    $("#tagList").append(tag);
 		}
@@ -312,7 +312,9 @@ function upLoad() {
 	    
 	},
 	error : function(data) {
+	    $(".spinner").css('display','none');
 	    $(".upload_info").text("上传失败");
+	    $(".upload_info").css('display','block'); 
 	    setTimeout("hideModal(false)",3000);
 	}
     });

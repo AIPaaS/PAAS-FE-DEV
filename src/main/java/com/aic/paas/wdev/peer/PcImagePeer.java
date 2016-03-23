@@ -203,4 +203,11 @@ public interface PcImagePeer {
 	 */
 	public JSONObject upLoadImage(String defid, String image_name, String tag, String export_file_url);
 
+	/**
+	 * 根据镜像定义ID查询构建tag
+	 * @param cdt
+	 * @param orders
+	 * @return
+	 */
+	public List<String> queryTagsByDefId(CPcImage cdt, String orders);
 }

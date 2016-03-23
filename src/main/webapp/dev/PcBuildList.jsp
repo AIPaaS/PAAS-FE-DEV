@@ -198,13 +198,23 @@ String ContextPath = request.getContextPath();
 					<i class="fa fa-cog fa-stack-1x fa-inverse"></i>
 				</span>
 			</a>
-
-			<a id="a_build_task_{{= row.def.id}}" href="###" class="table-link" title="历史任务">
-				<span class="fa-stack">
-					<i class="fa fa-square fa-stack-2x"></i>
-					<i class="fa fa-history fa-stack-1x fa-inverse"></i>
-				</span>
-			</a>
+			{{if !CU.isEmpty(row.lastBuildTask)}}
+				<a id="a_build_task_{{= row.def.id}}" href="###" class="table-link" title="历史任务" >
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-history fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			{{else}}
+				<a id="a_build_task_{{= row.def.id}}" href="###" class="table-link" title="历史任务" style="display:none ;">
+					<span class="fa-stack">
+						<i class="fa fa-square fa-stack-2x"></i>
+						<i class="fa fa-history fa-stack-1x fa-inverse"></i>
+					</span>
+				</a>
+			
+			{{/if}}
+			 
 			<a id="a_remove_build_{{= row.def.id}}" href="###" class="table-link danger" title="删除">
 				<span class="fa-stack">
 					<i class="fa fa-square fa-stack-2x"></i>

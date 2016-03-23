@@ -338,6 +338,19 @@ public class PcImagePeerImpl implements PcImagePeer {
 
 
 
+
+
+
+	@Override
+	public List<String> queryTagsByDefId(CPcImage cdt, String orders) {
+		if(cdt == null) cdt = new CPcImage();
+		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
+		cdt.setMntId(user.getMerchent().getId());
+		return imageSvc.queryTagsByDefId(cdt, orders);
+	}
+
+
+
 	 
 
 

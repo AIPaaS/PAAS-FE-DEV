@@ -200,7 +200,7 @@ public class PcImageMvc {
 
 	@RequestMapping("/queryImageTags")
 	public void queryImageTags(HttpServletRequest request, HttpServletResponse response, CPcImage cdt, String orders) {
-		List<PcImage> pcImages = pcImagePeer.queryImageList(cdt, orders);
+		List<String> pcImages = pcImagePeer.queryTagsByDefId(cdt, orders);
 		ControllerUtils.returnJson(request, response, pcImages);
 	}
 

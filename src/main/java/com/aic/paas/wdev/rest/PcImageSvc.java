@@ -273,4 +273,12 @@ public interface PcImageSvc {
 	 * @return "success/error"  成功/失败
 	 */
 	public String uploadImage(PcBuildTask buildTask,Map<String,String> uploadMap) ;
+	
+	/**
+	 * 根据定义iD查询tag
+	 * @param cdt
+	 * @param orders
+	 * @return
+	 */
+	public List<String> queryTagsByDefId(CPcImage cdt, String orders);
 }
