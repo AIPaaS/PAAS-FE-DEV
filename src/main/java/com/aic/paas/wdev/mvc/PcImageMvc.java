@@ -321,7 +321,9 @@ public class PcImageMvc {
 	}
 
 	@RequestMapping("/delteImage/**")
-	public void delteImage(HttpServletRequest request, HttpServletResponse response){
+	@ResponseBody
+	public String delteImage(HttpServletRequest request, HttpServletResponse response){
+		JSONObject result=new JSONObject();
 		String url = request.getRequestURI();
 		int idx = url.indexOf("/delteImage/");
 		if(idx < 0) throw new ServiceException(" is wrong url '"+url+"'! ");
@@ -330,20 +332,25 @@ public class PcImageMvc {
 		if(!BinaryUtils.isEmpty(fileName)){
 			File file=new File(folderUrl+"/"+fileName);
 			if(file.exists()){
-				this.deleteFile(file);
-				logger.info(fileName +"删除成功！");
+				if(file.isFile()&&file.exists()){
+					file.delete();
+					logger.info(fileName +"删除成功！");
+					result.put("result", "success");
+				}else{
+					logger.info(fileName +"删除失败！");
+					result.put("result", "error");
+				}
+				
 			}
 		}else{
-			
+			logger.info(fileName +"删除失败！");
+			result.put("result", "error");
 		}
+		return result.toString();
 		
 	}
 
-	private void deleteFile(File file) {
-		if(file.isFile()&&file.exists()){
-			file.delete();
-		}
-	}
+	 
 	
 	 
 	
