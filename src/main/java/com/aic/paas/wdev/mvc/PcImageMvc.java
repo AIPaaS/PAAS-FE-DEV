@@ -331,17 +331,15 @@ public class PcImageMvc {
 		logger.info("fileName :"+ fileName);
 		if(!BinaryUtils.isEmpty(fileName)){
 			File file=new File(folderUrl+"/"+fileName);
-			if(file.exists()){
-				if(file.isFile()&&file.exists()){
-					file.delete();
-					logger.info(fileName +"删除成功！");
-					result.put("result", "success");
-				}else{
-					logger.info(fileName +"删除失败！");
-					result.put("result", "error");
-				}
-				
+			if(file.isFile()&&file.exists()){
+				file.delete();
+				logger.info(fileName +"删除成功！");
+				result.put("result", "success");
+			}else{
+				logger.info(fileName +"删除失败！");
+				result.put("result", "error");
 			}
+		
 		}else{
 			logger.info(fileName +"删除失败！");
 			result.put("result", "error");

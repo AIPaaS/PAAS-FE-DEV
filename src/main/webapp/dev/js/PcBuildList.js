@@ -385,7 +385,11 @@ function queryTaskRecord() {
 		    if (data.hasOwnProperty("error_code")) {
 			RS.showErrMsg(null, "查询失败");
 		    } else if (data.duration != "") {
-			$("#start_time").text(data.started_at);
+			var time=data.started_at;
+			var date=CU.toDate(time);
+			var nowdate=new Date(date.getTime()-date.getTimezoneOffset()*60000);
+			var startTime=CU.toTimeString(nowdate);
+			$("#start_time").text(startTime);
 			$("#status").text(data.status);
 			var stdoutlist = data.stdout.split("\n");
 			var stdout = '';
