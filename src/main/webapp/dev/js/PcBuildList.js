@@ -42,6 +42,15 @@ function initListener() {
 	$("#roomName").bind("keyup", doCdtTFKeyUp);
 	$("#sel_productId").bind("change", function() {
 		var productId = $("#sel_productId").val();
+		
+		if(productId!=""){
+			$("#sel_projectId").css("background-color","#FFF");
+			$("#sel_projectId").attr("disabled", false);
+		}else{
+			$("#sel_projectId").css("background-color","#f5f5f5");
+			$("#sel_projectId").attr("disabled", true);
+		}
+		
 		$("#sel_projectId").html("");
 		if (!CU.isEmpty(productId)) {
 			RS.ajax({

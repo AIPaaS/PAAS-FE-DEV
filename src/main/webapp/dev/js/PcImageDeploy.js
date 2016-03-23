@@ -103,6 +103,15 @@ function initListener() {
 	$("#imageFullName").bind("keyup", doCdtTFKeyUp);
 	$("#productId").bind("change",function(){
 		var productId = $("#productId").val();
+		
+		if(productId!=""){
+			$("#projectId").css("background-color","#FFF");
+			$("#projectId").attr("disabled", false);
+		}else{
+			$("#projectId").css("background-color","#f5f5f5");
+			$("#projectId").attr("disabled", true);
+		}
+		
 		$("#projectId").html("");
 		if(!CU.isEmpty(productId)){
 			RS.ajax({url:"/dev/project/getProjectDropList",ps:{addEmpty:true, addAttr:true, productId:productId},cb:function(rs) {

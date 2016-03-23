@@ -18,27 +18,27 @@ String ContextPath = request.getContextPath();
 						&nbsp;镜像名:
 					</div>
 					<div class="form-group pull-left">
-						<input type="text" name="imageFullName" id="imageFullName" class="form-control" style="width:120px;">
+						<input type="text" name="imageFullName" id="imageFullName" class="form-control" style="width:130px;">
 					</div>
 					<div class="form-group pull-left">
 						产品:
 					</div>
 					<div class="form-group pull-left">
-						<select id="sel_productId" class="form-control" style="width:120px;">
+						<select id="sel_productId" class="form-control" style="width:160px;">
 						</select>
 					</div>
 					<div class="form-group pull-left">
 						工程:
 					</div>
 					<div class="form-group pull-left">
-						<select id="sel_projectId" class="form-control" style="width:120px;">
+						<select id="sel_projectId" class="form-control" style="width:160px; background-color:#f5f5f5" disabled="false">
 						</select>
 					</div>
 					<div class="form-group pull-left">
 						是否外部镜像:
 					</div>
 					<div class="form-group pull-left">
-						<select id="sel_isExternal" class="form-control" style="width:120px;">
+						<select id="sel_isExternal" class="form-control" style="width:70px;">
 						</select>
 					</div>
 				</div>
