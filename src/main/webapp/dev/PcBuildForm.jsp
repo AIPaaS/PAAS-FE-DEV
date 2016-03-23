@@ -63,8 +63,12 @@ String ContextPath = request.getContextPath();
 				<div class="form-group">
 					<label class="col-lg-2 control-label">代码库类型:</label>
 					<div class="col-lg-5">
-						<input type="radio" id="respType1" name="respType" placeholder="" checked><label for="respType1">&nbsp;SVN</label>&nbsp;&nbsp;&nbsp;&nbsp;
-						<input type="radio" id="respType2" name="respType" placeholder=""><label for="respType2">&nbsp;GIT</label>
+						<input type="radio" id="respType1" name="respType" placeholder="" >
+						<label for="respType1">&nbsp;SVN</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						
+						<input type="radio" id="respType2" name="respType" placeholder="" checked>
+						<label for="respType2">&nbsp;GIT</label>
+						
 					</div>
 					<div class="col-lg-5">
 						<span></span>

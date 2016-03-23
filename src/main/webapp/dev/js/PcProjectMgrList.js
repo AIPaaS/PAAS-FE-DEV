@@ -85,7 +85,8 @@ function query(pageNum){
 					validate: function(value) {
 			           if($.trim(value) == "") return "请先选择版本库类型.";
 			        },
-			        source:{1:"SVN", 2:"GIT"},
+			        //source:{1:"SVN", 2:"GIT"},
+			        source:{2:"GIT"},
 					url: function (pps) {
 						return submitApplyRespDoc(pps.pk, pps.value);
 					}

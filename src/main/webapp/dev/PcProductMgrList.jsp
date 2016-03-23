@@ -31,7 +31,7 @@ String ContextPath = request.getContextPath();
 					<div class="form-group pull-left">
 						<select id="sel_respDocType" class="form-control" style="width:120px;">
 							<option value="">&nbsp;</option>
-							<option value="1">SVN</option>
+							<!--<option value="1">SVN</option>-->
 							<option value="2">GIT</option>
 						</select>
 					</div>
