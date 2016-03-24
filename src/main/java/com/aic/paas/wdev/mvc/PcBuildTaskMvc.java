@@ -96,6 +96,9 @@ public class PcBuildTaskMvc {
 		if("error".equals(taskUserId)||taskUserId==null||"".equals(taskUserId)){
 			return result ;
 		}
+		if("success".equals(taskUserId)){
+			return "success";
+		}
 		String emailAddress =buildTaskPeer.queryEmailAdressByTaskUserId(taskUserId);//"452274335@qq.com";//
 		String namespace = pbtc.getNamespace();//"aaa_____zhaolijing";
 		String repo_name = pbtc.getRepo_name();//"paas/paasproject/buildname";//
