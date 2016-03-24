@@ -191,7 +191,7 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 
 		JSONObject param=new JSONObject();
 		param.put("namespace", namespace);
-		param.put("repo_name", repo_name);
+		param.put("repo_name", repo_name.substring(1));
 		param.put("build_id", build_id);
 		String data = "";
 		try {
