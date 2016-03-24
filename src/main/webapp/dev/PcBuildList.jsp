@@ -171,7 +171,7 @@ String ContextPath = request.getContextPath();
 		</td>
 		<td class="text-center">
 			{{if !CU.isEmpty(row.lastBuildTask)}}
-				{{= row.lastBuildTask.codeVersion}}
+				{{= row.lastBuildTask.backBuildId}}
 			{{/if}}
 		</td>
 		<td class="text-center" id="td_build_task_msage_{{= row.def.id}}">

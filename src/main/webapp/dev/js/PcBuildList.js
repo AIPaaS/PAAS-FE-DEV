@@ -162,7 +162,6 @@ function query(pageNum) {
 			    function() {
 				var def_id = this.id.substring(this.id
 					.lastIndexOf("_") + 1);
-				console.log(def_id);
 				$("#a_build_task_" + def_id).show();
 				var obj = CurrDataMap["key_"
 					+ this.id.substring(this.id

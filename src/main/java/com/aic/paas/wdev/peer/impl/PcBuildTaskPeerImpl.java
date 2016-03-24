@@ -129,8 +129,10 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		param.put("namespace", user.getMerchent().getMntCode()+"_____"+user.getUserCode());
 		param.put("repo_name", repo_name);
 		param.put("build_id", build_id);
+		logger.info("查询构建记录入参："+param.toString());
 		String data = HttpClientUtil.sendPostRequest(paasTaskUrl+"/dev/buildTaskMvc/queryTaskRecord",
 				param.toString());
+		logger.info("查询构建记录回参： "+data);
 		if (data == null || data.equals("")) {
 			record.setError_code("999999");
 			record.setError_info("请求失败");

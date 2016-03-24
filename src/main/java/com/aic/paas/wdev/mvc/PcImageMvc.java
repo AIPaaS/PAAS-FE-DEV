@@ -320,7 +320,7 @@ public class PcImageMvc {
 		
 	}
 
-	@RequestMapping("/delteImage/**")
+	@RequestMapping("/deleteImage/**")
 	@ResponseBody
 	public String delteImage(HttpServletRequest request, HttpServletResponse response){
 		JSONObject result=new JSONObject();
