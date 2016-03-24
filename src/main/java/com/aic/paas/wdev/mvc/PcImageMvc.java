@@ -327,7 +327,7 @@ public class PcImageMvc {
 		String url = request.getRequestURI();
 		int idx = url.indexOf("/deleteImage/");
 		if(idx < 0) throw new ServiceException(" is wrong url '"+url+"'! ");
-		String fileName = url.substring(idx+12).trim();
+		String fileName = url.substring(idx+13).trim();
 		logger.info("fileName :"+ fileName);
 		if(!BinaryUtils.isEmpty(fileName)){
 			File file=new File(folderUrl+"/"+fileName);
