@@ -2,7 +2,9 @@ package com.aic.paas.wdev.mvc;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -82,10 +84,6 @@ public class PcBuildTaskMvc {
 		BuildTaskRecord record =buildTaskPeer.queryTaskRecord(repo_name,build_id);
 		ControllerUtils.returnJson(request, response, record);
 	}
-//	@RequestMapping("/updateBuildTaskByCallBack")
-//	@ResponseBody
-//	public String updateBuildTaskByCallBack(HttpServletRequest request,HttpServletResponse response, 
-//			@RequestBody String sendParam){
 	@RequestMapping(value="updateBuildTaskByCallBack")
 	@ResponseBody
 	public String updateBuildTaskByCallBack(@RequestBody String sendParam){
@@ -95,24 +93,32 @@ public class PcBuildTaskMvc {
 		String imgRespId = pbtc.getImgRespId();
 		
 		String taskUserId = buildTaskPeer.updateBuildTaskByCallBack(pbtc, imgRespId);
-		if("error".equals(taskUserId)||taskUserId==null||"".equals(taskUserId)){
-			return result ;
-		}
-		String emailAddress = buildTaskPeer.queryEmailAdressByTaskUserId(taskUserId);
-		String namespace = pbtc.getNamespace();
-		String repo_name = pbtc.getRepo_name();
-		String build_id = pbtc.getBuild_id();
-		BuildTaskRecord buildTaskRecord = buildTaskPeer.queryTaskRecordToEmail(namespace, repo_name, build_id);
-		//远程调用task接口，获得某一个构建的详情
-		String status = buildTaskRecord.getStatus();
-		Integer flag = 0;
-		if("success".equals(status)){
-			flag = 1;
-		}
-		emailSenderPer.sendBuildTaskResult(taskUserId, flag, buildTaskRecord.getStdout(), emailAddress);
+//		if("error".equals(taskUserId)||taskUserId==null||"".equals(taskUserId)){
+//			return result ;
+//		}
+//		String emailAddress = buildTaskPeer.queryEmailAdressByTaskUserId(taskUserId);
+//		String namespace = pbtc.getNamespace();//"aaa_____zhaolijing";
+//		String repo_name = pbtc.getRepo_name();//"paas/paasproject/buildname";//
+//		String build_id = "329";//pbtc.getBuild_id();
+//		BuildTaskRecord buildTaskRecord = buildTaskPeer.queryTaskRecordToEmail(namespace, repo_name, build_id);
+//		//远程调用task接口，获得某一个构建的详情
+//		String status = buildTaskRecord.getStatus();
+//		Integer flag = 0;
+//		if("success".equals(status)){
+//			flag = 1;
+//			result="success";
+//		}
+//		if("error".equals(status)){
+//			flag = 0;
+//			result="success";
+//		}
+//		
+//		String stdout = buildTaskRecord.getStdout();
+//		Map<String,String> map = new HashMap<String,String>();
+//		map = JSON.toObject(sendParam,Map.class);
+//		emailSenderPer.sendBuildTaskResult(taskUserId, flag, stdout, emailAddress);
 		
 		return result ;
-//		ControllerUtils.returnJson(request, response, result);
 	}
 
 

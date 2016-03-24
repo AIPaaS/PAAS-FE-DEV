@@ -497,7 +497,7 @@ _media all and (-webkit-min-device-pixel-ratio: 1.5 ) { *[id
 																				</td>
 																			</tr>
 																			<tr>
-																				<td>您在<a style="color: rgb(0, 119, 181); text-decoration: none;"	href="${home_url}">亚信-PAAS平台</a>中新租户审核${buildTaskResult}.</td>
+																				<td>您在<a style="color: rgb(0, 119, 181); text-decoration: none;"	href="${home_url}">亚信-PAAS平台</a>中构建结果为${buildTaskResult}.</td>
 																			</tr>
 																			<tr>
 																				<td>

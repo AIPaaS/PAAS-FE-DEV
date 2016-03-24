@@ -58,16 +58,12 @@ public class EmailSenderPeerImpl implements EmailSenderPeer {
 		param.put("taskUserId", taskUserId);
 		param.put("home_url", this.homeUrl);
 		param.put("buildTaskResult", buildTaskResult.intValue()==1 ? "<font color='#008800'>[成功]</font>" : "<font color='#ff0000'>[失败]</font>");
-		if(buildTaskResult.intValue()==1) {
-			buildTaskRemark = "欢迎使用亚信PAAS平台";
+		if(!BinaryUtils.isEmpty(buildTaskRemark)) {
+			buildTaskRemark = "<font color='red'>构建记录："+buildTaskRemark.replaceAll("\n", "<br>")+"</font>";
 		}else {
-			if(!BinaryUtils.isEmpty(buildTaskRemark)) {
-				buildTaskRemark = "<font color='red'>构建记录："+buildTaskRemark.replaceAll("\n", "<br>")+"</font>";
-			}else {
-				buildTaskRemark = "";
-			}
-			buildTaskRemark += "<br><br><br>如果疑问，请与平台管理员联系。";
+			buildTaskRemark = "";
 		}
+		buildTaskRemark += "<br><br><br>如果疑问，请与平台管理员联系。";
 		param.put("buildTaskRemark", buildTaskRemark);
 		
 		String content = "";
