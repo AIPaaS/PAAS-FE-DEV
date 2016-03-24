@@ -325,7 +325,7 @@ public class PcImageMvc {
 	public String delteImage(HttpServletRequest request, HttpServletResponse response){
 		JSONObject result=new JSONObject();
 		String url = request.getRequestURI();
-		int idx = url.indexOf("/delteImage/");
+		int idx = url.indexOf("/deleteImage/");
 		if(idx < 0) throw new ServiceException(" is wrong url '"+url+"'! ");
 		String fileName = url.substring(idx+12).trim();
 		logger.info("fileName :"+ fileName);
