@@ -416,7 +416,11 @@ public class PcImagePeerImpl implements PcImagePeer {
 		}
 		PcImageDef pid = new PcImageDef();
 		pid = pids.get(0);
-		
+		Integer isExt =pid.getIsExternal();
+		if(isExt==1){
+			logger.info("是外部镜像，所以没有所属的产品，工程，镜像库，此处直接返回isExt");
+			return "isExt";
+		}
 		Long productId = 0l;
 		if("".equals(pid.getProductId())){
 			logger.info("产品表为空！");
