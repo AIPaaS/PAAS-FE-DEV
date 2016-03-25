@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.aic.paas.comm.util.SystemUtil;
 import com.aic.paas.frame.cross.integration.PaasWebSsoLoginUser;
+import com.aic.paas.wdev.bean.CPcBuildTask;
 import com.aic.paas.wdev.bean.CPcImage;
 import com.aic.paas.wdev.bean.CPcImageDef;
 import com.aic.paas.wdev.bean.CPcImageDeploy;
+import com.aic.paas.wdev.bean.CPcImageRepository;
 import com.aic.paas.wdev.bean.ImageStatus;
 import com.aic.paas.wdev.bean.PcBuildTask;
 import com.aic.paas.wdev.bean.PcImage;
@@ -20,16 +22,22 @@ import com.aic.paas.wdev.bean.PcImageDef;
 import com.aic.paas.wdev.bean.PcImageDefInfo;
 import com.aic.paas.wdev.bean.PcImageDeploy;
 import com.aic.paas.wdev.bean.PcImageInfo;
+import com.aic.paas.wdev.bean.PcImageRepository;
+import com.aic.paas.wdev.bean.PcProduct;
 import com.aic.paas.wdev.peer.PcImagePeer;
 import com.aic.paas.wdev.peer.UserAuthentication;
+import com.aic.paas.wdev.rest.PcBuildSvc;
+import com.aic.paas.wdev.rest.PcBuildTaskSvc;
+import com.aic.paas.wdev.rest.PcImageDefSvc;
+import com.aic.paas.wdev.rest.PcImageRepositorySvc;
 import com.aic.paas.wdev.rest.PcImageSvc;
+import com.aic.paas.wdev.rest.PcProductSvc;
 import com.binary.core.http.HttpUtils;
 import com.binary.core.util.BinaryUtils;
 import com.binary.framework.exception.ServiceException;
 import com.binary.jdbc.Page;
+import com.binary.json.JSON;
 import com.binary.json.JSONObject;
-
-import sun.util.logging.resources.logging;
 
 public class PcImagePeerImpl implements PcImagePeer {
 	
@@ -40,11 +48,16 @@ public class PcImagePeerImpl implements PcImagePeer {
 	
 	@Autowired
 	UserAuthentication userAuth;
-
-	
-	
-	 
-	
+	@Autowired
+	PcProductSvc productSvc;
+	@Autowired
+	PcBuildSvc buildSvc;
+	@Autowired
+	PcImageRepositorySvc imageRepositorySvc;
+	@Autowired
+	PcBuildTaskSvc buildTaskSvc;
+	@Autowired
+	PcImageDefSvc imageDefSvc;
 
 	@Override
 	public Page<PcImageDefInfo> queryDefInfoPage(Integer pageNum, Integer pageSize, CPcImageDef cdt, String orders) {
@@ -347,6 +360,99 @@ public class PcImagePeerImpl implements PcImagePeer {
 		PaasWebSsoLoginUser user = (PaasWebSsoLoginUser)SystemUtil.getLoginUser();
 		cdt.setMntId(user.getMerchent().getId());
 		return imageSvc.queryTagsByDefId(cdt, orders);
+	}
+
+
+
+
+
+
+	@Override
+	public String saveImageByCallBack(String param) {
+		logger.info("开始：paas-wdev：PcImageMvc：saveImageByCallBack--------");
+		String result ="error";
+		Map<String,String> paramMap = new HashMap<String,String>();
+		paramMap = JSON.toObject(param,Map.class);
+		logger.info("传递的参数paramMap是："+paramMap);
+		if("".equals(paramMap)){
+			logger.info("传递的参数param是空");
+			return result;
+		}
+		
+		if(paramMap == null ||"".equals(paramMap)){
+			logger.info("paramMap为null");
+			return result;
+		}
+		String taskBuildId = "";
+		
+		if("".equals(paramMap.get("build_id"))){
+			logger.info("参数中build_id为空");
+			return result ;
+		}
+		taskBuildId = paramMap.get("build_id");
+		CPcBuildTask cdt = new CPcBuildTask();
+		cdt.setId(Long.parseLong(taskBuildId));
+		List<PcBuildTask> buildTaskList = buildTaskSvc.selectTaskListByCdt(cdt, null);
+		if(buildTaskList==null ||buildTaskList.size()<=0){
+			logger.info("查询到的buildTask记录为空");
+			return result ;
+		}
+		PcBuildTask  buildTask = buildTaskList.get(0);
+		
+		
+		Long imageDefId = 0l;
+		if(buildTask.getImageDefId()==null){
+			logger.info("查询出的镜像定义Id为空");
+			return result ;
+		}
+		imageDefId = buildTask.getImageDefId();
+		
+		CPcImageDef cid = new CPcImageDef();
+		cid.setId(imageDefId);
+		List<PcImageDef> pids = imageDefSvc.selectTaskListByCdt(cid, null);
+		if(pids==null||pids.size()<=0){
+			logger.info("找不到镜像定义记录");
+			return result;
+		}
+		PcImageDef pid = new PcImageDef();
+		pid = pids.get(0);
+		
+		Long productId = 0l;
+		if("".equals(pid.getProductId())){
+			logger.info("产品表为空！");
+			return result;
+		}
+		productId = pid.getProductId();
+		PcProduct pp = new PcProduct();
+		//根据产品Id，查询产品记录
+		pp = productSvc.queryById(productId);
+		Long compRoomId = 0l;
+		if(pp.getCompRoomId()==null){
+			logger.info("产品所在的机房Id为空！");
+			return result;
+		}
+		compRoomId = pp.getCompRoomId();
+		logger.info("产品所在的机房Id是："+compRoomId);
+		//3.根据机房Id，查询镜像库Id
+		CPcImageRepository cir = new CPcImageRepository();
+		cir.setRoomId(compRoomId);
+		cir.setImgRespType(1);//imgRespType=1(是否快照镜像库)
+		cir.setDataStatus(1);
+		
+		List<PcImageRepository> pirlist =imageRepositorySvc.queryList(cir, "ID");
+		logger.info("根据机房Id，查询快照版本库的数量是："+ pirlist.size());
+		String imgRespId = "";//所属镜像库
+		if(pirlist == null || pirlist.size() <=0){
+			logger.info("查询出的镜像库为空");
+			return result ;
+		}
+		imgRespId = pirlist.get(0).getId().toString();
+		if("".equals(imgRespId)){
+			logger.info("查询不到房间对应的镜像库Id！");
+			return result;
+		}
+		logger.info("产品所在的镜像库的Id是："+imgRespId);
+		return imgRespId;
 	}
 
 

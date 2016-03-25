@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,6 +59,8 @@ public class PcImageMvc {
 
 	@Autowired
 	PcImageDefPeer imageDefPeer;
+	@Autowired
+	PcImagePeer imagePeer;
 	
 	@Value("${upLoad.folder.url}")
 	String folderUrl;
@@ -348,7 +351,19 @@ public class PcImageMvc {
 		return result.toString();
 		
 	}
+	@RequestMapping(value="saveImageByCallBack")
+	@ResponseBody
+	public String saveImageByCallBack(@RequestBody String param){
 
+		String result = "error";
+		result = imagePeer.saveImageByCallBack(param);
+		if("".equals(result)||"error".equals(result)){
+			return "error";
+		}
+
+		return result;
+		
+	}
 	 
 	
 	 

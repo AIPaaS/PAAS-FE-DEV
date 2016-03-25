@@ -1,9 +1,6 @@
 package com.aic.paas.wdev.peer;
 
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.multipart.MultipartFile;
 
 import com.aic.paas.wdev.bean.CPcImage;
 import com.aic.paas.wdev.bean.CPcImageDef;
@@ -210,4 +207,10 @@ public interface PcImagePeer {
 	 * @return
 	 */
 	public List<String> queryTagsByDefId(CPcImage cdt, String orders);
+	/** 
+	 * 上传镜像后，回调需要保存一条镜像记录
+	 * @param param
+	 * @return
+	 */
+	public String saveImageByCallBack( String param);
 }
