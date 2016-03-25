@@ -164,12 +164,12 @@ String ContextPath = request.getContextPath();
 				{{= row.imageDef.imageFullName}}
 			{{/if}}
 		</td>
-		<td class="text-center">
+		<td class="text-center" id="td_build_task_startTime_{{= row.def.id}}">
 			{{if !CU.isEmpty(row.lastBuildTask)}}
 				{{= CU.toStringDateTime(row.lastBuildTask.taskStartTime)}}
 			{{/if}}
 		</td>
-		<td class="text-center">
+		<td class="text-center" id="td_build_task_buildId_{{= row.def.id}}">
 			{{if !CU.isEmpty(row.lastBuildTask)}}
 				{{= row.lastBuildTask.backBuildId}}
 			{{/if}}

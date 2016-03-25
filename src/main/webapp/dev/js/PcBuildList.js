@@ -462,6 +462,10 @@ function searchTaskStatus(id){
 	    if(data!=null&&data!=""&&data!=undefined){
 		$("#td_build_task_msage_"+id).text("");
 		$("#td_build_task_msage_"+id).text(PU.getDropValue("V_PC_BUILD_TASK_STATUS",data.status,false));
+		$("#td_build_task_startTime_"+id).text("");
+		$("#td_build_task_startTime_"+id).text(CU.toStringDateTime(data.taskStartTime));
+		$("#td_build_task_buildId_"+id).text("");
+		$("#td_build_task_buildId_"+id).text(data.backBuildId);
 		$("#a_build_task_zd_"+id).hide();
 		$("#a_build_task_gj_"+id).show();
 		
