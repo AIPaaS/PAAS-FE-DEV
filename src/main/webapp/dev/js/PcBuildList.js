@@ -450,18 +450,23 @@ function queryTaskRecord() {
 }
 
 function searchTaskStatus(id){
-    ps={builDefId:id}
-    RS.ajax({
-	url : "/dev/buildtask/searchBuildStatus",
-	ps : ps,
-	cb : function(data){
+    $.ajax({
+	url: ContextPath+"/dev/buildtask/searchBuildStatus",
+	type: "post",
+	data: {
+	    buildDefId: id
+	},
+	datatype:'json',
+	timeout:600000,
+	success:function(data){
 	    if(data!=null&&data!=""&&data!=undefined){
 		$("#td_build_task_msage_"+id).text("");
 		$("#td_build_task_msage_"+id).text(PU.getDropValue("V_PC_BUILD_TASK_STATUS",data.status,false));
 		$("#a_build_task_zd_"+id).hide();
 		$("#a_build_task_gj_"+id).show();
 		
-	    }
+	    } 
 	}
-    });
+    })
+   
 }
