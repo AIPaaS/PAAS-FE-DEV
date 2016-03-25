@@ -129,8 +129,10 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		param.put("namespace", user.getMerchent().getMntCode()+"_____"+user.getUserCode());
 		param.put("repo_name", repo_name);
 		param.put("build_id", build_id);
+		logger.info("查询构建记录入参："+param.toString());
 		String data = HttpClientUtil.sendPostRequest(paasTaskUrl+"/dev/buildTaskMvc/queryTaskRecord",
 				param.toString());
+		logger.info("查询构建记录回参： "+data);
 		if (data == null || data.equals("")) {
 			record.setError_code("999999");
 			record.setError_info("请求失败");
@@ -189,7 +191,7 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 
 		JSONObject param=new JSONObject();
 		param.put("namespace", namespace);
-		param.put("repo_name", repo_name);
+		param.put("repo_name", repo_name.substring(1));
 		param.put("build_id", build_id);
 		String data = "";
 		try {
@@ -203,4 +205,24 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		record = JSON.toObject(data, BuildTaskRecord.class);
 		return record;
 	}
+	
+	@Override
+	public PcBuildTask searchBuildtaskStatus(Long[] buildDefIds) throws InterruptedException {
+		PcBuildTask buildTask;
+		for(int i=0;;i++){
+			logger.info("执行次数："+i);
+			buildTask=buildTaskSvc.selectLastestBuildTask(buildDefIds);
+			if(buildTask.getStatus().equals(2)){
+				Thread.sleep(20000);
+			}else{
+				logger.info("执行结束:"+buildTask.getBuildDefId());
+				logger.info("执行结果："+buildTask.getStatus());
+				break;
+			}
+			
+		}
+		return buildTask;
+	}
+	
+	
 }

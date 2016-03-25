@@ -47,7 +47,7 @@ public class EmailSenderPeerImpl implements EmailSenderPeer {
 	
 	
 	@Override
-	public void sendBuildTaskResult(String taskUserId, Integer buildTaskResult, String buildTaskRemark, String email) {
+	public void sendBuildTaskResult(String taskUserId, Integer buildTaskResult,String build_id, String buildTaskRemark, String email) {
 		BinaryUtils.checkEmpty(taskUserId, "taskUserId");
 		BinaryUtils.checkEmpty(buildTaskResult, "buildTaskResult");
 		
@@ -59,7 +59,7 @@ public class EmailSenderPeerImpl implements EmailSenderPeer {
 		param.put("home_url", this.homeUrl);
 		param.put("buildTaskResult", buildTaskResult.intValue()==1 ? "<font color='#008800'>[成功]</font>" : "<font color='#ff0000'>[失败]</font>");
 		if(!BinaryUtils.isEmpty(buildTaskRemark)) {
-			buildTaskRemark = "<font color='red'>构建记录："+buildTaskRemark.replaceAll("\n", "<br>")+"</font>";
+			buildTaskRemark = "<font color='black'>构建Id["+build_id+"],构建记录："+buildTaskRemark.replaceAll("\n", "<br>")+"</font>";
 		}else {
 			buildTaskRemark = "";
 		}

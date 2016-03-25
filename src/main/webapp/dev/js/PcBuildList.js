@@ -162,7 +162,6 @@ function query(pageNum) {
 			    function() {
 				var def_id = this.id.substring(this.id
 					.lastIndexOf("_") + 1);
-				console.log(def_id);
 				$("#a_build_task_" + def_id).show();
 				var obj = CurrDataMap["key_"
 					+ this.id.substring(this.id
@@ -236,6 +235,7 @@ function gj_BuildDef(id, depTag, imageDefId, buildName, imageFullName) {
 		$("#a_build_task_gj_" + id).css("display", "none");
 		$("#a_build_task_zd_" + id).css("display", "inline-block");
 		$("#td_build_task_msage_" + id).text("构建运行中");
+		searchTaskStatus(id);
 	    }
 	},
 	errcb : function(errorCode, errorMsg) {
@@ -447,4 +447,30 @@ function queryTaskRecord() {
 	RS.showErrMsg(null, "请求失败");
     }
 
+}
+
+function searchTaskStatus(id){
+    $.ajax({
+	url: ContextPath+"/dev/buildtask/searchBuildStatus",
+	type: "post",
+	data: {
+	    buildDefId: id
+	},
+	datatype:'json',
+	timeout:600000,
+	success:function(data){
+	    if(data!=null&&data!=""&&data!=undefined){
+		$("#td_build_task_msage_"+id).text("");
+		$("#td_build_task_msage_"+id).text(PU.getDropValue("V_PC_BUILD_TASK_STATUS",data.status,false));
+		$("#td_build_task_startTime_"+id).text("");
+		$("#td_build_task_startTime_"+id).text(CU.toStringDateTime(data.taskStartTime));
+		$("#td_build_task_buildId_"+id).text("");
+		$("#td_build_task_buildId_"+id).text(data.backBuildId);
+		$("#a_build_task_zd_"+id).hide();
+		$("#a_build_task_gj_"+id).show();
+		
+	    } 
+	}
+    })
+   
 }

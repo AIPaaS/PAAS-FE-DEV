@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -58,6 +59,8 @@ public class PcImageMvc {
 
 	@Autowired
 	PcImageDefPeer imageDefPeer;
+	@Autowired
+	PcImagePeer imagePeer;
 	
 	@Value("${upLoad.folder.url}")
 	String folderUrl;
@@ -269,7 +272,7 @@ public class PcImageMvc {
 				 try {
 						//获取文件的长度
 					    long fileLength = file.length();  
-					    logger.info("fileName:" +fileName);
+					    logger.info("下载fileName:" +fileName);
 					    //设置文件输出类型
 					    response.setContentType("application/octet-stream");  
 					    response.setHeader("Content-disposition", "attachment; filename="  
@@ -287,7 +290,8 @@ public class PcImageMvc {
 					    }  
 					    //关闭流
 					    bis.close();  
-					    bos.close();  
+					    bos.close();
+					    logger.info("下载成功:"+ fileName);
 				} catch (Exception e) {
 					logger.info("下载失败");
 					// TODO: handle exception
@@ -320,15 +324,15 @@ public class PcImageMvc {
 		
 	}
 
-	@RequestMapping("/delteImage/**")
+	@RequestMapping("/deleteImage/**")
 	@ResponseBody
 	public String delteImage(HttpServletRequest request, HttpServletResponse response){
 		JSONObject result=new JSONObject();
 		String url = request.getRequestURI();
-		int idx = url.indexOf("/delteImage/");
+		int idx = url.indexOf("/deleteImage/");
 		if(idx < 0) throw new ServiceException(" is wrong url '"+url+"'! ");
-		String fileName = url.substring(idx+12).trim();
-		logger.info("fileName :"+ fileName);
+		String fileName = url.substring(idx+13).trim();
+		logger.info("file 删除:"+ fileName);
 		if(!BinaryUtils.isEmpty(fileName)){
 			File file=new File(folderUrl+"/"+fileName);
 			if(file.isFile()&&file.exists()){
@@ -347,7 +351,19 @@ public class PcImageMvc {
 		return result.toString();
 		
 	}
+	@RequestMapping(value="saveImageByCallBack")
+	@ResponseBody
+	public String saveImageByCallBack(@RequestBody String param){
 
+		String result = "error";
+		result = imagePeer.saveImageByCallBack(param);
+		if("".equals(result)||"error".equals(result)){
+			return "error";
+		}
+
+		return result;
+		
+	}
 	 
 	
 	 

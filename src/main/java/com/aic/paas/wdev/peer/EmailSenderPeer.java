@@ -8,10 +8,12 @@ public interface EmailSenderPeer {
 	/**
 	 * 构建邮件通知
 	 * @param taskUserId  构建人的Id
-	 * @param buildTaskResult 1=审核通过  2=审核退回
-	 * @param buildTaskRemark 
+	 * @param buildTaskResult 1=构建成功  2=构建失败
+	 * @param build_id 构建Id
+	 * @param buildTaskRemark 构建详细信息 
+	 * @param email 收件人邮箱地址
 	 */
-	public void sendBuildTaskResult(String taskUserId, Integer buildTaskResult, String buildTaskRemark, String email);
+	public void sendBuildTaskResult(String taskUserId, Integer buildTaskResult,String build_id, String buildTaskRemark, String email);
 	
 	
 }

@@ -92,4 +92,12 @@ public interface PcBuildTaskPeer {
 	 * @return 构建过程的详细记录
 	 */
 	public BuildTaskRecord queryTaskRecordToEmail(String namespace,String repo_name, String build_id) ;
+	
+	/**
+	 * 查询最近构建记录的状态
+	 * @param buildDefIds
+	 * @return
+	 * @throws InterruptedException 
+	 */
+	public PcBuildTask searchBuildtaskStatus(Long[] buildDefIds) throws InterruptedException;
 }

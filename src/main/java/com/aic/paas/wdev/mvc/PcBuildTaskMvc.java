@@ -93,32 +93,45 @@ public class PcBuildTaskMvc {
 		String imgRespId = pbtc.getImgRespId();
 		
 		String taskUserId = buildTaskPeer.updateBuildTaskByCallBack(pbtc, imgRespId);
-//		if("error".equals(taskUserId)||taskUserId==null||"".equals(taskUserId)){
-//			return result ;
-//		}
-//		String emailAddress = buildTaskPeer.queryEmailAdressByTaskUserId(taskUserId);
-//		String namespace = pbtc.getNamespace();//"aaa_____zhaolijing";
-//		String repo_name = pbtc.getRepo_name();//"paas/paasproject/buildname";//
-//		String build_id = "329";//pbtc.getBuild_id();
-//		BuildTaskRecord buildTaskRecord = buildTaskPeer.queryTaskRecordToEmail(namespace, repo_name, build_id);
-//		//远程调用task接口，获得某一个构建的详情
-//		String status = buildTaskRecord.getStatus();
-//		Integer flag = 0;
-//		if("success".equals(status)){
-//			flag = 1;
-//			result="success";
-//		}
-//		if("error".equals(status)){
-//			flag = 0;
-//			result="success";
-//		}
-//		
-//		String stdout = buildTaskRecord.getStdout();
-//		Map<String,String> map = new HashMap<String,String>();
-//		map = JSON.toObject(sendParam,Map.class);
-//		emailSenderPer.sendBuildTaskResult(taskUserId, flag, stdout, emailAddress);
+		if("error".equals(taskUserId)||taskUserId==null||"".equals(taskUserId)){
+			return result ;
+		}
+		if("success".equals(taskUserId)){
+			return "success";
+		}
+		String emailAddress =buildTaskPeer.queryEmailAdressByTaskUserId(taskUserId);//"452274335@qq.com";//
+		String namespace = pbtc.getNamespace();//"aaa_____zhaolijing";
+		String repo_name = pbtc.getRepo_name();//"paas/paasproject/buildname";//
+		String build_id = pbtc.getBuild_id();//"47";//
+		BuildTaskRecord buildTaskRecord = buildTaskPeer.queryTaskRecordToEmail(namespace, repo_name, build_id);
+		//远程调用task接口，获得某一个构建的详情
+		String status = buildTaskRecord.getStatus();
+		Integer flag = 0;
+		if("success".equals(status)){
+			flag = 1;
+			result="success";
+		}
+		if("error".equals(status)){
+			flag = 0;
+			result="success";
+		}
+		
+		String stdout = buildTaskRecord.getStdout();
+		Map<String,String> map = new HashMap<String,String>();
+		map = JSON.toObject(sendParam,Map.class);
+		emailSenderPer.sendBuildTaskResult(taskUserId, flag,build_id, stdout, emailAddress);
 		
 		return result ;
+	}
+		
+	@RequestMapping("/searchBuildStatus")
+	public void searchBuildStatus(HttpServletRequest request, HttpServletResponse response) throws InterruptedException{
+		String buildDefId=request.getParameter("buildDefId");
+		BinaryUtils.checkEmpty(buildDefId, "buildDefId");
+		Long[] ids=new Long[1];
+		ids[0]=Long.parseLong(buildDefId);
+		PcBuildTask buildTask=buildTaskPeer.searchBuildtaskStatus(ids);
+		ControllerUtils.returnJson(request, response, buildTask);
 	}
 
 
