@@ -69,4 +69,12 @@ public interface PcBuildTaskSvc {
 	 * @return
 	 */
 	public List<PcBuildTask> selectTaskListByCdt(CPcBuildTask cdt,String orders);
+	
+	
+	/**
+	 * 查询最近的构建记录
+	 * @param buildDefIds
+	 * @return
+	 */
+	public PcBuildTask selectLastestBuildTask(Long[] buildDefIds);
 }

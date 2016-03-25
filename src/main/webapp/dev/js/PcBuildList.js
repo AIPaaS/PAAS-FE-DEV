@@ -235,6 +235,7 @@ function gj_BuildDef(id, depTag, imageDefId, buildName, imageFullName) {
 		$("#a_build_task_gj_" + id).css("display", "none");
 		$("#a_build_task_zd_" + id).css("display", "inline-block");
 		$("#td_build_task_msage_" + id).text("构建运行中");
+		searchTaskStatus(id);
 	    }
 	},
 	errcb : function(errorCode, errorMsg) {
@@ -446,4 +447,21 @@ function queryTaskRecord() {
 	RS.showErrMsg(null, "请求失败");
     }
 
+}
+
+function searchTaskStatus(id){
+    ps={builDefId:id}
+    RS.ajax({
+	url : "/dev/buildtask/searchBuildStatus",
+	ps : ps,
+	cb : function(data){
+	    if(data!=null&&data!=""&&data!=undefined){
+		$("#td_build_task_msage_"+id).text("");
+		$("#td_build_task_msage_"+id).text(PU.getDropValue("V_PC_BUILD_TASK_STATUS",data.status,false));
+		$("#a_build_task_zd_"+id).hide();
+		$("#a_build_task_gj_"+id).show();
+		
+	    }
+	}
+    });
 }

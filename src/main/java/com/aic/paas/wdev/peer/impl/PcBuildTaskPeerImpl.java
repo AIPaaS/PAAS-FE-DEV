@@ -205,4 +205,24 @@ public class PcBuildTaskPeerImpl implements PcBuildTaskPeer {
 		record = JSON.toObject(data, BuildTaskRecord.class);
 		return record;
 	}
+	
+	@Override
+	public PcBuildTask searchBuildtaskStatus(Long[] buildDefIds) throws InterruptedException {
+		PcBuildTask buildTask;
+		for(int i=0;;i++){
+			logger.info("执行次数："+i);
+			buildTask=buildTaskSvc.selectLastestBuildTask(buildDefIds);
+			if(buildTask.getStatus().equals(2)){
+				Thread.sleep(20000);
+			}else{
+				logger.info("执行结束:"+buildTask.getBuildDefId());
+				logger.info("执行结果："+buildTask.getStatus());
+				break;
+			}
+			
+		}
+		return buildTask;
+	}
+	
+	
 }

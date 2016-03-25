@@ -123,6 +123,15 @@ public class PcBuildTaskMvc {
 		
 		return result ;
 	}
+		
+	@RequestMapping("/searchBuildStatus")
+	public void searchBuildStatus(HttpServletRequest request, HttpServletResponse response, String builDefId) throws InterruptedException{
+		BinaryUtils.checkEmpty(builDefId, "builDefId");
+		Long[] ids=new Long[1];
+		ids[0]=Long.parseLong(builDefId);
+		PcBuildTask buildTask=buildTaskPeer.searchBuildtaskStatus(ids);
+		ControllerUtils.returnJson(request, response, buildTask);
+	}
 
 
 	
