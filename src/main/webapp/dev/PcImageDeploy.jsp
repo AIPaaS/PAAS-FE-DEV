@@ -56,6 +56,7 @@ String ContextPath = request.getContextPath();
 								<th class="text-center">对应产品</th>
 								<th class="text-center">对应工程</th>
 								<th class="text-center">build号</th>
+								<th class="text-center">tag号</th>
 								<th class="text-center">生成时间</th>
 								<th class="text-center">镜像环境</th>
 								<th class="text-center">数据中心</th>
@@ -105,6 +106,7 @@ String ContextPath = request.getContextPath();
 			<td class="text-center">{{= row.product.name}}</td>
 			<td class="text-center">{{= row.project.name}}</td>
 			<td class="text-center">{{= row.image.buildNo}}</td>
+			<td class="text-center">{{= row.image.depTag}}</td>
 			<td class="text-center">{{= CU.toStringDateTime(row.image.createTime)}}</td>
 			<td class="text-center">{{html PU.getDropValue("V_PC_IMAGE_STATUS",row.image.status,true)}}</td>
 			<td class="text-center">{{= PU.getDropValue("DV_DATA_CENTER_CODE",row.image.dataCenterId,false)}}</td>
