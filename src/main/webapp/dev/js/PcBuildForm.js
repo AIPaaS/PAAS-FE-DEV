@@ -279,7 +279,7 @@ function submitForm(){
 	
 	bean.buildName=$("#buildNameText").text()+$("#buildName").val();
 	bean.respType = $("#respType1").prop("checked") ? 1 : 2;
-	bean.isExternal = 0;//1=是  0=否
+	bean.isExternal = 0; //1=是  0=否
 	if(bean.isExternal){
 		delete bean.productId;
 		delete bean.projectId;
