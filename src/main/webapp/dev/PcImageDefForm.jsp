@@ -14,15 +14,15 @@ String ContextPath = request.getContextPath();
 	<div class="main-box-body clearfix">
 		<form class="form-horizontal" role="form" id="form_imageDef">
 		
-		<div class="form-group">
-				<label for="contactEmail" class="col-lg-2 control-label">是否外部镜像:</label>
-				<div class="col-lg-1">
-					<input type="checkbox" name="isExternal" id="isExternal">
-				</div>
-				<div class="col-lg-11">
-					<span></span>
-				</div>
-			</div>
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="contactEmail" class="col-lg-2 control-label">是否外部镜像:</label> -->
+<!-- 				<div class="col-lg-1"> -->
+<!-- 					<input type="checkbox" name="isExternal" id="isExternal"> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-11"> -->
+<!-- 					<span></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<div class="form-group" id="div_productId">
 				<label for="productId" class="col-lg-2 control-label">所属产品<font color="red">*</font>:</label>
 				<div class="col-lg-5">

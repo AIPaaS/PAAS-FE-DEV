@@ -35,18 +35,19 @@ function initComponent() {
 
 /** 对组件设置监听 **/
 function initListener() {
-	$("#isExternal").bind("change",function(){
-		$("#imageLockName").text("");
-		if($("#isExternal").prop("checked")){
-			$("#productId").val("");
-			$("#projectId").val("");
-			$("#div_productId").hide();
-			$("#div_projectId").hide();
-		}else{
-			$("#div_productId").show();
-			$("#div_projectId").show();
-		}
-	});
+	//镜像定义中不显示：是否为外部镜像的单选框。
+//	$("#isExternal").bind("change",function(){
+//		$("#imageLockName").text("");
+//		if($("#isExternal").prop("checked")){
+//			$("#productId").val("");
+//			$("#projectId").val("");
+//			$("#div_productId").hide();
+//			$("#div_projectId").hide();
+//		}else{
+//			$("#div_productId").show();
+//			$("#div_projectId").show();
+//		}
+//	});
 	$("#productId").bind("change",function(){
 		var productId = $("#productId").val();
 		var item = CU.getDropItemRecord("DV_PRODUCT_CODE", productId);
@@ -125,8 +126,8 @@ function queryInfo(){
 /**提交表单**/
 function submitForm(){
 	var bean = PU.getFormData("form_imageDef");
-	bean.isExternal = 1; //1=是 0=否
-	var isChecked = $("#isExternal").prop("checked");
+	bean.isExternal = 0; //1=是 0=否
+	var isChecked = false; //$("#isExternal").prop("checked");
 	if(!isChecked){
 		bean.isExternal = 0;
 		bean.dirName=$("#imageLockName").text()+$("#dirName").val();
