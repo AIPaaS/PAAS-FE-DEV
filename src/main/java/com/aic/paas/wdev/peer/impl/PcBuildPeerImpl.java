@@ -83,7 +83,8 @@ public class PcBuildPeerImpl implements PcBuildPeer {
 		boolean isadd = record.getId() == null;
 		if(isadd) {
 			BinaryUtils.checkEmpty(record.getBuildName(), "record.buildName");
-			BinaryUtils.checkEmpty(record.getIsExternal(), "record.isExternal");
+			record.setIsExternal(0);//新增构建定义时，默认0不是外部工程
+//			BinaryUtils.checkEmpty(record.getIsExternal(), "record.isExternal");
 			if(record.getIsExternal().intValue() == 0) {
 				BinaryUtils.checkEmpty(record.getProductId(), "record.productId");
 				BinaryUtils.checkEmpty(record.getProjectId(), "record.projectId");
