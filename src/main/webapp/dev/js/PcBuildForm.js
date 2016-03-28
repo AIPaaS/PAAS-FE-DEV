@@ -154,6 +154,7 @@ function toTreeData(dropList) {
 }
 
 function setDisabled(isExternal){
+	isExternal = false;
 	if(isExternal){
 		$("#respType1").prop("disabled",!isExternal);
 		$("#respType2").prop("disabled",!isExternal);
@@ -179,7 +180,7 @@ function reloadProjectDropList(productId, cb) {
 }
 
 function resetBuildFace(){
-	var isExternal = $("#isExternal").prop("checked");
+	var isExternal = false;// $("#isExternal").prop("checked");
 	var projectId = $("#projectId").val();
 	
 	if(isExternal) {
@@ -225,7 +226,7 @@ function queryInfo(){
 		if(isExternal){
 			setDisabled(true);
 			$("#div_isExternal_no").hide();
-			$("#isExternal").prop("checked",true);
+//			$("#isExternal").prop("checked",true);
 			var respType = rs.def.respType;
 			$("#respType1").prop("checked", respType==1);
 			$("#respType2").prop("checked", respType==2);
@@ -234,7 +235,7 @@ function queryInfo(){
 			$("#respPwd").val(rs.def.respPwd);
 		}else{
 			$("#div_isExternal_no").show();
-			$("#isExternal").prop("checked",false);
+//			$("#isExternal").prop("checked",false);
 			$("#productId").val(rs.def.productId);
 			if(!CU.isEmpty(rs.def.productId)) {
 				reloadProjectDropList(rs.def.productId, function() {
@@ -269,7 +270,7 @@ function queryInfo(){
 		$("#productId").attr("disabled",true);
 		$("#projectId").attr("disabled",true);
 		$("#buildName").attr("disabled",true);
-		$("#isExternal").attr("disabled",true);
+//		$("#isExternal").attr("disabled",true);
 	}});
 }
 
