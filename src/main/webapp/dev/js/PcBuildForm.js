@@ -64,20 +64,20 @@ function initComponent() {
 
 /** 对组件设置监听 **/
 function initListener() {
-	$("#isExternal").bind("click", function(){
-		$("#buildNameText").text("");
-	});
-	$("#isExternal").bind("change", resetBuildFace);
-	$("#isBuildImage").bind("change",function(){
-		if($("#isBuildImage").prop("checked")){
-			$("#div_isBuildImage_yes").show();
-		}else{
-			$("#imageDefId").val("");
-			$("#dockerFilePath").val("");
-			$("#isAutoPush1").val("");
-			$("#div_isBuildImage_yes").hide();
-		}
-	});
+//	$("#isExternal").bind("click", function(){
+//		$("#buildNameText").text("");
+//	});
+//	$("#isExternal").bind("change", resetBuildFace);
+//	$("#isBuildImage").bind("change",function(){
+//		if($("#isBuildImage").prop("checked")){
+//			$("#div_isBuildImage_yes").show();
+//		}else{
+//			$("#imageDefId").val("");
+//			$("#dockerFilePath").val("");
+//			$("#isAutoPush1").val("");
+//			$("#div_isBuildImage_yes").hide();
+//		}
+//	});
 	$("#isAutoPush1").bind("change",function(){
 		if($("#isAutoPush1").prop("checked")){
 			$("#div_isAutoPush1_yes").show();
@@ -279,6 +279,7 @@ function submitForm(){
 	
 	bean.buildName=$("#buildNameText").text()+$("#buildName").val();
 	bean.respType = $("#respType1").prop("checked") ? 1 : 2;
+	bean.isExternal = 0;//1=是  0=否
 	if(bean.isExternal){
 		delete bean.productId;
 		delete bean.projectId;

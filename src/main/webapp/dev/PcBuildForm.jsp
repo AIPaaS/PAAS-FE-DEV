@@ -13,15 +13,15 @@ String ContextPath = request.getContextPath();
 	<header class="main-box-header clearfix"> </header>
 	<div class="main-box-body clearfix">
 		<form class="form-horizontal" role="form" id="form_buildDef">
-		<div class="form-group">
-				<label for="isExternal" class="col-lg-2 control-label">是否外部工程:</label>
-				<div class="col-lg-1">
-					<input type="checkbox" name="isExternal" id="isExternal">
-				</div>
-				<div class="col-lg-11">
-					<span></span>
-				</div>
-			</div>
+<!-- 			<div class="form-group"> -->
+<!-- 				<label for="isExternal" class="col-lg-2 control-label">是否外部工程:</label> -->
+<!-- 				<div class="col-lg-1"> -->
+<!-- 					<input type="checkbox" name="isExternal" id="isExternal"> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-11"> -->
+<!-- 					<span></span> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 			<div id="div_isExternal_no">
 				<div class="form-group">
 					<label for="productId" class="col-lg-2 control-label">所属产品<font color="red">*</font>:</label>
